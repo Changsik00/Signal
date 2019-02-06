@@ -1,11 +1,10 @@
 <template>
   <div class="footer">
-      footer
+    footer
   </div>
 </template>
 
-<script>
-</script>
+<script></script>
 
 <style>
 .footer {
