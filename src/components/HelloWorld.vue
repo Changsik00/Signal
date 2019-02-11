@@ -1,7 +1,8 @@
 <template>
   <v-container>
     <div class="title-1">this is common css test</div>
-    <div class="title-2">this is common css test</div>
+    <div class="title-2 mt-10-20-30">this is common css test</div>
+    <div class="title-2 mobile-only">this is common css test</div>
     <v-layout text-xs-center wrap>
       <v-flex xs12>
         <v-img

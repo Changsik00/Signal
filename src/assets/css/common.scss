@@ -38,6 +38,38 @@
     }
 }
 
-.mt10 {
+.mt-10 {
     margin-top: 10px;
+}
+
+.mt-10-20 {
+    margin-top: 10px;
+
+    @include tablet {
+        margin-top: 20px;
+    }
+
+    @include desktop {
+        margin-top: 20px;
+    }
+}
+
+.mt-10-10-20 {
+    margin-top: 10px;
+
+    @include desktop {
+        margin-top: 20px;
+    }
+}
+
+.mt-10-20-30 {
+    margin-top: 10px;
+
+    @include tablet {
+        margin-top: 20px;
+    }
+
+    @include desktop {
+        margin-top: 30px;
+    }
 }
