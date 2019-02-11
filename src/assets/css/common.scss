@@ -1,0 +1,43 @@
+@import "mixin.scss";
+@import "color.scss";
+@import "font.scss";
+
+.mobile-only {
+    display: inline-block;
+
+    @include tablet {
+        display: none;
+    }
+
+    @include desktop {
+        display: none;
+    }
+}
+
+.tablet-only {
+    display: none;
+
+    @include tablet {
+        display: inline-block;
+    }
+
+    @include desktop {
+        display: none;
+    }
+}
+
+.desktop-only {
+    display: none;
+
+    @include tablet {
+        display: none;
+    }
+
+    @include desktop {
+        display: inline-block;
+    }
+}
+
+.mt10 {
+    margin-top: 10px;
+}

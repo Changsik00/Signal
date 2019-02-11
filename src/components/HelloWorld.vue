@@ -1,9 +1,11 @@
 <template>
   <v-container>
+    <div class="title-1">this is common css test</div>
+    <div class="title-2">this is common css test</div>
     <v-layout text-xs-center wrap>
       <v-flex xs12>
         <v-img
-          :src="require('../assets/logo.svg')"
+          :src="require('../assets/img/logo.svg')"
           class="my-3"
           contain
           height="200"
@@ -131,4 +133,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+@import "@/assets/css/common.scss";
+</style>
