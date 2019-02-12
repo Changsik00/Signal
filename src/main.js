@@ -16,6 +16,7 @@ const Footer = () =>
 Vue.component("Header", Header);
 Vue.component("Footer", Footer);
 
+// https://kr.vuejs.org/v2/api/index.html
 Vue.config.productionTip = false;
 
 new Vue({
