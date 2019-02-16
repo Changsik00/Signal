@@ -3,6 +3,7 @@
     <v-layout text-xs-center wrap>
       <v-flex xs12>
         <v-btn round color="primary" dark @click="gotoAbout">goto about page</v-btn>
+        <v-btn round color="primary" dark @click="test">Button2</v-btn>
       </v-flex>
       <v-flex xs12>
         <v-img
@@ -44,12 +45,13 @@
 export default {
   methods: {
     gotoAbout() {
-      this.$router.push({ name: "about" });
+      // this.$router.push({ name: "about" });
+      this.$store.dispatch("showLoading");
+    },
+    test() {
+      // this.$router.push({ name: "about" });
+      this.$store.dispatch("hideLoading");
     }
   }
 };
 </script>
-
-<style lang="scss">
-@import "@/assets/css/common.scss";
-</style>

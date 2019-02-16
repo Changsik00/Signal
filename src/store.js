@@ -6,8 +6,23 @@ import axios from "axios";
 Vue.use(Vuex);
 Vue.use(VueAxios, axios);
 
-export default new Vuex.Store({
+// https://github.com/axios/axios
+axios.defaults.timeout = 3000;
+axios.defaults.baseURL = "https://reqres.in/api/";
+
+axios.interceptors.request.use(config => {
+  store.dispatch("showLoading");
+  return config;
+});
+
+axios.interceptors.response.use(response => {
+  store.dispatch("hideLoading");
+  return response;
+});
+
+const store = new Vuex.Store({
   state: {
+    loading: false,
     userToken: null
   },
   getters: {
@@ -21,15 +36,28 @@ export default new Vuex.Store({
     },
     logout(state) {
       state.userToken = null;
+    },
+    setLoading(state, visible) {
+      state.loading = visible;
     }
   },
   actions: {
     login({ commit }, params) {
-      const loginApi = "https://reqres.in/api/login";
+      const loginApi = "login";
       Vue.axios.post(loginApi, params).then(response => {
-        console.log("#@# response", response);
         commit("setToken", response.data);
       });
+    },
+    showLoading({ commit, state }) {
+      if (!state.loading) {
+        commit("setLoading", true);
+        setTimeout(() => (state.loading = false), 5000);
+      }
+    },
+    hideLoading({ commit }) {
+      commit("setLoading", false);
     }
   }
 });
+
+export default store;

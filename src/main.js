@@ -5,21 +5,19 @@ import router from "./router";
 import store from "./store";
 import "roboto-fontface/css/roboto/roboto-fontface.css";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
+import "./assets/css/common.scss";
 
-// Header, Footer 전역으로 component 등록
-const Header = () =>
-  import(/* webpackChunkName: "Header" */ "./components/Header.vue");
-const Footer = () =>
-  import(/* webpackChunkName: "Header" */ "./components/Footer.vue");
-
+// Loading 전역으로 component 등록
 //https://vuejs.org/v2/guide/components-registration.html
-Vue.component("Header", Header);
-Vue.component("Footer", Footer);
+const Loading = () =>
+  import(/* webpackChunkName: "Header" */ "./components/Loading.vue");
+
+Vue.component("Loading", Loading);
 
 // https://kr.vuejs.org/v2/api/index.html
 Vue.config.productionTip = false;
 
-new Vue({
+Vue.prototype.vue = new Vue({
   router,
   store,
   render: h => h(App)

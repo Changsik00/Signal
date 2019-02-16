@@ -6,7 +6,7 @@ const About = () => import(/* webpackChunkName: "about" */ "./views/About.vue");
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: "history",
   routes: [
     {
@@ -25,3 +25,11 @@ export default new Router({
     }
   ]
 });
+
+router.beforeResolve((to, from, next) => {
+  next();
+});
+
+router.afterEach((to, from) => {});
+
+export default router;
