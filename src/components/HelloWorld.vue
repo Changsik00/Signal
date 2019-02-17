@@ -49,8 +49,7 @@ export default {
       this.$store.dispatch("showLoading");
     },
     test() {
-      // this.$router.push({ name: "about" });
-      this.$store.dispatch("hideLoading");
+      this.$toasted.show( 'toast test message')
     }
   }
 };

@@ -45,3 +45,11 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+// https://github.com/shakee93/vue-toasted
+.toast {
+	font-size: 18px !important;
+	font-weight: bold !important;
+	color: skyblue !important;
+	border-radius: 10px !important;
+}
