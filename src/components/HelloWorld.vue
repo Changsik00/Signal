@@ -49,7 +49,7 @@ export default {
       this.$store.dispatch("showLoading");
     },
     test() {
-      this.$toasted.show( 'toast test message')
+      this.$my.showToast( 'toast test message')
     }
   }
 };

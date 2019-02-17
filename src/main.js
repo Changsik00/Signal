@@ -1,9 +1,10 @@
 import Vue from "vue";
-import "./plugins/vuetify";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import Toasted from "vue-toasted";
+import "./plugins/vuetify";
+import "./plugins/my";
 // https://github.com/shakee93/vue-toasted
 Vue.use(Toasted, {
   position: "top-center",

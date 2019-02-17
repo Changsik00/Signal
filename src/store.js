@@ -15,10 +15,16 @@ axios.interceptors.request.use(config => {
   return config;
 });
 
-axios.interceptors.response.use(response => {
-  store.dispatch("hideLoading");
-  return response;
-});
+axios.interceptors.response.use(
+  response => {
+    store.dispatch("hideLoading");
+    return response;
+  },
+  error => {
+    Vue.toasted.show("axios error");
+    return Promise.reject(error.response);
+  }
+);
 
 const store = new Vuex.Store({
   state: {
