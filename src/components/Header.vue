@@ -1,15 +1,11 @@
 <template>
-  <div>
-    <v-toolbar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
+    <v-toolbar app class="header">
+      <img src="../assets/img/common/logo-signal.svg" alt="logo">
       <v-spacer></v-spacer>
+      <v-btn flat round color="primary" dark @click="main">주요기능</v-btn>
       <v-btn v-if="!$store.getters.isLogin" flat round color="primary" dark @click="login">Login</v-btn>
       <v-btn v-else flat round color="primary" dark @click="logout">Logout</v-btn>
     </v-toolbar>
-  </div>
 </template>
 
 <script>
@@ -29,3 +25,9 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.header {
+  height: 62px;
+  padding: 0 20px;
+}
+</style>

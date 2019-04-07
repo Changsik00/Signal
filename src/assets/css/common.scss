@@ -39,11 +39,11 @@
     }
 }
 
-.mt-10 {
+.mt10 {
     margin-top: 10px;
 }
 
-.mt-10-20 {
+.mt10-20 {
     margin-top: 10px;
 
     @include tablet {
@@ -55,7 +55,7 @@
     }
 }
 
-.mt-10-10-20 {
+.mt10-10-20 {
     margin-top: 10px;
 
     @include desktop {
@@ -63,7 +63,7 @@
     }
 }
 
-.mt-10-20-30 {
+.mt10-20-30 {
     margin-top: 10px;
 
     @include tablet {

@@ -16,7 +16,6 @@ Vue.use(Toasted, {
 // css
 import "roboto-fontface/css/roboto/roboto-fontface.css";
 import "material-design-icons-iconfont/dist/material-design-icons.css";
-import "./assets/css/common.scss";
 
 // Loading 전역으로 component 등록
 // https://vuejs.org/v2/guide/components-registration.html
