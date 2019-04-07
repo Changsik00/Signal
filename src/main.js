@@ -5,6 +5,12 @@ import store from "./store";
 import Toasted from "vue-toasted";
 import "./plugins/vuetify";
 import "./plugins/my";
+import "babel-polyfill";
+
+// css
+import "roboto-fontface/css/roboto/roboto-fontface.css";
+import "material-design-icons-iconfont/dist/material-design-icons.css";
+
 // https://github.com/shakee93/vue-toasted
 Vue.use(Toasted, {
   position: "top-center",
@@ -12,10 +18,6 @@ Vue.use(Toasted, {
   icon: "error_outline",
   className: "toast"
 });
-
-// css
-import "roboto-fontface/css/roboto/roboto-fontface.css";
-import "material-design-icons-iconfont/dist/material-design-icons.css";
 
 // Loading 전역으로 component 등록
 // https://vuejs.org/v2/guide/components-registration.html

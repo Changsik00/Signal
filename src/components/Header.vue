@@ -3,8 +3,8 @@
       <img src="../assets/img/common/logo-signal.svg" alt="logo">
       <v-spacer></v-spacer>
       <v-btn flat round color="primary" dark @click="main">주요기능</v-btn>
-      <v-btn v-if="!$store.getters.isLogin" flat round color="primary" dark @click="login">Login</v-btn>
-      <v-btn v-else flat round color="primary" dark @click="logout">Logout</v-btn>
+      <v-btn v-if="!$store.getters.isLogin" flat round color="primary" dark @click="login">로그인</v-btn>
+      <v-btn v-else flat round color="primary" dark @click="logout">로그아웃</v-btn>
     </v-toolbar>
 </template>
 
