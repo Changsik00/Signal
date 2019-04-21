@@ -6,7 +6,7 @@ module.exports = {
   publicPath:
     process.env.NODE_ENV === "production"
       ? "static/assets"
-      : "http://0.0.0.0:8080/",
+      : "/",
   outputDir: "./dist/assets",
   chainWebpack: config => {
     config.module.rules.delete("eslint");

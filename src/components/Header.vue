@@ -21,6 +21,9 @@ export default {
     },
     logout() {
       this.$store.commit("logout");
+    },
+    main(){
+      console.log("#@# goto main")
     }
   }
 };
