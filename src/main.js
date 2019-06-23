@@ -19,6 +19,13 @@ Vue.use(Toasted, {
   className: "toast"
 });
 
+import VeeValidate from "vee-validate";
+Vue.use(VeeValidate);
+
+import Buefy from "buefy";
+import "buefy/dist/buefy.css";
+Vue.use(Buefy);
+
 // Loading 전역으로 component 등록
 // https://vuejs.org/v2/guide/components-registration.html
 const Loading = () =>

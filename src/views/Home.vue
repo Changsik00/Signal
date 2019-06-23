@@ -1,117 +1,95 @@
 <template>
-  <v-container class="mainArea1" fluid pa-0>
-        <v-layout align-center justify-center pt68>
-            <v-flex Text1-1>{{ itemList.title }}</v-flex>
-        </v-layout>
-        <v-layout align-center justify-center column pt10>
-            <v-flex Text1-2>{{ itemList.info }}</v-flex>
-        </v-layout>
-        <br>
-        <v-layout align-center justify-center>
-            <v-flex xs5 offset-xs2>
-                <v-layout style="max-height:75px;">
-                    <v-text-field v-if="isSizePc" solo flat class="Normal-form" placeholder="원하시는 키워드를 입력하세요 :)"></v-text-field>
-                    <v-text-field v-else solo flat class="Normal-form" placeholder="키워드를 입력하세요 :)"></v-text-field>
-                </v-layout>
-            </v-flex>
-            <v-flex xs4>
-                <v-btn v-if="isSizePc" flat dark class="Button-solid">검색</v-btn>
-                <v-btn v-else flat dark icon class="Button-solid">
-                    <i class="material-icons">search</i>
-                </v-btn>
-            </v-flex>
-        </v-layout>
-        <v-flex class="GrayBoxPadding">
-            <div class="grey lighten-4 GrayBox">
-                <v-layout align-center justify-center v-bind="isColumnWhenXs">
-                    <!-- <v-flex xs3></v-flex> -->
-                    <v-flex xs2 v-for="(item, index) in this.itemList.cntInfoList" :key="index">
-                        <v-layout align-center column>
-                            <v-flex Text1-5 pt24>{{ item.title }}</v-flex>
-                            <v-flex Text1-6 pt1>{{ getCount(item.count) }}</v-flex>
-                        </v-layout>
-                    </v-flex>
-                    <!-- <v-flex xs3></v-flex> -->
-                </v-layout>
-            </div>
-        </v-flex>
+    <v-container class="test" fluid>
+        <form @submit.prevent="validateBeforeSubmit">
+            <b-field label="First name" :type="{'is-danger': errors.has('firstname')}" :message="errors.first('firstname')">
+                <b-input v-model="firstname" name="firstname" v-validate="'required'" />
+            </b-field>
+    
+            <!-- <b-field label="Last name" :type="{'is-danger': errors.has('lastname')}" :message="errors.first('lastname')">
+                <b-input v-model="lastname" name="lastname" v-validate="'required'" />
+            </b-field>
+    
+            <b-field label="Age" :type="{'is-danger': errors.has('age')}" :message="errors.first('age')">
+                <b-input type="number" v-model="age" name="age" v-validate="'required|integer|between:18,65'" />
+            </b-field>
+    
+            <b-field label="Gender" :addons="false" :type="{'is-danger': errors.has('gender')}" :message="errors.first('gender')">
+                <b-radio v-model="gender" name="gender" native-value="M" v-validate="'required'">Male</b-radio>
+                <b-radio v-model="gender" name="gender" native-value="F" v-validate="'required'">Female</b-radio>
+            </b-field>
+    
+            <b-field label="Username" :type="{'is-danger': errors.has('username')}" :message="errors.first('username')">
+                <b-input type="text" v-model="username" name="username" v-validate="'required|alpha'" />
+            </b-field>
+    
+            <b-field label="Password" :type="{'is-danger': errors.has('password')}" :message="errors.first('password')">
+                <b-input type="password" v-model="password" name="password" v-validate="'required|min:8'" />
+            </b-field>
+    
+            <b-field label="Confirm password" :type="{'is-danger': errors.has('confirm-password')}" :message="[{
+                                            'The confirm password field is required' : errors.firstByRule('confirm-password', 'required'),
+                                            'The confirm password is not valid' : errors.firstByRule('confirm-password', 'is')
+                                        }]">
+                <b-input type="password" v-model="confirmPassword" name="confirm-password" v-validate="{ required: true, is: password }" />
+            </b-field>
+    
+            <b-field label="Where did you find us ?" :type="{'is-danger': errors.has('question')}" :message="errors.first('question')">
+                <b-select v-model="question" name="question" placeholder="Select an option" v-validate="'required'">
+                    <option value="google">Google</option>
+                    <option value="github">Github</option>
+                    <option value="other">Other</option>
+                </b-select>
+            </b-field>
+    
+            <b-field label :type="{'is-danger': errors.has('flag-terms')}" :message="{'Please check this box to proceed' : errors.firstByRule('flag-terms', 'required')}">
+                <b-checkbox v-model="flagTerms" name="flag-terms" v-validate="'required:false'">I agree to the terms and conditions</b-checkbox>
+            </b-field>
+     -->
+            <button type="submit" class="button is-primary">Submit</button>
+        </form>
     </v-container>
 </template>
+
 <script>
 export default {
-  data() {
+    data() {
         return {
-            itemList: {
-                title: "지금 당신의 관심사를 검색하세요",
-                info: "당신의 서비스, 브랜드, 경쟁사등 다양한 소식을 카카오톡으로 쉽게 전달해드립니다.",
-                cntInfoList: [{
-                        title: "전달된 소식",
-                        count: 123456
-                    },
-                    {
-                        title: "관심 키워드",
-                        count: 4321
-                    },
-                    {
-                        title: "사용자 수",
-                        count: 567
-                    }
-                ]
-            }
+            firstname: null,
+            lastname: null,
+            age: null,
+            username: null,
+            password: null,
+            confirmPassword: null,
+            gender: null,
+            question: null,
+            flagTerms: false
         };
     },
     methods: {
-        getCount(count) {
-            return count.toLocaleString();
-        }
-    },
-    computed: {
-        isColumnWhenXs() {
-            const bindText = {};
+        validateBeforeSubmit() {
+            this.$validator.validateAll().then(result => {
+                if (result) {
+                    // this.$toast.open({
+                    //     message: "Form is valid!",
+                    //     type: "is-success",
+                    //     position: "is-bottom"
+                    // });
 
-            if (this.$vuetify.breakpoint.xs) {
-                bindText.column = true;
-            }
-
-            return bindText;
-        },
-        isSizePc() {
-            return !this.$vuetify.breakpoint.xs;
+                    // this.$showToast("Form is valid!")
+                    this.$toasted.show("Form is valid!");
+                }else {
+                    this.$showToast("Form is not valid! Please check the fields.")
+                }
+            });
         }
     }
 };
 </script>
+
 <style lang="scss" scoped>
-.home {
-  padding: 60px 0;
-}
-.title {
-  font-size: 36px !important;
-  font-weight: bold;
-  color: $charcoal-grey;
-}
-
-.sub-title {
-  color: $charcoal-grey;
-  font-size: 16px;
-}
-
-.Normal-form {
-  display: inline-block;
-  vertical-align: middle;
-  width: 330px;
-  height: 50px;
-  border-radius: 4px;
-  border: solid 1px #dbdbdb;
-  background-color: white;
-}
-
-.Button-solid {
-  width: 120px;
-  height: 50px;
-  border-radius: 4px;
-  background-color: $greenblue;
-  font-size: 16px;
-  color: white;
+.test {
+    width: $desktop-width;
+    margin: auto;
+    padding: 30px;
 }
 </style>
