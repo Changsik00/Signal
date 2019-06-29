@@ -2,6 +2,18 @@ import Vue from "vue";
 import Vuex from "vuex";
 import VueAxios from "vue-axios";
 import axios from "axios";
+import firebase from "firebase";
+Vue.config.productionTip = false;
+var firebaseConfig = {
+  apiKey: "AIzaSyCo8MlwzJ_FMuWCbhhhaHpaGluLfX7hTak",
+  authDomain: "signal-97eaf.firebaseapp.com",
+  databaseURL: "https://signal-97eaf.firebaseio.com",
+  projectId: "signal-97eaf",
+  storageBucket: "signal-97eaf.appspot.com",
+  messagingSenderId: "493631048995",
+  appId: "1:493631048995:web:5a51cbfc53a696cb"
+};
+firebase.initializeApp(firebaseConfig);
 
 Vue.use(Vuex);
 Vue.use(VueAxios, axios);
