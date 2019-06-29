@@ -13,10 +13,10 @@
           <v-spacer></v-spacer>
         </v-toolbar>
         <v-layout justify-center>
-          <v-btn @click="authenticate('github')">auth Github</v-btn>
           <v-btn @click="authenticate('facebook')">auth Facebook</v-btn>
-          <v-btn @click="authenticate('google')">auth Google</v-btn>
           <v-btn @click="authenticate('twitter')">auth Twitter</v-btn>
+          <v-btn @click="authenticate('google')">auth Google</v-btn>
+          <v-btn @click="authenticate('instagram')">auth Instagram</v-btn>
         </v-layout>
         <div class="sns-result">
           <div>
@@ -77,7 +77,6 @@ export default {
         .signInWithPopup(provider)
         .then(result => {
           var user = result.user;
-          console.log("#@# success", result);
           this.snsResult = result;
           this.accessToken = result.credential.accessToken;
         })
