@@ -22,7 +22,7 @@
           <div>
             <strong>
               AccessToken :
-              <br>
+              <br />
             </strong>
             {{accessToken}}
           </div>
@@ -30,7 +30,7 @@
           <div>
             <strong>
               Json :
-              <br>
+              <br />
             </strong>
             {{snsResult}}
           </div>
@@ -67,6 +67,10 @@ export default {
 
         case "twitter":
           provider = new firebase.auth.TwitterAuthProvider();
+          break;
+
+        case "google":
+          provider = new firebase.auth.GoogleAuthProvider();
           break;
       }
 
