@@ -14,7 +14,7 @@
         style="width: 300px; margin: 100px auto;"
       >
         <h3 class="title" style="text-align: center">한 계정으로 모든 서비스 액세스</h3>
-        <form class="mt30" @submit.prevent="signInWithEmailAndPassword">
+        <form class="mt30" @submit.prevent="authenticateEmail">
           <b-field
             label="Email"
             :type="{'is-danger': errors.has('email')}"
@@ -49,7 +49,7 @@
         </div>
       </v-layout>
       <v-layout v-if="showSignUp" justify-center column style="width: 300px; margin:50px auto;">
-        <div class="login-link" @click="showSignUp = false">< 로그인으로 이동</div>
+        <div class="login-link" @click="showSignUp = false">&lt; 로그인으로 이동</div>
         <form class="mt50" @submit.prevent="signUp">
           <b-field
             label="Email"
@@ -101,7 +101,7 @@
         column
         style="width: 300px; margin:50px auto;"
       >
-        <div class="login-link" @click="showFindPassword = false">< 로그인으로 이동</div>
+        <div class="login-link" @click="showFindPassword = false">&lt; 로그인으로 이동</div>
         <h3 class="mt30">
           등록된 이메일로 패스워드 변경
           <br />메일을 요청할 수 있습니다.
@@ -122,6 +122,7 @@
 </template>
 <script>
 import firebase from "firebase";
+import { parse } from "path";
 export default {
   data() {
     return {
@@ -148,18 +149,6 @@ export default {
     hideDialog() {
       this.dialog = false;
     },
-    createUser() {
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then(success => {
-          console.log("#@# success", success.user.email);
-        })
-        .catch(error => {
-          console.log("#@# error", error);
-          this.$showToast(error.code + "<br>" + error.message);
-        });
-    },
     sendResetPassword() {
       firebase
         .auth()
@@ -171,7 +160,18 @@ export default {
     authenticateEmail() {
       firebase
         .auth()
-        .signInWithEmailAndPassword(email, password)
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(success => {
+          // this.$store.dispatch("login" , {email: this.email});
+          const params = {
+            email: "eve.holt@reqres.in",
+            password: "cityslicka"
+          };
+          this.$store.dispatch("login", params).then(() => {
+            // TODO login 성공체크
+            this.$router.replace("home");
+          });
+        })
         .catch(error => {
           this.$showToast(error.code + "<br>" + error.message);
         });
@@ -219,40 +219,26 @@ export default {
           console.log("#@# error", error);
         });
     },
-    createUserWithEmailAndPassword() {
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(this.email, this.password)
-        .then(
-          result => {
-            console.log("#@# result", result);
-            this.$router.replace("home");
-          },
-          err => {
-            console.log("#@# err", err);
-            this.$showToast("Error : " + err.message);
-          }
-        )
-        .catch(err => {
-          console.log("#@# err", err);
-          this.$showToast("Error : " + err.message);
-        });
-    },
-    signInWithEmailAndPassword() {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then(user => {
-          this.$router.replace("home");
-        })
-        .catch(err => {
-          this.$showToast("Error : " + err.message);
-        });
-    },
     signUp() {
       this.$validator.validateAll().then(result => {
         if (result) {
-          this.createUserWithEmailAndPassword();
+          firebase
+            .auth()
+            .createUserWithEmailAndPassword(this.email, this.password)
+            .then(
+              result => {
+                console.log("#@# result", result);
+                this.$router.replace("home");
+              },
+              err => {
+                console.log("#@# err", err);
+                this.$showToast("Error : " + err.message);
+              }
+            )
+            .catch(err => {
+              console.log("#@# err", err);
+              this.$showToast("Error : " + err.message);
+            });
         } else {
           this.$showToast("필수 항목을 확인 해 주세요!");
         }
