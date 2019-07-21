@@ -1,3 +1,4 @@
+import "babel-polyfill";
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
@@ -5,11 +6,6 @@ import store from "./store";
 import Toasted from "vue-toasted";
 import "./plugins/vuetify";
 import "./plugins/my";
-import "babel-polyfill";
-
-// css
-import "roboto-fontface/css/roboto/roboto-fontface.css";
-import "material-design-icons-iconfont/dist/material-design-icons.css";
 
 // https://github.com/shakee93/vue-toasted
 Vue.use(Toasted, {

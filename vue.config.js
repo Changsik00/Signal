@@ -3,10 +3,7 @@
 const BundleTracker = require("webpack-bundle-tracker");
 
 module.exports = {
-  publicPath:
-    process.env.NODE_ENV === "production"
-      ? "static/assets"
-      : "/",
+  publicPath: process.env.NODE_ENV === "production" ? "static/assets" : "/",
   outputDir: "./dist/assets",
   chainWebpack: config => {
     config.module.rules.delete("eslint");

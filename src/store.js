@@ -3,7 +3,6 @@ import Vuex from "vuex";
 import VueAxios from "vue-axios";
 import axios from "axios";
 import firebase from "firebase";
-Vue.config.productionTip = false;
 var firebaseConfig = {
   apiKey: "AIzaSyCo8MlwzJ_FMuWCbhhhaHpaGluLfX7hTak",
   authDomain: "signal-97eaf.firebaseapp.com",

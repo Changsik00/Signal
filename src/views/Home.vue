@@ -5,7 +5,7 @@
                 <b-input v-model="firstname" name="firstname" v-validate="'required'" />
             </b-field>
     
-            <!-- <b-field label="Last name" :type="{'is-danger': errors.has('lastname')}" :message="errors.first('lastname')">
+            <b-field label="Last name" :type="{'is-danger': errors.has('lastname')}" :message="errors.first('lastname')">
                 <b-input v-model="lastname" name="lastname" v-validate="'required'" />
             </b-field>
     
@@ -44,7 +44,7 @@
             <b-field label :type="{'is-danger': errors.has('flag-terms')}" :message="{'Please check this box to proceed' : errors.firstByRule('flag-terms', 'required')}">
                 <b-checkbox v-model="flagTerms" name="flag-terms" v-validate="'required:false'">I agree to the terms and conditions</b-checkbox>
             </b-field>
-     -->
+    
             <button type="submit" class="button is-primary">Submit</button>
         </form>
     </v-container>
