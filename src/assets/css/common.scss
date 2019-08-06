@@ -39,8 +39,16 @@
     }
 }
 
+.pointer {
+    cursor: pointer;
+}
+
 .line {
     border-top: 1px solid #d0d0d0;
+}
+
+.m20 {
+    margin: 20px;
 }
 
 .mt10 {
@@ -65,4 +73,18 @@
 
 .ml10 {
     margin-left: 10px
+}
+
+.ml20 {
+    margin-left: 20px
+}
+
+.ml30 {
+    margin-left: 30px
+}
+
+.container {
+    width: $desktop-width;
+    margin: auto;
+    padding: 30px;
 }

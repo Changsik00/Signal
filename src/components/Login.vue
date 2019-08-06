@@ -13,7 +13,6 @@
         column
         style="width: 300px; margin: 100px auto;"
       >
-        <h3 class="title" style="text-align: center">한 계정으로 모든 서비스 액세스</h3>
         <form class="mt30" @submit.prevent="authenticateEmail">
           <b-field
             label="Email"
@@ -44,8 +43,10 @@
         </v-layout>
 
         <div class="mt30 line"></div>
-        <div class="mt30">
-          <div @click="authenticateSNS('google')" class="mt30 google-login"></div>
+        <div style="display: flex; justify-content: space-between; padding: 30px;">
+          <img class="icon-sns-login" @click="authenticateSNS('facebook')"  src="../assets/img/common/facebook-on.svg">
+          <img class="icon-sns-login" @click="authenticateSNS('twitter')"  src="../assets/img/common/twitter-on.svg">
+          <img class="icon-sns-login" @click="authenticateSNS('google')"  src="../assets/img/common/google.svg">
         </div>
       </v-layout>
       <v-layout v-if="showSignUp" justify-center column style="width: 300px; margin:50px auto;">
@@ -91,8 +92,10 @@
         </form>
 
         <div class="mt30 line"></div>
-        <div class="mt30">
-          <div @click="authenticateSNS('google')" class="mt30 google-login"></div>
+        <div style="display: flex; justify-content: space-between; padding: 30px;">
+          <img class="icon-sns-login" @click="authenticateSNS('facebook')"  src="../assets/img/common/facebook-on.svg">
+          <img class="icon-sns-login" @click="authenticateSNS('twitter')"  src="../assets/img/common/twitter-on.svg">
+          <img class="icon-sns-login" @click="authenticateSNS('google')"  src="../assets/img/common/google.svg">
         </div>
       </v-layout>
       <v-layout
@@ -122,7 +125,6 @@
 </template>
 <script>
 import firebase from "firebase";
-import { parse } from "path";
 export default {
   data() {
     return {
@@ -168,8 +170,11 @@ export default {
             password: "cityslicka"
           };
           this.$store.dispatch("login", params).then(() => {
-            // TODO login 성공체크
-            this.$router.replace("home");
+            if(this.$store.getters.isLogin != null) {
+              this.$router.replace("home");
+            }else {
+              this.$showToast("#### login error");     
+            }
           });
         })
         .catch(error => {
@@ -185,7 +190,6 @@ export default {
       switch (sns) {
         case "facebook":
           provider = new firebase.auth.FacebookAuthProvider();
-          provider.addScope("manage_pages,publish_pages,pages_show_list");
           break;
 
         case "twitter":
@@ -210,6 +214,8 @@ export default {
           var user = result.user;
           this.snsResult = result;
           this.accessToken = result.credential.accessToken;
+
+          console.log("#@# result" , result)
         })
         .catch(error => {
           var errorCode = error.code;
@@ -247,25 +253,22 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .sns-result {
   & > div {
     margin: 50px;
   }
 }
 
-.google-login {
-  display: inline-block;
-  margin: auto;
-  width: 300px;
-  height: 72px;
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-image: url(../assets/img/login/btn_google_signin_light_normal_web@2x.png);
+.icon-sns-login {
   cursor: pointer;
-  &:hover {
-    background-image: url(../assets/img/login/btn_google_signin_light_pressed_web@2x.png);
-  }
+  width: 50px;
+  height: 50px;
+  // background-image: url(../assets/img/login/btn_google_signin_light_normal_web@2x.png);
+  // cursor: pointer;
+  // &:hover {
+  //   background-image: url(../assets/img/login/btn_google_signin_light_pressed_web@2x.png);
+  // }
 }
 
 .login-link {
