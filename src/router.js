@@ -2,7 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 
 const Home = () => import(/* webpackChunkName: "home" */ "./views/Home.vue");
-const About = () => import(/* webpackChunkName: "about" */ "./views/About.vue");
+const Main = () => import(/* webpackChunkName: "main" */ "./views/Main.vue");
 
 Vue.use(Router);
 
@@ -15,9 +15,9 @@ const router = new Router({
       component: Home
     },
     {
-      path: "/about",
-      name: "about",
-      component: About
+      path: "/main",
+      name: "Main",
+      component: Main
     },
     {
       path: "*",

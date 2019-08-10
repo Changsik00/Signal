@@ -3,7 +3,8 @@
     <v-toolbar class="header">
       <img src="../assets/img/common/logo-signal.svg"/>
       <v-spacer class="ml30">
-         <v-btn class="text-capitalize" outline round color="primary" @click="connections">Connections</v-btn>
+         <v-btn class="text-capitalize top-button" outline round color="primary" @click="connections">Connections</v-btn>
+         <v-btn class="text-capitalize top-button" :class="{'active' : index == 0}" exact outline round color="primary" @click="connections">Monitor</v-btn>
       </v-spacer>
       <v-btn v-if="!$store.getters.isLogin" flat round color="info" @click="login">로그인</v-btn>
       <v-btn v-else flat round color="primary" @click="logout">로그아웃</v-btn>
@@ -16,11 +17,20 @@
 <script>
 import Login from "./Login";
 import Connections from "./Connections";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   components: {
     Login,
     Connections
+  },
+  computed: {
+    ...mapGetters(["isLogin"]),
+  },
+  data() {
+    return {
+      index: 0
+    };
   },
   methods: {
     login() {
@@ -51,5 +61,11 @@ export default {
 .header {
   height: 62px;
   padding: 0 20px;
+}
+
+.top-button {
+  &.active {
+    border: 3px solid  cadetblue !important;;
+  }
 }
 </style>

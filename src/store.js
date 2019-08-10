@@ -3,6 +3,8 @@ import Vuex from "vuex";
 import VueAxios from "vue-axios";
 import axios from "axios";
 import firebase from "firebase";
+import router from "./router";
+
 var firebaseConfig = {
   apiKey: "AIzaSyCo8MlwzJ_FMuWCbhhhaHpaGluLfX7hTak",
   authDomain: "signal-97eaf.firebaseapp.com",
@@ -64,6 +66,7 @@ const store = new Vuex.Store({
       Vue.axios.post(loginApi, params).then(response => {
         console.log("#@# login", response);
         commit("setToken", "asdfasf");
+        router.push({ name: "main" });
       });
     },
     showLoading({ commit, state }) {
