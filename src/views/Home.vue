@@ -37,7 +37,7 @@
       <v-layout v-for="(item, index) in this.itemList" :key="index">
         <div class="home-layer1">
           <div class="item">
-            <div style="font-weight: bold; font-size: 20px; margin-bottom: 20px;">{{item.title}}</div>
+            <div style="font-weight: bold; font-size: 20px; color: #393f45">{{item.title}}</div>
             <div>{{item.info}}</div>
           </div>
           <div class="item">
@@ -51,15 +51,44 @@
         <div class="home-layer1">
           <div
             class="item"
-            style="font-weight: bold; font-size: 20px; margin-bottom: 20px;"
+            style="font-size: 24px; font-weight: 300; color: #393f45"
           >이미 23,444 파트너사가 시그널을 이용하여 원하는 관심사를 받아보고 계십니다.</div>
           <div class="item">
-            <v-avatar class="circle-size" v-for="(url, index) in imgList" :key="index">
-              <img :src="url" />
-            </v-avatar>
+            <div style="text-align: center">
+              <v-avatar class="circle-size" v-for="(url, index) in imgList1" :key="index">
+                <img :src="url" />
+              </v-avatar>
+            </div>
+            <div style="text-align: center">
+              <v-avatar class="circle-size" v-for="(url, index) in imgList2" :key="index">
+                <img :src="url" />
+              </v-avatar>
+            </div>
           </div>
         </div>
       </v-layout>
+    </div>
+    <div class="home-layer1 home-layer-margin bottom">
+      <v-carousel hide-delimiters light height="200" style="box-shadow:none; padding: 0 20px;">
+        <v-carousel-item v-for="(img, i) in imgList3" :key="i">
+          <v-layout align-center justify-center fill-height>
+            <div style="text-align: center; flex-grow: 1;">
+              <div>EASY {{i}}</div>
+              <div>검색은 간편! 정보는 정확!</div>
+              <div>
+                키워드만 입력해서 검색하면 소셜미디어상에
+                <br />다양한 정보를 한꺼번에 받아볼 수 있어요!
+              </div>
+              <div>줌마렐라 이기원 대표</div>
+            </div>
+            <div style="text-align: center; flex-grow: 1;">
+              <v-avatar>
+                <img :src="img" />
+              </v-avatar>
+            </div>
+          </v-layout>
+        </v-carousel-item>
+      </v-carousel>
     </div>
   </section>
 </template>
@@ -89,13 +118,21 @@ export default {
           imgUrl: "https://t1.kakaocdn.net/kakaocorp/admin/main-banner/1652"
         }
       ],
-      imgList: [
+      imgList1: [
         "https://picsum.photos/510/300?image=1",
         "https://picsum.photos/510/300?image=10",
-        "https://picsum.photos/510/300?image=20",
+        "https://picsum.photos/510/300?image=20"
+      ],
+      imgList2: [
         "https://picsum.photos/510/300?image=30",
         "https://picsum.photos/510/300?image=40",
         "https://picsum.photos/510/300?image=50"
+      ],
+      imgList3: [
+        "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
+        "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
+        "https://cdn.vuetifyjs.com/images/carousel/bird.jpg",
+        "https://cdn.vuetifyjs.com/images/carousel/planet.jpg"
       ]
     };
   },
@@ -120,7 +157,15 @@ export default {
   @include tablet {
     margin-top: 100px;
   }
+
+  &.bottom {
+    margin-bottom: 60px;
+    @include tablet {
+      margin-bottom: 100px;
+    }
+  }
 }
+
 .home-number-margin {
   margin: 0 30px;
   @include tablet {
@@ -128,7 +173,7 @@ export default {
   }
 }
 .home-layer1 {
-  width: $desktop-width;
+  max-width: $desktop-width;
   margin: auto;
   padding: 20px;
   display: flex;
@@ -155,10 +200,10 @@ export default {
   @include tablet {
     width: 80px !important;
     height: 80px !important;
-    margin: 10px;  
+    margin: 10px;
   }
   @include desktop {
-    margin: 10px 20px;  
+    margin: 10px 20px;
   }
 }
 </style>
