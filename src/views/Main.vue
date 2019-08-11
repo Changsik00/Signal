@@ -42,13 +42,12 @@ export default {
     return {};
   },
   methods: {
-    ...mapMutations(["showMonitorSlideMenu", "hideMonitorSlideMenu"])
+    ...mapMutations(["hideMonitorSlideMenu"])
   },
   computed: {
     ...mapGetters(["monitorSlideMenu"])
   },
   created() {
-    console.log("#@# monitorSlideMenu", this.monitorSlideMenu);
   }
 };
 </script>
