@@ -62,7 +62,7 @@ const store = new Vuex.Store({
   },
   actions: {
     login({ commit }, params) {
-      const loginApi = "https://reqres.in//api/login";
+      const loginApi = "https://reqres.in/api/login";
       Vue.axios.post(loginApi, params).then(response => {
         console.log("#@# login", response);
         commit("setToken", "asdfasf");

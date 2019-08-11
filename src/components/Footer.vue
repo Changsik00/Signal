@@ -10,7 +10,7 @@
 .footer {
   width: 100%;
   background-color: $charcoal-grey;
-  padding: 30px;
+  padding: 30px 50px;
   color: $ice-blue;
   display: flex;
   align-items: center;

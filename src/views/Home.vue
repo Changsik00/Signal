@@ -174,6 +174,7 @@ export default {
 }
 .home-layer1 {
   max-width: $desktop-width;
+  width: 100%;
   margin: auto;
   padding: 20px;
   display: flex;

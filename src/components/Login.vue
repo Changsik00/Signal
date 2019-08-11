@@ -44,9 +44,21 @@
 
         <div class="mt30 line"></div>
         <div style="display: flex; justify-content: space-between; padding: 30px;">
-          <img class="icon-sns-login" @click="authenticateSNS('facebook')"  src="../assets/img/common/facebook-on.svg">
-          <img class="icon-sns-login" @click="authenticateSNS('twitter')"  src="../assets/img/common/twitter-on.svg">
-          <img class="icon-sns-login" @click="authenticateSNS('google')"  src="../assets/img/common/google.svg">
+          <img
+            class="icon-sns-login"
+            @click="authenticateSNS('facebook')"
+            src="../assets/img/common/facebook-on.svg"
+          />
+          <img
+            class="icon-sns-login"
+            @click="authenticateSNS('twitter')"
+            src="../assets/img/common/twitter-on.svg"
+          />
+          <img
+            class="icon-sns-login"
+            @click="authenticateSNS('google')"
+            src="../assets/img/common/google.svg"
+          />
         </div>
       </v-layout>
       <v-layout v-if="showSignUp" justify-center column style="width: 300px; margin:50px auto;">
@@ -93,9 +105,21 @@
 
         <div class="mt30 line"></div>
         <div style="display: flex; justify-content: space-between; padding: 30px;">
-          <img class="icon-sns-login" @click="authenticateSNS('facebook')"  src="../assets/img/common/facebook-on.svg">
-          <img class="icon-sns-login" @click="authenticateSNS('twitter')"  src="../assets/img/common/twitter-on.svg">
-          <img class="icon-sns-login" @click="authenticateSNS('google')"  src="../assets/img/common/google.svg">
+          <img
+            class="icon-sns-login"
+            @click="authenticateSNS('facebook')"
+            src="../assets/img/common/facebook-on.svg"
+          />
+          <img
+            class="icon-sns-login"
+            @click="authenticateSNS('twitter')"
+            src="../assets/img/common/twitter-on.svg"
+          />
+          <img
+            class="icon-sns-login"
+            @click="authenticateSNS('google')"
+            src="../assets/img/common/google.svg"
+          />
         </div>
       </v-layout>
       <v-layout
@@ -170,10 +194,11 @@ export default {
             password: "cityslicka"
           };
           this.$store.dispatch("login", params).then(() => {
-            if(this.$store.getters.isLogin != null) {
-              this.$router.replace("home");
-            }else {
-              this.$showToast("#### login error");     
+            if (this.$store.getters.isLogin) {
+              console.log("#@# loginSuccess")
+              this.dialog = false;
+            } else {
+              this.$showToast("#### login error");
             }
           });
         })
@@ -215,7 +240,13 @@ export default {
           this.snsResult = result;
           this.accessToken = result.credential.accessToken;
 
-          console.log("#@# result" , result)
+          console.log("#@# result", result);
+
+          const params = {
+            email: "eve.holt@reqres.in",
+            password: "cityslicka"
+          };
+          this.$store.dispatch("login", params);
         })
         .catch(error => {
           var errorCode = error.code;
