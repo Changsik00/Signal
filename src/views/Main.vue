@@ -1,7 +1,7 @@
 <template>
   <section>
-    <v-layout>
-      columns
+    <v-layout class="main-layer">
+      <NewsColumn :keyword="keyword" v-for="keyword in keywords" />
     </v-layout>
 
     <v-navigation-drawer v-model="monitorSlideMenu" absolute temporary right width="320">
@@ -18,18 +18,18 @@
       </div>
       <div class="side-menu">
         <div class="title">facebook</div>
-        <div class="pointer">Visitor Posts</div>
-        <div class="pointer">Page Mentions</div>
-        <div class="pointer">Page Search</div>
+        <div class="pointer" @click="facebook('VisitorPosts')">Visitor Posts</div>
+        <div class="pointer" @click="facebook('PageMentions')">Page Mentions</div>
+        <div class="pointer" @click="facebook('PageSearch')">Page Search</div>
       </div>
       <div class="side-menu">
         <div class="title">Twitter</div>
-        <div class="pointer">Mentions</div>
-        <div class="pointer">Timeline</div>
-        <div class="pointer">Likes</div>
-        <div class="pointer">Keyword Search</div>
-        <div class="pointer">User Search</div>
-        <div class="pointer">Lists</div>
+        <div class="pointer" @click="twitter('Mentions')">Mentions</div>
+        <div class="pointer" @click="twitter('Timeline')">Timeline</div>
+        <div class="pointer" @click="twitter('Likes')">Likes</div>
+        <div class="pointer" @click="twitter('KeywordSearch')">Keyword Search</div>
+        <div class="pointer" @click="twitter('UserSearch')">User Search</div>
+        <div class="pointer" @click="twitter('Lists')">Lists</div>
       </div>
     </v-navigation-drawer>
   </section>
@@ -37,18 +37,61 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
+import NewsColumn from "../components/NewsColumn";
+
 export default {
+  components: {
+    NewsColumn
+  },
   data() {
-    return {};
+    return {
+      ConnectionState : {
+        facebook : false,
+        twitter : false,
+      }
+    };
   },
   methods: {
-    ...mapMutations(["hideMonitorSlideMenu"])
+    ...mapMutations(["hideMonitorSlideMenu"]),
+    facebook(type) {
+      if(!this.ConnectionState.facebook) {
+        this.$showToast("facebook 연결이 안되어 있습니다.");
+        return; 
+      }
+      switch (type) {
+        case "VisitorPosts":
+          break;
+        case "PageMentions":
+          break;
+        case "PageSearch":
+          break;
+      }
+    },
+    twitter(type) {
+      if(!this.ConnectionState.twitter) {
+        this.$showToast("twitter 연결이 안되어 있습니다.");
+        return; 
+      }
+      switch (type) {
+        case "Mentions":
+          break;
+        case "Timeline":
+          break;
+        case "Likes":
+          break;
+        case "KeywordSearch":
+          break;
+        case "UserSearch":
+          break;
+        case "Lists":
+          break;
+      }
+    }
   },
   computed: {
     ...mapGetters(["monitorSlideMenu"])
   },
-  created() {
-  }
+  created() {}
 };
 </script>
 
@@ -59,13 +102,20 @@ export default {
     margin: 0 90px;
   }
 }
+
 .main-layer {
-  max-width: $desktop-width;
   margin: auto;
   padding: 20px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 0;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  background-color: #393f45;
 }
 
 .side-menu {
