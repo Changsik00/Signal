@@ -1,11 +1,14 @@
 <template>
   <section>
-    <v-btn color="pink" dark @click.stop="drawer = !drawer">Toggle</v-btn>
-    <v-navigation-drawer v-model="drawer" absolute temporary right width="320">
+    <v-layout>
+      columns
+    </v-layout>
+
+    <v-navigation-drawer v-model="monitorSlideMenu" absolute temporary right width="320">
       <v-layout align-center row style="padding: 10px 0; background-color: whitesmoke;">
         <div style="font-size: 20px; font-weight: bold; margin-left: 20px;">Select a column type</div>
         <v-spacer></v-spacer>
-        <v-btn icon @click="drawer = false">
+        <v-btn icon @click="hideMonitorSlideMenu">
           <v-icon>close</v-icon>
         </v-btn>
       </v-layout>
@@ -33,18 +36,20 @@
 </template>
 
 <script>
+import { mapGetters, mapMutations } from "vuex";
 export default {
   data() {
-    return {
-      drawer: false,
-      items: [
-        { title: "Home", icon: "dashboard" },
-        { title: "About", icon: "question_answer" }
-      ]
-    };
+    return {};
   },
-  methods: {},
-  computed: {}
+  methods: {
+    ...mapMutations(["showMonitorSlideMenu", "hideMonitorSlideMenu"])
+  },
+  computed: {
+    ...mapGetters(["monitorSlideMenu"])
+  },
+  created() {
+    console.log("#@# monitorSlideMenu", this.monitorSlideMenu);
+  }
 };
 </script>
 
@@ -71,7 +76,7 @@ export default {
   padding-top: 20px;
   border-bottom: 1px solid #dedede;
 
-  &>.title {
+  & > .title {
     margin: 0;
     padding: 0 20px;
     margin-bottom: 10px;

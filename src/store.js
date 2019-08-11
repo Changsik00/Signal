@@ -42,11 +42,15 @@ axios.interceptors.response.use(
 const store = new Vuex.Store({
   state: {
     loading: false,
-    userToken: null
+    userToken: null,
+    monitorSlideMenu: false
   },
   getters: {
     isLogin(state) {
       return state.userToken != null;
+    },
+    monitorSlideMenu(state) {
+      return state.monitorSlideMenu;
     }
   },
   mutations: {
@@ -58,6 +62,12 @@ const store = new Vuex.Store({
     },
     setLoading(state, visible) {
       state.loading = visible;
+    },
+    showMonitorSlideMenu(state) {
+      state.monitorSlideMenu = true;
+    },
+    hideMonitorSlideMenu(state) {
+      state.monitorSlideMenu = false;
     }
   },
   actions: {

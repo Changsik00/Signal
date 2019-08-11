@@ -17,7 +17,7 @@
           outline
           round
           color="primary"
-          @click="connections"
+          @click="monitor"
         >Monitor</v-btn>
       </v-spacer>
       <v-btn v-if="!$store.getters.isLogin" flat round color="info" @click="login">로그인</v-btn>
@@ -31,7 +31,7 @@
 <script>
 import Login from "./Login";
 import Connections from "./Connections";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   components: {
@@ -39,12 +39,12 @@ export default {
     Connections
   },
   computed: {
-    ...mapGetters(["isLogin"])
+    ...mapGetters(["isLogin", "monitorSlideMenu"])
   },
   watch: {
     isLogin(newValue, oldValue) {
       if (!newValue) {
-        console.log("#@# isLogin" , newValue , oldValue);
+        console.log("#@# isLogin", newValue, oldValue);
         this.hideDialog();
       }
       return newValue;
@@ -56,6 +56,7 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(["showMonitorSlideMenu", "hideMonitorSlideMenu"]),
     login() {
       this.$refs.login.showDialog();
     },
@@ -64,6 +65,14 @@ export default {
     },
     connections() {
       this.$refs.connections.showDialog();
+    },
+    monitor() {
+      console.log("#@# monitor" , this.monitorSlideMenu)
+      if (this.monitorSlideMenu) {
+        this.hideMonitorSlideMenu();
+      } else {
+        this.showMonitorSlideMenu();
+      }
     },
     logout() {
       this.$store.commit("logout");
