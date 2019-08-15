@@ -166,6 +166,15 @@ export default {
   created() {
     firebase.auth().useDeviceLanguage();
   },
+  mounted() {
+    this.$store.subscribe((mutation, state) => {
+      switch(mutation.type) {
+        case 'setToken':
+          this.dialog = this.isLogin;
+          break;
+      }
+    });
+  },
   methods: {
     showDialog() {
       this.dialog = true;

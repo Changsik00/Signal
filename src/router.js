@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-
+import store from "./store";
 const Home = () => import(/* webpackChunkName: "home" */ "./views/Home.vue");
 const Main = () => import(/* webpackChunkName: "main" */ "./views/Main.vue");
 
@@ -17,7 +17,14 @@ const router = new Router({
     {
       path: "/main",
       name: "main",
-      component: Main
+      component: Main,
+      beforeEnter: (to, from, next) => {
+        if (store.getters.isLogin) {
+          next();
+        } else {
+          next("/");
+        }
+      }
     },
     {
       path: "*",

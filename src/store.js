@@ -64,6 +64,7 @@ const store = new Vuex.Store({
     },
     logout(state) {
       state.userToken = null;
+      router.push({ name: "home" });
     },
     setLoading(state, visible) {
       state.loading = visible;

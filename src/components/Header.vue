@@ -3,24 +3,26 @@
     <v-toolbar class="header">
       <img src="../assets/img/common/logo-signal.svg" />
       <v-spacer class="ml30">
-        <v-btn
-          class="text-capitalize top-button"
-          outline
-          round
-          color="primary"
-          @click="connections"
-        >Connections</v-btn>
-        <v-btn
-          class="text-capitalize top-button"
-          :class="{'active' : index == 0}"
-          exact
-          outline
-          round
-          color="primary"
-          @click="monitor"
-        >Monitor</v-btn>
+        <div v-if="isLogin">
+          <v-btn
+            class="text-capitalize top-button"
+            outline
+            round
+            color="primary"
+            @click="connections"
+          >Connections</v-btn>
+          <v-btn
+            class="text-capitalize top-button"
+            :class="{'active' : index == 0}"
+            exact
+            outline
+            round
+            color="primary"
+            @click="monitor"
+          >Monitor</v-btn>
+        </div>
       </v-spacer>
-      <v-btn v-if="!$store.getters.isLogin" flat round color="info" @click="login">로그인</v-btn>
+      <v-btn v-if="!isLogin" flat round color="info" @click="login">로그인</v-btn>
       <v-btn v-else flat round color="primary" @click="logout">로그아웃</v-btn>
     </v-toolbar>
     <Login ref="login" />
@@ -54,6 +56,11 @@ export default {
     return {
       index: 0
     };
+  },
+  mounted() {
+    this.$store.subscribe((mutation, state) => {
+      console.log("#@# subscribe", mutation.type);
+    });
   },
   methods: {
     ...mapMutations(["showMonitorSlideMenu"]),
