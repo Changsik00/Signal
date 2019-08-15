@@ -22,6 +22,9 @@ import Buefy from "buefy";
 import "buefy/dist/buefy.css";
 Vue.use(Buefy);
 
+import VueObserveVisibility from "vue-observe-visibility";
+Vue.use(VueObserveVisibility);
+
 // Loading 전역으로 component 등록
 // https://vuejs.org/v2/guide/components-registration.html
 const Loading = () =>

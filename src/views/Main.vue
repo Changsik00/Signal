@@ -1,10 +1,16 @@
 <template>
   <section>
     <v-layout class="main-layer">
-      <NewsColumn :keyword="keyword" v-for="keyword in keywords" />
+      <FeedColumn :keyword="keyword" v-for="keyword in keywords" :key="keyword" />
     </v-layout>
 
-    <v-navigation-drawer v-model="monitorSlideMenu" absolute temporary right width="320">
+    <v-navigation-drawer
+      v-model="$store.state.monitorSlideMenu"
+      absolute
+      temporary
+      right
+      width="320"
+    >
       <v-layout align-center row style="padding: 10px 0; background-color: whitesmoke;">
         <div style="font-size: 20px; font-weight: bold; margin-left: 20px;">Select a column type</div>
         <v-spacer></v-spacer>
@@ -37,26 +43,27 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
-import NewsColumn from "../components/NewsColumn";
+import FeedColumn from "../components/FeedColumn";
 
 export default {
   components: {
-    NewsColumn
+    FeedColumn
   },
   data() {
     return {
-      ConnectionState : {
-        facebook : false,
-        twitter : false,
-      }
+      ConnectionState: {
+        facebook: false,
+        twitter: false
+      },
+      keywords: ["bts", "no no japan"]
     };
   },
   methods: {
     ...mapMutations(["hideMonitorSlideMenu"]),
     facebook(type) {
-      if(!this.ConnectionState.facebook) {
+      if (!this.ConnectionState.facebook) {
         this.$showToast("facebook 연결이 안되어 있습니다.");
-        return; 
+        return;
       }
       switch (type) {
         case "VisitorPosts":
@@ -68,9 +75,9 @@ export default {
       }
     },
     twitter(type) {
-      if(!this.ConnectionState.twitter) {
+      if (!this.ConnectionState.twitter) {
         this.$showToast("twitter 연결이 안되어 있습니다.");
-        return; 
+        return;
       }
       switch (type) {
         case "Mentions":
@@ -96,13 +103,6 @@ export default {
 </script>
 
 <style lang="scss">
-.home-number-margin {
-  margin: 0 30px;
-  @include tablet {
-    margin: 0 90px;
-  }
-}
-
 .main-layer {
   margin: auto;
   padding: 20px;

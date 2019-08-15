@@ -5,12 +5,12 @@
       <span class="Text6-5 pl4">Today : {{this.todayCnt }}</span>
     </div>
     <div class="keywordListLayer">
-      <NewsCard
-        :item="news"
+      <FeedCard
+        :item="feed"
         :index="index"
-        :last="newsList.length"
+        :last="feedList.length"
         @detectLastPosition="detectLastPosition"
-        v-for="(news, index) in newsList"
+        v-for="(feed, index) in feedList"
         :key="index"
       />
     </div>
@@ -18,18 +18,15 @@
 </template>
 
 <script>
-import NewsCard from "./NewsCard";
-import { ScrollContainer, ScrollItem } from "vue-scrollmonitor";
+import FeedCard from "./FeedCard";
 export default {
   props: ["keyword"],
   components: {
-    NewsCard,
-    ScrollContainer,
-    ScrollItem
+    FeedCard,
   },
   data() {
     return {
-      newsList: [],
+      feedList: [],
       total: 0,
       todayCnt: 0,
       today: null,
@@ -39,18 +36,15 @@ export default {
     };
   },
   created() {
-    this.requestNews();
+    this.requestfeed();
     this.today = new Date();
   },
   methods: {
     isToday(date) {
-      console.log("#@# date", date);
       const d = new Date(date);
-      console.log("#@# d", d);
-      console.log("#@# today", this.today);
       return this.today.toDateString() == d.toDateString();
     },
-    requestNews() {
+    requestfeed() {
       if (!this.requestLock) {
         this.requestLock = true;
         this.$store.dispatch("showLoading");
@@ -62,13 +56,13 @@ export default {
             this.total = res.data.total;
             if (this.total > this.start) {
               res.data.items.forEach(item => {
-                this.newsList.push(item);
+                this.feedList.push(item);
                 if (this.isToday(item.pubDate)) {
                   this.todayCnt++;
                 }
               });
 
-              this.start = this.newsList.length + 1;
+              this.start = this.feedList.length + 1;
             }
             this.$store.dispatch("hideLoading");
             this.requestLock = false;
@@ -78,7 +72,7 @@ export default {
     },
     detectLastPosition() {
       if (this.total - this.start > this.offset) {
-        this.requestNews();
+        this.requestfeed();
       }
     }
   }

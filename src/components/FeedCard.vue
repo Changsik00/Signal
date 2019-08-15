@@ -5,8 +5,8 @@
       column
       style=" padding: 20px; background-color: white"
     >
-      <div class="news-title">
-        <img src="#" style="width:40px; height:40px;">
+      <div class="feed-title">
+        <img src="../assets/img/common/information.svg" style="width:30px; height:30px;">
         <div style="margin-left: 10px;">
           <div style="font-weight: bold;" v-html="item.title"></div>
           <div style="font-size: 14px; color: #9da6af">{{dateToFormat(item.pubDate)}}</div>
@@ -18,7 +18,7 @@
         <a @click="seeMore">See More</a>
       </div>
       <v-img
-        class="news-image"
+        class="feed-image"
         @click="seeMore"
         v-if="ogImage.length > 1"
         :aspect-ratio="2 / 1"
@@ -81,11 +81,11 @@ export default {
 </script>
 
 <style lang="scss">
-.news-title {
+.feed-title {
   display: flex;
 }
 
-.news-desc {
+.feed-desc {
   margin-top: 10px;
 }
 
@@ -94,7 +94,7 @@ export default {
   text-decoration: underline;
 }
 
-.news-image {
+.feed-image {
   margin-top: 10px;
   cursor: pointer;
   width: 100%;

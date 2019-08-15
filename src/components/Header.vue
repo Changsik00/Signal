@@ -56,7 +56,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["showMonitorSlideMenu", "hideMonitorSlideMenu"]),
+    ...mapMutations(["showMonitorSlideMenu"]),
     login() {
       this.$refs.login.showDialog();
     },
@@ -67,7 +67,6 @@ export default {
       this.$refs.connections.showDialog();
     },
     monitor() {
-      console.log("#@# monitor" , this.monitorSlideMenu)
       if (this.monitorSlideMenu) {
         this.hideMonitorSlideMenu();
       } else {

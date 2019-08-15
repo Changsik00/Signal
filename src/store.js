@@ -21,7 +21,11 @@ Vue.use(VueAxios, axios);
 
 // https://github.com/axios/axios
 axios.defaults.timeout = 3000;
-axios.defaults.baseURL = "https://reqres.in/api/";
+if (window.location.href.startsWith("http://localhost")) {
+  axios.defaults.baseURL = "https://test.signal.bz/api/";
+} else {
+  axios.defaults.baseURL = "/api/";
+}
 
 axios.interceptors.request.use(config => {
   store.dispatch("showLoading");
@@ -34,7 +38,8 @@ axios.interceptors.response.use(
     return response;
   },
   error => {
-    Vue.toasted.show("axios error");
+    // Vue.toasted.show("axios error");
+    console.log("#@# Axios Error", error);
     return Promise.reject(error.response);
   }
 );
