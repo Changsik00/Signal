@@ -12,31 +12,36 @@ const router = new Router({
     {
       path: "/",
       name: "home",
-      component: Home
+      component: Home,
+      beforeEnter: homeGuard
     },
     {
       path: "/main",
       name: "main",
       component: Main,
-      beforeEnter: (to, from, next) => {
-        if (store.getters.isLogin) {
-          next();
-        } else {
-          next("/");
-        }
-      }
+      beforeEnter: loginGuard
     },
     {
       path: "*",
-      component: Home
+      component: Home,
+      beforeEnter: homeGuard
     }
   ]
 });
+function homeGuard(to, from, next) {
+  if (store.getters.isLogin) {
+    next("/main");
+  } else {
+    next();
+  }
+}
 
-router.beforeResolve((to, from, next) => {
-  next();
-});
-
-router.afterEach((to, from) => {});
+function loginGuard(to, from, next) {
+  if (store.getters.isLogin) {
+    next();
+  } else {
+    next("/");
+  }
+}
 
 export default router;

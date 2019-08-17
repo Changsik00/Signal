@@ -20,12 +20,8 @@ Vue.use(Vuex);
 Vue.use(VueAxios, axios);
 
 // https://github.com/axios/axios
-axios.defaults.timeout = 3000;
-if (window.location.href.startsWith("http://localhost")) {
-  axios.defaults.baseURL = "https://test.signal.bz/api/";
-} else {
-  axios.defaults.baseURL = "/api/";
-}
+axios.defaults.timeout = 10000;
+axios.defaults.baseURL = "https://api.signal.bz/v1";
 
 axios.interceptors.request.use(config => {
   store.dispatch("showLoading");
@@ -47,12 +43,12 @@ axios.interceptors.response.use(
 const store = new Vuex.Store({
   state: {
     loading: false,
-    userToken: null,
+    userToken: localStorage.getItem("access_token"),
     monitorSlideMenu: false
   },
   getters: {
     isLogin(state) {
-      return state.userToken != null;
+      return state.userToken != null && state.userToken.length > 0;
     },
     monitorSlideMenu(state) {
       return state.monitorSlideMenu;
@@ -60,14 +56,17 @@ const store = new Vuex.Store({
   },
   mutations: {
     setToken(state, userToken) {
+      localStorage.setItem("access_token", userToken);
       state.userToken = userToken;
     },
     logout(state) {
       state.userToken = null;
+      localStorage.setItem("access_token", "");
       router.push({ name: "home" });
     },
     setLoading(state, visible) {
       state.loading = visible;
+      setTimeout(() => (state.loading = false), 10000);
     },
     showMonitorSlideMenu(state) {
       state.monitorSlideMenu = true;
@@ -78,18 +77,17 @@ const store = new Vuex.Store({
   },
   actions: {
     login({ commit }, params) {
-      const loginApi = "https://reqres.in/api/login";
+      const loginApi = "/firebase/auth/";
       Vue.axios.post(loginApi, params).then(response => {
-        console.log("#@# login", response);
-        commit("setToken", "asdfasf");
+        commit("setToken", response.data.access_token);
         router.push({ name: "main" });
       });
     },
-    showLoading({ commit, state }) {
-      if (!state.loading) {
-        commit("setLoading", true);
-        setTimeout(() => (state.loading = false), 5000);
-      }
+    logout({ commit }) {
+      commit("logout");
+    },
+    showLoading({ commit }) {
+      commit("setLoading", true);
     },
     hideLoading({ commit }) {
       commit("setLoading", false);

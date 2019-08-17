@@ -6,7 +6,7 @@
       style=" padding: 20px; background-color: white"
     >
       <div class="feed-title">
-        <img src="../assets/img/common/information.svg" style="width:30px; height:30px;">
+        <img src="../assets/img/common/information.svg" style="width:30px; height:30px;" />
         <div style="margin-left: 10px;">
           <div style="font-weight: bold;" v-html="item.title"></div>
           <div style="font-size: 14px; color: #9da6af">{{dateToFormat(item.pubDate)}}</div>
@@ -37,10 +37,20 @@ export default {
     };
   },
   created() {
+    let baseURL = "https://www.signal.bz/api/ogimage/?url=";
+    if (
+      window.location.href.startsWith("http://localhost") ||
+      window.location.href.startsWith("https://test.signal.bz")
+    ) {
+      baseURL = "https://test.signal.bz/api/ogimage/?url=";
+    }
+
     this.axios
-      .get("/ogimage/?url=" + this.item.link)
+      .get(baseURL + this.item.link)
       .then(res => {
-        this.ogImage = res.data.image;
+        if (res.data.image.startsWith("http")) {
+          this.ogImage = res.data.image;
+        }
       })
       .catch(error => {});
   },
@@ -55,7 +65,7 @@ export default {
         }
     },
     dateToFormat(pubDate) {
-      var d = new Date(pubDate)
+      var d = new Date(pubDate);
       return (
         d.getFullYear().toString() +
         "년" +
@@ -75,7 +85,7 @@ export default {
           ? (parseInt(d.getMinutes() / 5) * 5).toString()
           : "0" + (parseInt(d.getMinutes() / 5) * 5).toString())
       );
-    },
+    }
   }
 };
 </script>

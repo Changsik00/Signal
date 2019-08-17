@@ -34,7 +34,7 @@
               v-validate="'required|min:8'"
             />
           </b-field>
-          <v-btn type="submit" class="mt30" block :loading="loading" color="secondary">로그인</v-btn>
+          <v-btn type="submit" class="mt30" block color="secondary">로그인</v-btn>
         </form>
         <v-layout align-center class="mt20">
           <div @click="showFindPassword = true" class="login-link">비밀번호를 잊으셨나요?</div>
@@ -100,7 +100,7 @@
               v-validate="{ required: true, is: password }"
             />
           </b-field>
-          <v-btn type="submit" class="mt30" block :loading="loading" color="secondary">회원 가입</v-btn>
+          <v-btn type="submit" class="mt30" block color="secondary">회원 가입</v-btn>
         </form>
 
         <div class="mt30 line"></div>
@@ -141,7 +141,7 @@
           >
             <b-input type="email" v-model="email" name="email" v-validate="'required|email'" />
           </b-field>
-          <v-btn type="submit" class="mt30" block :loading="loading" color="secondary">요청</v-btn>
+          <v-btn type="submit" class="mt30" block color="secondary">요청</v-btn>
         </form>
       </v-layout>
     </v-card>
@@ -153,12 +153,9 @@ export default {
   data() {
     return {
       dialog: false,
-      snsResult: "",
-      accessToken: "",
       email: "",
       password: "",
       confirmPassword: "",
-      loading: false,
       showFindPassword: false,
       showSignUp: false
     };
@@ -168,8 +165,8 @@ export default {
   },
   mounted() {
     this.$store.subscribe((mutation, state) => {
-      switch(mutation.type) {
-        case 'setToken':
+      switch (mutation.type) {
+        case "setToken":
           this.dialog = this.isLogin;
           break;
       }
@@ -177,6 +174,9 @@ export default {
   },
   methods: {
     showDialog() {
+      this.email = "";
+      this.password = "";
+      this.confirmPassword = "";
       this.dialog = true;
       this.showFindPassword = false;
       this.showSignUp = false;
@@ -196,30 +196,19 @@ export default {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
-        .then(success => {
-          // this.$store.dispatch("login" , {email: this.email});
+        .then(result => {
           const params = {
-            email: "eve.holt@reqres.in",
-            password: "cityslicka"
+            login_id: result.user.email,
+            access_token: result.user.refreshToken,
+            type: "email"
           };
-          this.$store.dispatch("login", params).then(() => {
-            if (this.$store.getters.isLogin) {
-              console.log("#@# loginSuccess")
-              this.dialog = false;
-            } else {
-              this.$showToast("#### login error");
-            }
-          });
+          this.$store.dispatch("login", params);
         })
         .catch(error => {
-          this.$showToast(error.code + "<br>" + error.message);
+          this.$showToast("Error : " + err.message);
         });
     },
     authenticateSNS(sns) {
-      this.snsResult = "";
-      this.accessToken = "";
-
-      // https://firebase.google.com/docs/auth/web/facebook-login?hl=ko
       let provider = null;
       switch (sns) {
         case "facebook":
@@ -240,41 +229,37 @@ export default {
           provider.addScope("manage_pages,instagram_basic");
           break;
       }
-
       firebase
         .auth()
         .signInWithPopup(provider)
         .then(result => {
-          var user = result.user;
-          this.snsResult = result;
-          this.accessToken = result.credential.accessToken;
-
-          console.log("#@# result", result);
-
           const params = {
-            email: "eve.holt@reqres.in",
-            password: "cityslicka"
+            login_id: result.user.email,
+            // access_token: result.credential.accessToken,
+            access_token: result.user.refreshToken,
+            type: sns
           };
           this.$store.dispatch("login", params);
         })
         .catch(error => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          var email = error.email;
-          var credential = error.credential;
           console.log("#@# error", error);
+          this.$showToast("Error : " + err.message);
         });
     },
     signUp() {
-      this.$validator.validateAll().then(result => {
-        if (result) {
+      this.$validator.validateAll().then(validate => {
+        if (validate) {
           firebase
             .auth()
             .createUserWithEmailAndPassword(this.email, this.password)
             .then(
               result => {
-                console.log("#@# result", result);
-                this.$router.replace("home");
+                const params = {
+                  login_id: result.user.email,
+                  access_token: result.user.refreshToken,
+                  type: "email"
+                };
+                this.$store.dispatch("login", params);
               },
               err => {
                 console.log("#@# err", err);

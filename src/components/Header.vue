@@ -34,7 +34,7 @@
 import Login from "./Login";
 import Connections from "./Connections";
 import { mapGetters, mapMutations } from "vuex";
-
+import firebase from "firebase";
 export default {
   components: {
     Login,
@@ -43,32 +43,22 @@ export default {
   computed: {
     ...mapGetters(["isLogin", "monitorSlideMenu"])
   },
-  watch: {
-    isLogin(newValue, oldValue) {
-      if (!newValue) {
-        console.log("#@# isLogin", newValue, oldValue);
-        this.hideDialog();
-      }
-      return newValue;
-    }
-  },
   data() {
     return {
       index: 0
     };
   },
-  mounted() {
-    this.$store.subscribe((mutation, state) => {
-      console.log("#@# subscribe", mutation.type);
-    });
+  created() {
+    firebase.auth().useDeviceLanguage();
   },
   methods: {
     ...mapMutations(["showMonitorSlideMenu"]),
     login() {
       this.$refs.login.showDialog();
     },
-    hideDialog() {
-      this.$refs.login.hideDialog();
+    logout() {
+      this.$store.dispatch("logout");
+      firebase.auth().signOut();
     },
     connections() {
       this.$refs.connections.showDialog();
@@ -79,21 +69,6 @@ export default {
       } else {
         this.showMonitorSlideMenu();
       }
-    },
-    logout() {
-      this.$store.commit("logout");
-      firebase
-        .auth()
-        .signOut()
-        .then(function() {
-          // Sign-out successful.
-        })
-        .catch(function(error) {
-          // An error happened.
-        });
-    },
-    main() {
-      console.log("#@# goto main");
     }
   }
 };

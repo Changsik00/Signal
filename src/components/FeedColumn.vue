@@ -22,7 +22,7 @@ import FeedCard from "./FeedCard";
 export default {
   props: ["keyword"],
   components: {
-    FeedCard,
+    FeedCard
   },
   data() {
     return {
@@ -47,9 +47,16 @@ export default {
     requestfeed() {
       if (!this.requestLock) {
         this.requestLock = true;
+        let baseURL = "https://www.signal.bz/api/news/";
+        if (
+          window.location.href.startsWith("http://localhost") ||
+          window.location.href.startsWith("https://test.signal.bz")
+        ) {
+          baseURL = "https://test.signal.bz/api/news/";
+        }
         this.$store.dispatch("showLoading");
         this.axios
-          .get("/news/", {
+          .get(baseURL, {
             params: { keyword: this.keyword, start: this.start }
           })
           .then(res => {

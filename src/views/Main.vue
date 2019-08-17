@@ -75,14 +75,19 @@ export default {
       }
     },
     twitter(type) {
-      if (!this.ConnectionState.twitter) {
-        this.$showToast("twitter 연결이 안되어 있습니다.");
-        return;
-      }
+      // if (!this.ConnectionState.twitter) {
+      //   this.$showToast("twitter 연결이 안되어 있습니다.");
+      //   return;
+      // }
       switch (type) {
         case "Mentions":
           break;
         case "Timeline":
+          console.log("#@# Timeline")
+          this.axios.get("/twitter/timeline").then(result =>{
+            console.log("#@# Timeline result" , result.data)
+          });
+          
           break;
         case "Likes":
           break;
