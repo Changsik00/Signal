@@ -6,11 +6,8 @@
       style=" padding: 20px; background-color: white"
     >
       <div class="feed-title">
-        <img src="../assets/img/common/information.svg" style="width:30px; height:30px;" />
-        <div style="margin-left: 10px;">
-          <div style="font-weight: bold;" v-html="item.title"></div>
-          <div style="font-size: 14px; color: #9da6af">{{dateToFormat(item.pubDate)}}</div>
-        </div>
+        <div style="font-weight: bold;" v-html="item.title"></div>
+        <div style="font-size: 14px; color: #9da6af">{{dateToFormat(item.pubDate)}}</div>
       </div>
 
       <div class="mt10" v-html="item.description"></div>

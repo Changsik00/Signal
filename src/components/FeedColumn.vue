@@ -1,10 +1,10 @@
 <template>
-  <div class="keywordListColumn">
-    <div class="keywordListCardTitle">
-      <span class="Text6-1">{{ keyword}}</span>
-      <span class="Text6-5 pl4">Today : {{this.todayCnt }}</span>
-    </div>
-    <div class="keywordListLayer">
+  <div class="feed-column">
+    <v-layout align-center class="feed-column-title">
+      <v-icon class="v-icon">search</v-icon>
+      <div>{{ keyword}}</div>
+    </v-layout>
+    <div class="feeds-layer">
       <FeedCard
         :item="feed"
         :index="index"
@@ -86,20 +86,32 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.keywordListColumn {
+<style lang="scss">
+.feed-column {
   display: inline-block;
   width: 360px;
   height: 100%;
   margin: 0px 2px;
 }
 
-.keywordListCardTitle {
-  padding: 10px 25px;
-  background-color: var(--ice-blue);
+.feed-column-title {
+  padding: 10px;
+  background-color: $greenblue2;
+
+  & > .v-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    color: #b2ebf2;
+  }
+  & > div {
+    font-size: 20px;
+    font-weight: bold;
+    color: #b2ebf2;
+  }
 }
 
-.keywordListLayer {
+.feeds-layer {
   width: 360px;
   overflow-y: auto;
   height: 100%;

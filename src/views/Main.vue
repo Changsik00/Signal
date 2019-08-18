@@ -20,12 +20,6 @@
       </v-layout>
       <div class="side-menu">
         <div class="title">Search</div>
-        <v-layout align-center style="width: 100%; padding: 10px">
-          <b-input style="flex-grow: 1" type="text" v-model="searchKeyword" />
-          <v-btn icon style="margin: 0 0 0 10px" @click="search">
-            <v-icon style="font-size: 30px; color: #393f45; cursor: pointer;">search</v-icon>
-          </v-btn>
-        </v-layout>
         <v-layout align-center class="menu" v-for="keyword in getKeywords" :key="keyword">
           {{keyword}}
           <v-spacer></v-spacer>
@@ -33,8 +27,24 @@
             <v-icon>delete</v-icon>
           </v-btn>
         </v-layout>
+        <v-layout align-center style="width: 100%; padding: 10px">
+          <b-input style="flex-grow: 1" type="text" v-model="searchKeyword" />
+          <div v-if="!searchOn">
+            <v-btn icon style="margin: 0 0 0 10px" @click="search">
+              <v-icon style="font-size: 30px; color: #393f45; cursor: pointer;">search</v-icon>
+            </v-btn>
+          </div>
+          <div v-else>
+            <v-btn icon style="margin: 0 0 0 10px" @click="acceptKeyword">
+              <v-icon style="font-size: 30px; color: #393f45; cursor: pointer;">check_circle</v-icon>
+            </v-btn>
+            <v-btn icon style="margin: 0 0 0 10px" @click="cancelKeyword">
+              <v-icon style="font-size: 30px; color: #393f45; cursor: pointer;">remove_circle</v-icon>
+            </v-btn>
+          </div>
+        </v-layout>
       </div>
-      <div class="side-menu">
+      <div v-if="!searchOn" class="side-menu line">
         <v-layout align-center class="title">
           <img src="../assets/img/common/facebook-off.svg" style="width: 25px; margin-right: 5px;" />
           Facebook
@@ -43,7 +53,7 @@
         <div class="menu" @click="facebook('PageMentions')">Page Mentions</div>
         <div class="menu" @click="facebook('PageSearch')">Page Search</div>
       </div>
-      <div class="side-menu">
+      <div v-if="!searchOn" class="side-menu line">
         <v-layout align-center class="title">
           <img src="../assets/img/common/twitter-off.svg" style="width: 25px; margin-right: 5px;" />
           Twitter
@@ -54,6 +64,12 @@
         <div class="menu" @click="twitter('KeywordSearch')">Keyword Search</div>
         <div class="menu" @click="twitter('UserSearch')">User Search</div>
         <div class="menu" @click="twitter('Lists')">Lists</div>
+      </div>
+      <div v-if="searchOn" class="side-menu line">
+        <div v-for="(news, i) in searchPreviewList" :key="i" style="padding: 10px; margin-bottom: 20px">
+          <div v-html="news.title" style="font-size: 16px; font-weight: bold;"></div>
+          <div class="mt10" style="font-size: 14px;" v-html="news.description"></div>
+        </div>
       </div>
     </v-navigation-drawer>
   </section>
@@ -73,7 +89,9 @@ export default {
         facebook: false,
         twitter: false
       },
-      searchKeyword: ""
+      searchKeyword: "",
+      searchOn: false,
+      searchPreviewList: []
     };
   },
   computed: {
@@ -86,11 +104,45 @@ export default {
     ...mapMutations(["hideMonitorSlideMenu"]),
     ...mapActions(["setKeywords", "removeKeyword", "addKeyword"]),
     search() {
-      if (_.find(this.getKeywords, d => d == this.searchKeyword)) {
-        this.$showToast("존재하는 검색어 입니다."); 
-      } else {
-        this.addKeyword(this.searchKeyword);
+      if (this.searchKeyword.length <= 2) {
+        this.$showToast("너무 짧은 단어입니다.");
+        this.searchKeyword = "";
+        return;
       }
+      if (_.find(this.getKeywords, d => d == this.searchKeyword)) {
+        this.$showToast("존재하는 검색어 입니다.");
+        this.searchKeyword = "";
+        return;
+      }
+
+      this.searchPreviewList = [];
+      let baseURL = "https://www.signal.bz/api/news/";
+      if (
+        window.location.href.startsWith("http://localhost") ||
+        window.location.href.startsWith("https://test.signal.bz")
+      ) {
+        baseURL = "https://test.signal.bz/api/news/";
+      }
+      this.$store.dispatch("showLoading");
+      this.axios
+        .get(baseURL, {
+          params: { keyword: this.searchKeyword, start: 1 }
+        })
+        .then(res => {
+          res.data.items.forEach(item => {
+            this.searchPreviewList.push(item);
+          });
+          this.$store.dispatch("hideLoading");
+          this.searchOn = true;
+        });
+    },
+    acceptKeyword() {
+      this.searchOn = false;
+      this.addKeyword(this.searchKeyword);
+      this.searchKeyword = "";
+    },
+    cancelKeyword() {
+      this.searchOn = false;
       this.searchKeyword = "";
     },
     facebook(type) {
@@ -157,7 +209,10 @@ export default {
   flex-direction: column;
   align-items: center;
   padding-top: 20px;
-  border-bottom: 1px solid #dedede;
+
+  &.line {
+    border-top: 1px solid #dedede;
+  }
 
   & > .title {
     width: 100%;
