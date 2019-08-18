@@ -12,10 +12,10 @@
       width="320"
     >
       <v-layout align-center style="padding: 10px 0; background-color: whitesmoke;">
-        <div style="font-size: 20px; font-weight: bold; margin-left: 20px;">Select a column type</div>
+        <div style="font-size: 20px; font-weight: bold; margin-left: 15px;">Select a column type</div>
         <v-spacer></v-spacer>
         <v-btn icon @click="hideMonitorSlideMenu">
-          <v-icon>close</v-icon>
+          <v-icon>arrow_forward</v-icon>
         </v-btn>
       </v-layout>
       <div class="side-menu">
@@ -208,7 +208,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 20px;
+  padding: 20px 0;
 
   &.line {
     border-top: 1px solid #dedede;
@@ -217,7 +217,7 @@ export default {
   & > .title {
     width: 100%;
     margin: 0;
-    padding: 0 10px;
+    padding: 0 15px;
     margin-bottom: 10px;
     text-align: left;
     color: #393f45;
