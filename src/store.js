@@ -44,11 +44,15 @@ const store = new Vuex.Store({
   state: {
     loading: false,
     userToken: localStorage.getItem("access_token"),
-    monitorSlideMenu: false
+    monitorSlideMenu: false,
+    keyowrds: []
   },
   getters: {
     isLogin(state) {
       return state.userToken != null && state.userToken.length > 0;
+    },
+    getKeywords(state) {
+      return state.keyowrds;
     },
     monitorSlideMenu(state) {
       return state.monitorSlideMenu;
@@ -63,6 +67,15 @@ const store = new Vuex.Store({
       state.userToken = null;
       localStorage.setItem("access_token", "");
       router.push({ name: "home" });
+    },
+    setKeywords(state, keyowrds) {
+      state.keyowrds = keyowrds;
+    },
+    addKeyword(state, keyword) {
+      state.keyowrds.push(keyword);
+    },
+    removeKeyword(state, keyword) {
+      state.keyowrds = _.filter(state.keyowrds, d => d != keyword);
     },
     setLoading(state, visible) {
       state.loading = visible;
@@ -91,6 +104,16 @@ const store = new Vuex.Store({
     },
     hideLoading({ commit }) {
       commit("setLoading", false);
+    },
+    setKeywords({ commit }) {
+      const testKeywords = ["bts", "노노재팬"];
+      commit("setKeywords", testKeywords);
+    },
+    addKeyword({ commit }, keyword) {
+      commit("addKeyword", keyword);
+    },
+    removeKeyword({ commit }, keyword) {
+      commit("removeKeyword", keyword);
     }
   }
 });
