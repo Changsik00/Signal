@@ -27,7 +27,7 @@
             <v-icon>delete</v-icon>
           </v-btn>
         </v-layout>
-        <v-layout align-center style="width: 100%; padding: 10px">
+        <v-layout v-if="getKeywords.length < 3" align-center style="width: 100%; padding: 10px">
           <b-input style="flex-grow: 1" type="text" v-model="searchKeyword" />
           <div v-if="!searchOn">
             <v-btn icon style="margin: 0 0 0 10px" @click="search">
@@ -104,11 +104,17 @@ export default {
     ...mapMutations(["hideMonitorSlideMenu"]),
     ...mapActions(["setKeywords", "removeKeyword", "addKeyword"]),
     search() {
+      if (this.searchKeyword.length == 0) {
+        this.$showToast("검색어를 입력해 주세요!");
+        return;
+      }
+
       if (this.searchKeyword.length <= 2) {
         this.$showToast("너무 짧은 단어입니다.");
         this.searchKeyword = "";
         return;
       }
+
       if (_.find(this.getKeywords, d => d == this.searchKeyword)) {
         this.$showToast("존재하는 검색어 입니다.");
         this.searchKeyword = "";

@@ -1,7 +1,7 @@
 <template>
   <section>
     <v-toolbar class="header">
-      <img src="../assets/img/common/logo-signal.svg" />
+      <img src="../assets/img/common/logo-signal.svg" class="pointer" @click="$router.push('/')" />
       <v-spacer class="ml30">
         <div v-if="isLogin">
           <v-btn
@@ -75,8 +75,8 @@ export default {
 </script>
 <style lang="scss">
 .header {
-  height: 62px;
-  padding: 0 30px !important;
+  height: 60px;
+  padding: 0 10px;
 }
 
 .top-button {
