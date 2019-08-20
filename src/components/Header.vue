@@ -75,7 +75,6 @@ export default {
 </script>
 <style lang="scss">
 .header {
-  height: 60px;
   padding: 0 10px;
 }
 

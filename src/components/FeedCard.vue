@@ -39,7 +39,7 @@ export default {
       baseURL = "https://test.signal.bz/api/ogimage/?url=";
     }
 
-    this.axios
+    this.$axios
       .get(baseURL + this.item.link)
       .then(res => {
         if (res.data.image.startsWith("http")) {

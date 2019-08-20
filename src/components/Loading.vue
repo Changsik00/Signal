@@ -1,5 +1,5 @@
 <template>
-  <div v-if="showLoading" class="loading-container">
+  <div v-if="isLoading" class="loading-container">
     <div class="loading">
       <half-circle-spinner :animation-duration="1000" :size="60" :color="'#24c185'"/>
     </div>
@@ -7,17 +7,16 @@
 </template>
 
 <script>
+// https://github.com/epicmaxco/epic-spinners
 import { HalfCircleSpinner } from "epic-spinners";
+import { mapGetters } from "vuex"
 export default {
   components: {
     HalfCircleSpinner
   },
-  name: "Loading",
   computed: {
-    showLoading() {
-      return this.$store.state.loading;
-    }
-  }
+    ...mapGetters(["isLoading"]),
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -27,7 +26,7 @@ export default {
   bottom: 0px;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.4);
   z-index: 1000;
 }
 .loading {

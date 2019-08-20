@@ -10,6 +10,7 @@
       temporary
       right
       width="320"
+      style="padding-bottom: 20px"
     >
       <v-layout align-center style="padding: 10px 0; background-color: whitesmoke;">
         <div style="font-size: 20px; font-weight: bold; margin-left: 15px;">Select a column type</div>
@@ -66,7 +67,7 @@
         <div class="menu" @click="twitter('Lists')">Lists</div>
       </div>
       <div v-if="searchOn" class="side-menu line">
-        <div v-for="(news, i) in searchPreviewList" :key="i" style="padding: 10px; margin-bottom: 20px">
+        <div v-for="(news, i) in searchPreviewList" :key="i" style="padding: 10px;">
           <div v-html="news.title" style="font-size: 16px; font-weight: bold;"></div>
           <div class="mt10" style="font-size: 14px;" v-html="news.description"></div>
         </div>
@@ -129,8 +130,7 @@ export default {
       ) {
         baseURL = "https://test.signal.bz/api/news/";
       }
-      this.$store.dispatch("showLoading");
-      this.axios
+      this.$axios
         .get(baseURL, {
           params: { keyword: this.searchKeyword, start: 1 }
         })
@@ -138,7 +138,6 @@ export default {
           res.data.items.forEach(item => {
             this.searchPreviewList.push(item);
           });
-          this.$store.dispatch("hideLoading");
           this.searchOn = true;
         });
     },
@@ -174,8 +173,7 @@ export default {
         case "Mentions":
           break;
         case "Timeline":
-          console.log("#@# Timeline");
-          this.axios.get("/twitter/timeline").then(result => {
+          this.$axios.get("/twitter/timeline").then(result => {
             console.log("#@# Timeline result", result.data);
           });
 
@@ -214,7 +212,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 0;
+  padding-top: 20px;
 
   &.line {
     border-top: 1px solid #dedede;

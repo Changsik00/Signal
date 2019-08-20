@@ -54,8 +54,7 @@ export default {
         ) {
           baseURL = "https://test.signal.bz/api/news/";
         }
-        this.$store.dispatch("showLoading");
-        this.axios
+        this.$axios
           .get(baseURL, {
             params: { keyword: this.keyword, start: this.start }
           })
@@ -71,7 +70,6 @@ export default {
 
               this.start = this.feedList.length + 1;
             }
-            this.$store.dispatch("hideLoading");
             this.requestLock = false;
           })
           .catch(error => (this.requestLock = false));

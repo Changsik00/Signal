@@ -6,6 +6,7 @@
     </v-content>
     <Footer v-if="!isLogin" />
     <Loading/>
+    <Snackbar/>
   </v-app>
 </template>
 

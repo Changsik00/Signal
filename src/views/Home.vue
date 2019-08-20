@@ -135,18 +135,6 @@ export default {
         "https://cdn.vuetifyjs.com/images/carousel/planet.jpg"
       ]
     };
-  },
-  methods: {},
-  computed: {
-    isColumnWhenXs() {
-      const bindText = {};
-
-      if (this.$vuetify.breakpoint.xs) {
-        bindText.column = true;
-      }
-
-      return bindText;
-    }
   }
 };
 </script>
