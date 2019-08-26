@@ -8,21 +8,10 @@ import VeeValidate from "vee-validate";
 import Buefy from "buefy";
 import "buefy/dist/buefy.css";
 import VueObserveVisibility from "vue-observe-visibility";
-import firebase from "firebase";
+
 import "./plugins/vuetify";
 import "./plugins/axios";
 import "./plugins/my";
-
-var firebaseConfig = {
-  apiKey: "AIzaSyCo8MlwzJ_FMuWCbhhhaHpaGluLfX7hTak",
-  authDomain: "signal-97eaf.firebaseapp.com",
-  databaseURL: "https://signal-97eaf.firebaseio.com",
-  projectId: "signal-97eaf",
-  storageBucket: "signal-97eaf.appspot.com",
-  messagingSenderId: "493631048995",
-  appId: "1:493631048995:web:5a51cbfc53a696cb"
-};
-firebase.initializeApp(firebaseConfig);
 
 // https://github.com/shakee93/vue-toasted
 Vue.use(Toasted, {
@@ -42,9 +31,15 @@ const Loading = () =>
   import(/* webpackChunkName: "Header" */ "./components/Loading.vue");
 const Snackbar = () =>
   import(/* webpackChunkName: "Snackbar" */ "./components/Snackbar.vue");
+const Login = () =>
+  import(/* webpackChunkName: "Login" */ "./components/Login.vue");
+const Connections = () =>
+  import(/* webpackChunkName: "Connections" */ "./components/Connections.vue");
 
 Vue.component("Loading", Loading);
 Vue.component("Snackbar", Snackbar);
+Vue.component("Login", Login);
+Vue.component("Connections", Connections);
 
 // https://kr.vuejs.org/v2/api/index.html
 Vue.config.productionTip = false;

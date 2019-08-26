@@ -1,16 +1,27 @@
 <template>
   <div class="feed-column">
-    <v-layout align-center class="feed-column-title">
-      <v-icon class="v-icon">search</v-icon>
+    <v-layout v-if="keyword" align-center class="feed-column-title">
+      <v-icon class="icon">search</v-icon>
       <div>{{ keyword}}</div>
     </v-layout>
+    <v-layout v-if="twitterTimeline" align-center class="feed-column-title">
+      <img class="icon" src="../assets/img/common/twitter-on.svg" />
+      <div>Timeline</div>
+    </v-layout>
     <div class="feeds-layer">
-      <FeedCard
+      <KeywordCard
+        v-if="keyword"
+        v-for="(feed, index) in feedList"
         :item="feed"
         :index="index"
         :last="feedList.length"
+        :key="index"
         @detectLastPosition="detectLastPosition"
+      />
+      <TwitterCard
+        v-if="twitterTimeline"
         v-for="(feed, index) in feedList"
+        :item="feed"
         :key="index"
       />
     </div>
@@ -18,11 +29,13 @@
 </template>
 
 <script>
-import FeedCard from "./FeedCard";
+import KeywordCard from "./KeywordCard";
+import TwitterCard from "./TwitterCard";
 export default {
-  props: ["keyword"],
+  props: ["keyword", "twitterTimeline"],
   components: {
-    FeedCard
+    KeywordCard,
+    TwitterCard
   },
   data() {
     return {
@@ -47,32 +60,47 @@ export default {
     requestfeed() {
       if (!this.requestLock) {
         this.requestLock = true;
-        let baseURL = "https://www.signal.bz/api/news/";
-        if (
-          window.location.href.startsWith("http://localhost") ||
-          window.location.href.startsWith("https://test.signal.bz")
-        ) {
-          baseURL = "https://test.signal.bz/api/news/";
-        }
-        this.$axios
-          .get(baseURL, {
-            params: { keyword: this.keyword, start: this.start }
-          })
-          .then(res => {
-            this.total = res.data.total;
-            if (this.total > this.start) {
-              res.data.items.forEach(item => {
-                this.feedList.push(item);
-                if (this.isToday(item.pubDate)) {
-                  this.todayCnt++;
-                }
-              });
+        if (this.keyword) {
+          let baseURL = "https://www.signal.bz/api/news/";
+          if (
+            window.location.href.startsWith("http://localhost") ||
+            window.location.href.startsWith("https://test.signal.bz")
+          ) {
+            baseURL = "https://test.signal.bz/api/news/";
+          }
+          this.$axios
+            .get(baseURL, {
+              params: { keyword: this.keyword, start: this.start }
+            })
+            .then(res => {
+              this.total = res.data.total;
+              if (this.total > this.start) {
+                res.data.items.forEach(item => {
+                  this.feedList.push(item);
+                  if (this.isToday(item.pubDate)) {
+                    this.todayCnt++;
+                  }
+                });
 
-              this.start = this.feedList.length + 1;
-            }
-            this.requestLock = false;
-          })
-          .catch(error => (this.requestLock = false));
+                this.start = this.feedList.length + 1;
+              }
+              this.requestLock = false;
+            })
+            .catch(error => (this.requestLock = false));
+        }
+
+        if (this.twitterTimeline) {
+          this.$axios
+            // .get("/twitter/timeline", {
+            //   params: { firebase_access_token: this.$store.state.userToken }
+            // })
+            .get("/twitter/timeline")
+            .then(res => {
+              this.feedList = res.data;
+              this.requestLock = false;
+            })
+            .catch(error => (this.requestLock = false));
+        }
       }
     },
     detectLastPosition() {
@@ -96,7 +124,7 @@ export default {
   padding: 10px;
   background-color: $greenblue2;
 
-  & > .v-icon {
+  & > .icon {
     width: 20px;
     height: 20px;
     margin-right: 10px;

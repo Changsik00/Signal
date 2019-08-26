@@ -7,7 +7,7 @@ import store from "../store";
 
 Vue.prototype.$axios = axios;
 
-axios.defaults.timeout = 10000;
+axios.defaults.timeout = 15000;
 axios.defaults.baseURL = "https://api.signal.bz/v1";
 
 function axisoErrorHandler(error) {
@@ -19,12 +19,6 @@ function axisoErrorHandler(error) {
 
 axios.interceptors.request.use(
   config => {
-    config.headers.common["Access-Control-Allow-Origin"] = "*";
-    config.headers.common["Access-Control-Allow-Credentials"] = true;
-    config.headers.common["Access-Control-Allow-Methods"] =
-      "GET,PUT,POST,DELETE";
-    config.headers.common["Access-Control-Allow-Headers"] =
-      "Origin, X-Requested-With, Content-Type, Accept";
     store.dispatch("showLoading");
     return config;
   },

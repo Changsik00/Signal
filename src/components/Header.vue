@@ -9,7 +9,7 @@
             outline
             round
             color="primary"
-            @click="connections"
+            @click="$store.state.showConnections = true"
           >Connections</v-btn>
           <v-btn
             class="text-capitalize top-button"
@@ -22,11 +22,9 @@
           >Monitor</v-btn>
         </div>
       </v-spacer>
-      <v-btn v-if="!isLogin" flat round color="info" @click="login">로그인</v-btn>
+      <v-btn v-if="!isLogin" flat round color="info" @click="$store.state.showLogin = true">로그인</v-btn>
       <v-btn v-else flat round color="primary" @click="logout">로그아웃</v-btn>
     </v-toolbar>
-    <Login ref="login" />
-    <Connections ref="connections" />
   </section>
 </template>
 
@@ -48,21 +46,8 @@ export default {
       index: 0
     };
   },
-  created() {
-    firebase.auth().useDeviceLanguage();
-  },
   methods: {
-    ...mapMutations(["showMonitorSlideMenu"]),
-    login() {
-      this.$refs.login.showDialog();
-    },
-    logout() {
-      this.$store.dispatch("logout");
-      firebase.auth().signOut();
-    },
-    connections() {
-      this.$refs.connections.showDialog();
-    },
+    ...mapMutations(["logout", "showMonitorSlideMenu", "hideMonitorSlideMenu"]),
     monitor() {
       if (this.monitorSlideMenu) {
         this.hideMonitorSlideMenu();

@@ -1,9 +1,14 @@
 <template>
-  <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
+  <v-dialog
+    v-model="$store.state.showLogin"
+    fullscreen
+    hide-overlay
+    transition="dialog-bottom-transition"
+  >
     <v-layout column style="padding: 0; height: 100%; background-color: white;">
       <v-toolbar dark color="primary">
         <v-spacer></v-spacer>
-        <v-btn icon dark @click="dialog = false">
+        <v-btn icon dark @click="$store.state.showLogin = false">
           <v-icon>close</v-icon>
         </v-btn>
       </v-toolbar>
@@ -167,24 +172,21 @@ export default {
   },
   mounted() {
     this.$store.subscribe((mutation, state) => {
-      switch (mutation.type) {
-        case "setToken":
-          this.dialog = this.isLogin;
+      switch (state.type) {
+        case "showLogin":
+          this.email = "";
+          this.password = "";
+          this.confirmPassword = "";
+          this.dialog = true;
+          this.showFindPassword = false;
+          this.showSignUp = false;
           break;
       }
     });
   },
   methods: {
-    showDialog() {
-      this.email = "";
-      this.password = "";
-      this.confirmPassword = "";
-      this.dialog = true;
-      this.showFindPassword = false;
-      this.showSignUp = false;
-    },
     hideDialog() {
-      this.dialog = false;
+      this.$store.state.showLogin = false;
     },
     sendResetPassword() {
       firebase
@@ -235,8 +237,13 @@ export default {
         .auth()
         .signInWithPopup(provider)
         .then(result => {
+          console.log("#@# ", sns, result);
+          let loginId = result.user.email;
+          if (loginId == null) {
+            loginId = `${result.user.uid}@${sns}.com`;
+          }
           const params = {
-            login_id: result.user.email,
+            login_id: loginId,
             // access_token: result.credential.accessToken,
             access_token: result.user.refreshToken,
             type: sns

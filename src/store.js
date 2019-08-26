@@ -2,11 +2,24 @@ import Vue from "vue";
 import Vuex from "vuex";
 import router from "./router";
 import axios from "axios";
+import firebase from "firebase";
+var firebaseConfig = {
+  apiKey: "AIzaSyCo8MlwzJ_FMuWCbhhhaHpaGluLfX7hTak",
+  authDomain: "signal-97eaf.firebaseapp.com",
+  databaseURL: "https://signal-97eaf.firebaseio.com",
+  projectId: "signal-97eaf",
+  storageBucket: "signal-97eaf.appspot.com",
+  messagingSenderId: "493631048995",
+  appId: "1:493631048995:web:5a51cbfc53a696cb"
+};
+firebase.initializeApp(firebaseConfig);
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
+    showLogin: false,
+    showConnections: false,
     loadingCheckSum: 0,
     loadingTimeout: null,
     snackbar: false,
@@ -14,7 +27,16 @@ const store = new Vuex.Store({
     snackbarTimeout: null,
     userToken: localStorage.getItem("access_token"),
     monitorSlideMenu: false,
-    keyowrds: []
+    keyowrds: [],
+    snsConnect: {
+      facebook: false,
+      facebookAccessToken: "",
+      twitter: false,
+      twitterTimeline: false,
+      twitterAccessTotken: "",
+      twitterName: "",
+      twitterSecret: ""
+    }
   },
   getters: {
     isLoading(state) {
@@ -74,9 +96,13 @@ const store = new Vuex.Store({
     setToken(state, userToken) {
       localStorage.setItem("access_token", userToken);
       state.userToken = userToken;
+      state.showLogin = false;
     },
     logout(state) {
       state.userToken = null;
+      state.showLogin = false;
+      state.showConnections = false;
+      firebase.auth().signOut();
       localStorage.setItem("access_token", "");
       router.push({ name: "home" });
     },
@@ -98,6 +124,13 @@ const store = new Vuex.Store({
     },
     hideMonitorSlideMenu(state) {
       state.monitorSlideMenu = false;
+    },
+    twiiterConnection(state, params) {
+      console.log("#@# twiiterConnection", params);
+      state.snsConnect.twitter = true;
+      state.snsConnect.twitterAccessTotken = params.access_token;
+      state.snsConnect.twitterName = params.name;
+      state.snsConnect.twitterSecret = params.secret;
     }
   },
   actions: {
@@ -114,15 +147,14 @@ const store = new Vuex.Store({
       commit("hideSnackbar");
     },
     login({ commit }, params) {
-      // const loginApi = "/firebase/auth/";
-      // axios.post(loginApi, params).then(response => {
-      //   commit("setToken", response.data.access_token);
-      //   router.push({ name: "main" });
-      // });
-      commit("setToken", params.access_token);
-      router.push({ name: "main" });
+      const loginApi = "/firebase/auth/";
+      axios.post(loginApi, params).then(response => {
+        commit("setToken", response.data.access_token);
+        router.push({ name: "main" });
+      });
     },
     logout({ commit }) {
+      firebase.auth().signOut();
       commit("logout");
     },
     setKeywords({ commit }) {
@@ -134,6 +166,15 @@ const store = new Vuex.Store({
     },
     removeKeyword({ commit }, keyword) {
       commit("removeKeyword", keyword);
+    },
+    requestTwitterConnection({ commit }, params) {
+      console.log("#@# requestTwitterConnection", params);
+      axios.post("/twitter/users/", params).then(response => {
+        console.log("#@# twiiterConnection axios", response);
+        // if (response.data.success) {
+        commit("twiiterConnection", params);
+        // }
+      });
     }
   }
 });

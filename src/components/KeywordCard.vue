@@ -7,7 +7,7 @@
     >
       <div style="font-size: 18px; font-weight: bold;" v-html="item.title"></div>
       <div style="font-size: 14px; color: #9da6af">{{dateToFormat(item.pubDate)}}</div>
-      <div class="mt10" v-html="item.description"></div>
+      <div class="mt10" style="word-break: break-all;" v-html="item.description"></div>
       <div class="see-more">
         <a @click="seeMore">See More</a>
       </div>
@@ -42,7 +42,7 @@ export default {
     this.$axios
       .get(baseURL + this.item.link)
       .then(res => {
-        if (res.data.image.startsWith("http")) {
+        if (res.data.image.startsWith("http") && (res.data.image.endsWith("png") || res.data.image.endsWith("peg"))) {
           this.ogImage = res.data.image;
         }
       })

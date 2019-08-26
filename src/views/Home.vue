@@ -25,12 +25,12 @@
         <div style="color: #34d499; font-size: 36px;">123,323</div>
       </div>
       <div class="home-number-margin">
-        <div style="color: #272c31; font-size: 14px;">전달된 소식</div>
-        <div style="color: #34d499; font-size: 36px;">123,323</div>
+        <div style="color: #272c31; font-size: 14px;">관심 키워드</div>
+        <div style="color: #34d499; font-size: 36px;">4,321</div>
       </div>
       <div>
-        <div style="color: #272c31; font-size: 14px;">전달된 소식</div>
-        <div style="color: #34d499; font-size: 36px;">123,323</div>
+        <div style="color: #272c31; font-size: 14px;">사용자 수</div>
+        <div style="color: #34d499; font-size: 36px;">123</div>
       </div>
     </div>
     <div class="home-layer-margin">

@@ -2,6 +2,7 @@
   <section>
     <v-layout class="main-layer">
       <FeedColumn :keyword="keyword" v-for="keyword in getKeywords" :key="keyword" />
+      <FeedColumn v-if="$store.state.snsConnect.twitterTimeline" :twitter-timeline="true" />
     </v-layout>
 
     <v-navigation-drawer
@@ -47,8 +48,16 @@
       </div>
       <div v-if="!searchOn" class="side-menu line">
         <v-layout align-center class="title">
-          <img src="../assets/img/common/facebook-off.svg" style="width: 25px; margin-right: 5px;" />
-          Facebook
+          <img
+            v-if="$store.state.snsConnect.facebook"
+            src="../assets/img/common/facebook-on.svg"
+            style="width: 25px; margin-right: 5px;"
+          />
+          <img
+            v-else
+            src="../assets/img/common/facebook-off.svg"
+            style="width: 25px; margin-right: 5px;"
+          /> Facebook
         </v-layout>
         <div class="menu" @click="facebook('VisitorPosts')">Visitor Posts</div>
         <div class="menu" @click="facebook('PageMentions')">Page Mentions</div>
@@ -56,7 +65,16 @@
       </div>
       <div v-if="!searchOn" class="side-menu line">
         <v-layout align-center class="title">
-          <img src="../assets/img/common/twitter-off.svg" style="width: 25px; margin-right: 5px;" />
+          <img
+            v-if="$store.state.snsConnect.twitter"
+            src="../assets/img/common/twitter-on.svg"
+            style="width: 25px; margin-right: 5px;"
+          />
+          <img
+            v-else
+            src="../assets/img/common/twitter-off.svg"
+            style="width: 25px; margin-right: 5px;"
+          />
           Twitter
         </v-layout>
         <div class="menu" @click="twitter('Mentions')">Mentions</div>
@@ -151,8 +169,10 @@ export default {
       this.searchKeyword = "";
     },
     facebook(type) {
-      if (!this.ConnectionState.facebook) {
-        this.$showToast("facebook 연결이 안되어 있습니다.");
+      if (!this.$store.state.snsConnect.facebook) {
+        this.$showToast("facebook 연결이 필요합니다.");
+        this.$store.state.showConnections = true;
+        this.hideMonitorSlideMenu();
         return;
       }
       switch (type) {
@@ -165,18 +185,17 @@ export default {
       }
     },
     twitter(type) {
-      // if (!this.ConnectionState.twitter) {
-      //   this.$showToast("twitter 연결이 안되어 있습니다.");
-      //   return;
-      // }
+      if (!this.$store.state.snsConnect.twitter) {
+        this.$showToast("twitter 연결이 필요합니다.");
+        this.$store.state.showConnections = true;
+        this.hideMonitorSlideMenu();
+        return;
+      }
       switch (type) {
         case "Mentions":
           break;
         case "Timeline":
-          this.$axios.get("/twitter/timeline").then(result => {
-            console.log("#@# Timeline result", result.data);
-          });
-
+          this.$store.state.snsConnect.twitterTimeline = true;
           break;
         case "Likes":
           break;
@@ -213,11 +232,9 @@ export default {
   flex-direction: column;
   align-items: center;
   padding-top: 20px;
-
   &.line {
     border-top: 1px solid #dedede;
   }
-
   & > .title {
     width: 100%;
     margin: 0;
