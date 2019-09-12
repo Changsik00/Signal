@@ -168,12 +168,13 @@ const store = new Vuex.Store({
       commit("removeKeyword", keyword);
     },
     requestTwitterConnection({ commit }, params) {
-      console.log("#@# requestTwitterConnection", params);
       axios.post("/twitter/users/", params).then(response => {
-        console.log("#@# twiiterConnection axios", response);
-        // if (response.data.success) {
         commit("twiiterConnection", params);
-        // }
+        // axios.post("/twitter/timeline/", params).then(response2 => {
+        //   if (response2.data.success) {
+        //     console.log("#@# twitter2", response2);
+        //   }
+        // });
       });
     }
   }

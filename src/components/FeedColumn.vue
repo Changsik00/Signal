@@ -3,6 +3,10 @@
     <v-layout v-if="keyword" align-center class="feed-column-title">
       <v-icon class="icon">search</v-icon>
       <div>{{ keyword}}</div>
+      <v-spacer></v-spacer>
+      <v-btn icon style="width: 30px; height: 30px; margin: 0;" @click="removeKeyword(keyword)">
+        <v-icon style="color: #b2ebf2;" @click="removeKeyword(keyword)">delete</v-icon>
+      </v-btn>
     </v-layout>
     <v-layout v-if="twitterTimeline" align-center class="feed-column-title">
       <img class="icon" src="../assets/img/common/twitter-on.svg" />
@@ -31,6 +35,8 @@
 <script>
 import KeywordCard from "./KeywordCard";
 import TwitterCard from "./TwitterCard";
+import { mapGetters, mapMutations, mapActions } from "vuex";
+
 export default {
   props: ["keyword", "twitterTimeline"],
   components: {
@@ -53,6 +59,7 @@ export default {
     this.today = new Date();
   },
   methods: {
+    ...mapActions(["removeKeyword"]),
     isToday(date) {
       const d = new Date(date);
       return this.today.toDateString() == d.toDateString();
@@ -61,13 +68,7 @@ export default {
       if (!this.requestLock) {
         this.requestLock = true;
         if (this.keyword) {
-          let baseURL = "https://www.signal.bz/api/news/";
-          if (
-            window.location.href.startsWith("http://localhost") ||
-            window.location.href.startsWith("https://test.signal.bz")
-          ) {
-            baseURL = "https://test.signal.bz/api/news/";
-          }
+          let baseURL = "https://test.signal.bz/api/news/";
           this.$axios
             .get(baseURL, {
               params: { keyword: this.keyword, start: this.start }
@@ -91,10 +92,9 @@ export default {
 
         if (this.twitterTimeline) {
           this.$axios
-            // .get("/twitter/timeline", {
-            //   params: { firebase_access_token: this.$store.state.userToken }
-            // })
-            .get("/twitter/timeline")
+            .get("/twitter/timeline", {
+              params: { firebase_access_token: this.$store.state.userToken }
+            })
             .then(res => {
               this.feedList = res.data;
               this.requestLock = false;

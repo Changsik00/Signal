@@ -31,14 +31,7 @@ export default {
     };
   },
   created() {
-    let baseURL = "https://www.signal.bz/api/ogimage/?url=";
-    if (
-      window.location.href.startsWith("http://localhost") ||
-      window.location.href.startsWith("https://test.signal.bz")
-    ) {
-      baseURL = "https://test.signal.bz/api/ogimage/?url=";
-    }
-
+    let baseURL = "https://test.signal.bz/api/ogimage/?url=";
     this.$axios
       .get(baseURL + this.item.link)
       .then(res => {
