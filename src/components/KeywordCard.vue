@@ -35,7 +35,7 @@ export default {
     this.$axios
       .get(baseURL + this.item.link)
       .then(res => {
-        if (res.data.image.startsWith("http") && (res.data.image.endsWith("png") || res.data.image.endsWith("peg"))) {
+        if (res.data.image.startsWith("http") && (res.data.image.endsWith("png") || res.data.image.endsWith("jpg"))) {
           this.ogImage = res.data.image;
         }
       })

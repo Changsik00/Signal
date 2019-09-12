@@ -14,10 +14,18 @@
       style="padding-bottom: 20px"
     >
       <v-layout align-center style="padding: 10px 0; background-color: whitesmoke;">
-        <div style="font-size: 20px; font-weight: bold; margin-left: 15px;">Select a column type</div>
+        <div v-if="searchOn" style="display: flex; align-items: center; margin-left: 10px;">
+          <img src="../assets/img/common/naver2-on.svg" style="width: 25px; margin-right: 5px;" />
+          <div>News Search</div>
+        </div>
+        <div
+          v-else
+          style="font-size: 20px; font-weight: bold; margin-left: 15px;"
+        >Select a column type</div>
         <v-spacer></v-spacer>
         <v-btn icon @click="sideMenuClose">
-          <v-icon>arrow_forward</v-icon>
+          <v-icon v-if="searchOn">close</v-icon>
+          <v-icon v-else>arrow_forward</v-icon>
         </v-btn>
       </v-layout>
       <div style="position: relative; display: flex; flex-direction: column;">
@@ -58,7 +66,7 @@
         </div>
         <div v-else>
           <div class="search-menu" @click="searchOn = true;">
-            <v-icon style="font-size: 30px; color: #393f45;">search</v-icon>
+            <img src="../assets/img/common/naver2-on.svg" style="width: 25px; margin-right: 5px;" />
             <div>News Search</div>
           </div>
           <div class="side-menu line">
@@ -222,10 +230,10 @@ export default {
       }
     },
     sideMenuClose() {
-      if(this.searchOn) {
+      if (this.searchOn) {
         this.searchOn = false;
       } else {
-        this.hideMonitorSlideMenu()
+        this.hideMonitorSlideMenu();
       }
     }
   }
@@ -251,7 +259,6 @@ export default {
 .side-menu {
   display: flex;
   flex-direction: column;
-  align-items: center;
   padding-top: 20px;
   &.line {
     border-top: 1px solid #dedede;
