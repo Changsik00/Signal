@@ -1,8 +1,14 @@
 <template>
   <section>
     <v-layout class="main-layer">
-      <FeedColumn :keyword="keyword" v-for="keyword in getKeywords" :key="keyword" />
-      <FeedColumn v-if="$store.state.snsConnect.twitterTimeline" :twitter-timeline="true" />
+      <Container style="display: flex; " :orientation="'horizontal'">
+        <Draggable v-for="keyword in getKeywords" :key="keyword">
+          <FeedColumn :keyword="keyword" />
+        </Draggable>
+        <Draggable v-if="$store.state.snsConnect.twitterTimeline">
+          <FeedColumn :twitter-timeline="true" />
+        </Draggable>
+      </Container>
     </v-layout>
 
     <v-navigation-drawer
@@ -116,10 +122,14 @@
 <script>
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import FeedColumn from "../components/FeedColumn";
+import { Container, Draggable } from "vue-smooth-dnd";
+// import { applyDrag, generateItems } from "./utils";
 
 export default {
   components: {
-    FeedColumn
+    FeedColumn,
+    Container,
+    Draggable
   },
   data() {
     return {

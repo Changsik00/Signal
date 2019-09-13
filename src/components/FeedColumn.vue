@@ -114,13 +114,17 @@ export default {
 
 <style lang="scss">
 .feed-column {
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
   width: 360px;
   height: 100%;
-  margin: 0px 2px;
+  margin-right: 4px;
+  overflow: hidden;
 }
 
 .feed-column-title {
+  max-height: 50px;
+  height: 50px;
   padding: 10px;
   background-color: $greenblue2;
 
@@ -138,9 +142,8 @@ export default {
 }
 
 .feeds-layer {
-  width: 360px;
+  flex-grow: 1;
   overflow-y: auto;
-  height: 100%;
 }
 
 .pl4 {
