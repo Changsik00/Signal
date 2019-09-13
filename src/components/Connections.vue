@@ -1,5 +1,9 @@
 <template>
-  <v-dialog v-model="$store.state.showConnections" width="500" transition="dialog-bottom-transition">
+  <v-dialog
+    v-model="$store.state.showConnections"
+    width="500"
+    transition="dialog-bottom-transition"
+  >
     <v-card>
       <v-toolbar dark color="primary">
         <v-toolbar-title>Connections</v-toolbar-title>
@@ -99,7 +103,33 @@ export default {
     snsConnect(sns, result) {
       switch (sns) {
         case "facebook":
-          console.log("#@# facebook", result.credential.accessToken);
+          const token = result.credential.accessToken;
+          if (token && token.length > 0) {
+            this.$axios
+              .get(
+                "https://graph.facebook.com/me/accounts?access_token=" + token
+              )
+              .then(response => {
+                console.log("#@# facebook response", response);
+                const page = response.data.data; 
+                const pageCount = page.length;
+                if (pageCount == 0) {
+                  this.$showToast("Facebook Page 계정이 반듯이 필요합니다.");
+                  return;
+                }
+                if (pageCount > 1) {
+                  this.$showToast("Facebook Page는 하나만 관리 됩니다.");
+                  return;
+                }
+                const params = {
+                  firebase_access_token: this.$store.state.userToken,
+                  id: page[0].id,
+                  access_token: page[0].access_token,
+                  secret: page[0].name
+                };
+                this.$store.dispatch("requestFacebookConnection", params);
+              });
+          }
           break;
 
         case "twitter":

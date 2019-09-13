@@ -131,6 +131,11 @@ const store = new Vuex.Store({
       state.snsConnect.twitterAccessTotken = params.access_token;
       state.snsConnect.twitterName = params.name;
       state.snsConnect.twitterSecret = params.secret;
+    },
+    facebookConnection(state, params) {
+      console.log("#@# facebookConnection", params);
+      state.snsConnect.facebook = true;
+      state.snsConnect.facebookAccessTotken = params.access_token;
     }
   },
   actions: {
@@ -175,6 +180,11 @@ const store = new Vuex.Store({
         //     console.log("#@# twitter2", response2);
         //   }
         // });
+      });
+    },
+    requestFacebookConnection({ commit }, params) {
+      axios.post("/facebook/users/", params).then(response => {
+        commit("facebookConnection", params);
       });
     }
   }
