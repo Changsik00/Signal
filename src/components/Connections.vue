@@ -103,14 +103,13 @@ export default {
     snsConnect(sns, result) {
       switch (sns) {
         case "facebook":
+          console.log("#@# facebook result", result);
           const token = result.credential.accessToken;
           if (token && token.length > 0) {
             this.$axios
-              .get(
-                "https://graph.facebook.com/me/accounts?access_token=" + token
-              )
+              .get("https://graph.facebook.com/me/accounts?access_token=" + token)
               .then(response => {
-                console.log("#@# facebook response", response);
+                // console.log("#@# facebook response", response);
                 const page = response.data.data; 
                 const pageCount = page.length;
                 if (pageCount == 0) {
@@ -123,7 +122,8 @@ export default {
                 }
                 const params = {
                   firebase_access_token: this.$store.state.userToken,
-                  id: page[0].id,
+                  // id: page[0].id,
+                  id: result.additionalUserInfo.profile.id,
                   access_token: page[0].access_token,
                   secret: page[0].name
                 };
