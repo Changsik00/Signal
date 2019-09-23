@@ -2,11 +2,8 @@
   <section>
     <v-layout class="main-layer">
       <Container style="display: flex; " :orientation="'horizontal'">
-        <Draggable v-for="keyword in getKeywords" :key="keyword">
-          <FeedColumn :keyword="keyword" />
-        </Draggable>
-        <Draggable v-if="$store.state.snsConnect.twitterTimeline">
-          <FeedColumn :twitter-timeline="true" />
+        <Draggable v-for="feed in getFeeds" :key="feed">
+          <FeedColumn :type="feed.type"  :data="feed.data" />
         </Draggable>
       </Container>
     </v-layout>
