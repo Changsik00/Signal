@@ -3,7 +3,6 @@ import Vuex from "vuex";
 import router from "./router";
 import axios from "axios";
 import firebase from "firebase";
-import { stat } from "fs";
 var firebaseConfig = {
   apiKey: "AIzaSyCo8MlwzJ_FMuWCbhhhaHpaGluLfX7hTak",
   authDomain: "signal-97eaf.firebaseapp.com",
@@ -58,9 +57,14 @@ const store = new Vuex.Store({
       return state.userToken != null && state.userToken.length > 0;
     },
     getKeywords(state) {
-      return state.keyowrds;
+      return state.feeds.filter(d => d.type == "KEY_WORD");
     },
     getFeeds(state) {
+      if (state.feeds.length == 0) {
+        state.feeds.push({ type: "KEY_WORD", data: "bts" });
+        state.feeds.push({ type: "KEY_WORD", data: "블랙핑크" });
+        state.feeds.push({ type: "TIWTTER_TIMELINE", data: "" });
+      }
       return state.feeds;
     },
     monitorSlideMenu(state) {
@@ -129,7 +133,7 @@ const store = new Vuex.Store({
       this.commit("addFeed", { type: state.FEED_TYPE.KEY_WORD, data: keyword });
     },
     removeKeyword(state, keyword) {
-      state.keyowrds = _.filter(state.keyowrds, d => d != keyword);
+      state.feeds = _.filter(state.feeds, d => d.data != keyword);
     },
     addFeed(state, feed) {
       console.log("#@# addFeed", feed);

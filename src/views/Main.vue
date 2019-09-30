@@ -2,8 +2,8 @@
   <section>
     <v-layout class="main-layer">
       <Container style="display: flex; " :orientation="'horizontal'">
-        <Draggable v-for="feed in getFeeds" :key="feed">
-          <FeedColumn :type="feed.type"  :data="feed.data" />
+        <Draggable v-for="(feed, i) in getFeeds" :key="i">
+          <FeedColumn :data="feed" />
         </Draggable>
       </Container>
     </v-layout>
@@ -49,13 +49,13 @@
               </v-btn>
             </div>
           </v-layout>
-          <v-layout align-center class="menu" v-for="keyword in getKeywords" :key="keyword">
-            {{keyword}}
+          <v-layout align-center class="menu" v-for="keyword in getKeywords" :key="keyword.data">
+            {{keyword.data}}
             <v-spacer></v-spacer>
             <v-btn
               icon
               style="width: 30px; height: 30px; margin: 0;"
-              @click="removeKeyword(keyword)"
+              @click="removeKeyword(keyword.data)"
             >
               <v-icon>delete</v-icon>
             </v-btn>
@@ -120,7 +120,6 @@
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import FeedColumn from "../components/FeedColumn";
 import { Container, Draggable } from "vue-smooth-dnd";
-// import { applyDrag, generateItems } from "./utils";
 
 export default {
   components: {
@@ -141,7 +140,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["monitorSlideMenu", "getKeywords"])
+    ...mapGetters(["monitorSlideMenu", "getKeywords", "getFeeds"])
   },
   created() {
     this.setKeywords();

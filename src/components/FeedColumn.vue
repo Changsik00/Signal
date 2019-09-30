@@ -1,20 +1,20 @@
 <template>
   <div class="feed-column">
-    <v-layout v-if="keyword" align-center class="feed-column-title">
+    <v-layout v-if="data.type == $store.state.FEED_TYPE.KEY_WORD" align-center class="feed-column-title">
       <v-icon class="icon">search</v-icon>
-      <div>{{ keyword}}</div>
+      <div>{{ data.data}}</div>
       <v-spacer></v-spacer>
-      <v-btn icon style="width: 30px; height: 30px; margin: 0;" @click="removeKeyword(keyword)">
-        <v-icon style="color: #b2ebf2;" @click="removeKeyword(keyword)">delete</v-icon>
+      <v-btn icon style="width: 30px; height: 30px; margin: 0;" @click="removeKeyword(data.data)">
+        <v-icon style="color: #b2ebf2;">delete</v-icon>
       </v-btn>
     </v-layout>
-    <v-layout v-if="twitterTimeline" align-center class="feed-column-title">
+    <v-layout v-if="data.type == $store.state.FEED_TYPE.TIWTTER_TIMELINE" align-center class="feed-column-title">
       <img class="icon" src="../assets/img/common/twitter-on.svg" />
       <div>Timeline</div>
     </v-layout>
     <div class="feeds-layer">
       <KeywordCard
-        v-if="type == $store.state.FEED_TYPE.KEY_WORD"
+        v-if="data.type == $store.state.FEED_TYPE.KEY_WORD"
         v-for="(feed, index) in feedList"
         :item="feed"
         :index="index"
@@ -23,7 +23,7 @@
         @detectLastPosition="detectLastPosition"
       />
       <TwitterCard
-        v-if="$store.state.FEED_TYPE.TIWTTER_TIMELINE"
+        v-if="data.type == $store.state.FEED_TYPE.TIWTTER_TIMELINE"
         v-for="(feed, index) in feedList"
         :item="feed"
         :key="index"
@@ -39,7 +39,7 @@ import TwitterCard from "./TwitterCard";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
-  props: ["type", "data"],
+  props: ["data"],
   components: {
     KeywordCard,
     TwitterCard
@@ -48,8 +48,6 @@ export default {
     return {
       feedList: [],
       total: 0,
-      todayCnt: 0,
-      today: null,
       start: 1,
       offset: 30,
       requestLock: false
@@ -57,31 +55,24 @@ export default {
   },
   created() {
     this.requestfeed();
-    this.today = new Date();
+    console.log("#@# data", this.data)
   },
   methods: {
     ...mapActions(["removeKeyword"]),
-    isToday(date) {
-      const d = new Date(date);
-      return this.today.toDateString() == d.toDateString();
-    },
     requestfeed() {
       if (!this.requestLock) {
         this.requestLock = true;
-        if (this.keyword) {
+        if (this.data.type == "KEY_WORD") {
           let baseURL = "https://test.signal.bz/api/news/";
           this.$axios
             .get(baseURL, {
-              params: { keyword: this.keyword, start: this.start }
+              params: { keyword: this.data.data, start: this.start }
             })
             .then(res => {
               this.total = res.data.total;
               if (this.total > this.start) {
                 res.data.items.forEach(item => {
                   this.feedList.push(item);
-                  if (this.isToday(item.pubDate)) {
-                    this.todayCnt++;
-                  }
                 });
 
                 this.start = this.feedList.length + 1;
@@ -91,7 +82,7 @@ export default {
             .catch(error => (this.requestLock = false));
         }
 
-        if (this.twitterTimeline) {
+        if (this.data.type == "TIWTTER_TIMELINE") {
           this.$axios
             .get("/twitter/timeline", {
               params: { firebase_access_token: this.$store.state.userToken }
