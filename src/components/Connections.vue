@@ -16,7 +16,7 @@
         <div class="headline">SNS 계정 연결</div>
         <v-layout class="mt20" row>
           <div class="m20 pointer">
-            <v-layout v-if="isFacebookConneted">
+            <v-layout v-if="$store.state.snsConnect.facebook">
               <img class="icon-sns-connection" src="../assets/img/common/facebook-on.svg" />
               <span class="ml10 subtitle-2 font-weight-light">연결</span>
             </v-layout>
