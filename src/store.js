@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import router from "./router";
 import axios from "axios";
 import firebase from "firebase";
+import { stat } from "fs";
 var firebaseConfig = {
   apiKey: "AIzaSyCo8MlwzJ_FMuWCbhhhaHpaGluLfX7hTak",
   authDomain: "signal-97eaf.firebaseapp.com",
@@ -28,6 +29,7 @@ const store = new Vuex.Store({
     userToken: localStorage.getItem("access_token"),
     monitorSlideMenu: false,
     keyowrds: [],
+    feeds: [],
     snsConnect: {
       facebook: false,
       facebookAccessToken: "",
@@ -36,6 +38,10 @@ const store = new Vuex.Store({
       twitterAccessTotken: "",
       twitterName: "",
       twitterSecret: ""
+    },
+    FEED_TYPE: {
+      KEY_WORD: "KEY_WORD",
+      TIWTTER_TIMELINE: "TIWTTER_TIMELINE"
     }
   },
   getters: {
@@ -53,6 +59,9 @@ const store = new Vuex.Store({
     },
     getKeywords(state) {
       return state.keyowrds;
+    },
+    getFeeds(state) {
+      return state.feeds;
     },
     monitorSlideMenu(state) {
       return state.monitorSlideMenu;
@@ -76,6 +85,12 @@ const store = new Vuex.Store({
         state.loadingTimeout = null;
         state.loadingCheckSum = 0;
       }
+    },
+    showMonitorSlideMenu(state) {
+      state.monitorSlideMenu = true;
+    },
+    hideMonitorSlideMenu(state) {
+      state.monitorSlideMenu = false;
     },
     showSnackbar(state, message) {
       state.snackbar = true;
@@ -111,19 +126,14 @@ const store = new Vuex.Store({
     },
     addKeyword(state, keyword) {
       state.keyowrds.push(keyword);
+      this.commit("addFeed", { type: state.FEED_TYPE.KEY_WORD, data: keyword });
     },
     removeKeyword(state, keyword) {
       state.keyowrds = _.filter(state.keyowrds, d => d != keyword);
     },
-    setLoading(state, visible) {
-      state.loading = visible;
-      setTimeout(() => (state.loading = false), 10000);
-    },
-    showMonitorSlideMenu(state) {
-      state.monitorSlideMenu = true;
-    },
-    hideMonitorSlideMenu(state) {
-      state.monitorSlideMenu = false;
+    addFeed(state, feed) {
+      console.log("#@# addFeed", feed);
+      state.feeds.push(feed);
     },
     twiiterConnection(state, params) {
       console.log("#@# twiiterConnection", params);

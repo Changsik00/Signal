@@ -14,7 +14,7 @@
     </v-layout>
     <div class="feeds-layer">
       <KeywordCard
-        v-if="keyword"
+        v-if="type == $store.state.FEED_TYPE.KEY_WORD"
         v-for="(feed, index) in feedList"
         :item="feed"
         :index="index"
@@ -23,11 +23,12 @@
         @detectLastPosition="detectLastPosition"
       />
       <TwitterCard
-        v-if="twitterTimeline"
+        v-if="$store.state.FEED_TYPE.TIWTTER_TIMELINE"
         v-for="(feed, index) in feedList"
         :item="feed"
         :key="index"
       />
+      <!-- FeedCard 에서 분기처리..?-->
     </div>
   </div>
 </template>
@@ -38,7 +39,7 @@ import TwitterCard from "./TwitterCard";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
-  props: ["keyword", "twitterTimeline"],
+  props: ["type", "data"],
   components: {
     KeywordCard,
     TwitterCard
