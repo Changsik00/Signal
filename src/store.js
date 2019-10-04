@@ -27,7 +27,6 @@ const store = new Vuex.Store({
     snackbarTimeout: null,
     userToken: localStorage.getItem("access_token"),
     monitorSlideMenu: false,
-    keyowrds: [],
     feeds: [],
     snsConnect: {
       facebook: false,
@@ -39,7 +38,8 @@ const store = new Vuex.Store({
       twitterSecret: ""
     },
     FEED_TYPE: {
-      KEY_WORD: "KEY_WORD",
+      NAVER_KEY_WORD: "NAVER_KEY_WORD",
+      TWITTER_KEY_WORD: "TWITTER_KEY_WORD",
       TIWTTER_TIMELINE: "TIWTTER_TIMELINE"
     }
   },
@@ -56,15 +56,13 @@ const store = new Vuex.Store({
     isLogin(state) {
       return state.userToken != null && state.userToken.length > 0;
     },
-    getKeywords(state) {
-      return state.feeds.filter(d => d.type == "KEY_WORD");
+    getNaverKeywords(state) {
+      return state.feeds.filter(d => d.type == "NAVER_KEY_WORD");
+    },
+    getTwitterKeywords(state) {
+      return state.feeds.filter(d => d.type == "TWITTER_KEY_WORD");
     },
     getFeeds(state) {
-      if (state.feeds.length == 0) {
-        state.feeds.push({ type: "KEY_WORD", data: "bts" });
-        state.feeds.push({ type: "KEY_WORD", data: "블랙핑크" });
-        state.feeds.push({ type: "TIWTTER_TIMELINE", data: "" });
-      }
       return state.feeds;
     },
     monitorSlideMenu(state) {
@@ -125,29 +123,31 @@ const store = new Vuex.Store({
       localStorage.setItem("access_token", "");
       router.push({ name: "home" });
     },
-    setKeywords(state, keyowrds) {
-      state.keyowrds = keyowrds;
+    removeFeed(state, feed) {
+      state.feeds = _.filter(
+        state.feeds,
+        d => !(d.data == feed.data && d.type == feed.type)
+      );
     },
-    addKeyword(state, keyword) {
-      state.keyowrds.push(keyword);
-      this.commit("addFeed", { type: state.FEED_TYPE.KEY_WORD, data: keyword });
-    },
-    removeKeyword(state, keyword) {
-      state.feeds = _.filter(state.feeds, d => d.data != keyword);
+    setFeeds(state) {
+      let dummyFeeds = [];
+      if (state.feeds.length == 0) {
+        dummyFeeds.push({ type: "NAVER_KEY_WORD", data: "bts" });
+        dummyFeeds.push({ type: "NAVER_KEY_WORD", data: "블랙핑크" });
+        dummyFeeds.push({ type: "TIWTTER_TIMELINE", data: "" });
+      }
+      state.feeds = dummyFeeds;
     },
     addFeed(state, feed) {
-      console.log("#@# addFeed", feed);
       state.feeds.push(feed);
     },
     twiiterConnection(state, params) {
-      console.log("#@# twiiterConnection", params);
       state.snsConnect.twitter = true;
       state.snsConnect.twitterAccessTotken = params.access_token;
       state.snsConnect.twitterName = params.name;
       state.snsConnect.twitterSecret = params.secret;
     },
     facebookConnection(state, params) {
-      console.log("#@# facebookConnection", params);
       state.snsConnect.facebook = true;
       state.snsConnect.facebookAccessTotken = params.access_token;
     }
@@ -176,15 +176,14 @@ const store = new Vuex.Store({
       firebase.auth().signOut();
       commit("logout");
     },
-    setKeywords({ commit }) {
-      const testKeywords = ["bts", "노노재팬"];
-      commit("setKeywords", testKeywords);
+    setFeeds({ commit }) {
+      commit("setFeeds");
     },
-    addKeyword({ commit }, keyword) {
-      commit("addKeyword", keyword);
+    addFeed({ commit }, feed) {
+      commit("addFeed", feed);
     },
-    removeKeyword({ commit }, keyword) {
-      commit("removeKeyword", keyword);
+    removeFeed({ commit }, feed) {
+      commit("removeFeed", feed);
     },
     requestTwitterConnection({ commit }, params) {
       axios.post("/twitter/users/", params).then(response => {

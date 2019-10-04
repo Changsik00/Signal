@@ -18,7 +18,16 @@
     >
       <v-layout align-center style="padding: 10px 0; background-color: whitesmoke;">
         <div v-if="searchOn" style="display: flex; align-items: center; margin-left: 10px;">
-          <img src="../assets/img/common/naver2-on.svg" style="width: 25px; margin-right: 5px;" />
+          <img
+            v-if="searchType == 'NAVER_KEY_WORD'"
+            src="../assets/img/common/naver2-on.svg"
+            style="width: 25px; margin-right: 5px;"
+          />
+          <img
+            v-if="searchType == 'TWITTER_KEY_WORD'"
+            src="../assets/img/common/twitter-on.svg"
+            style="width: 25px; margin-right: 5px;"
+          />
           <div>News Search</div>
         </div>
         <div
@@ -33,7 +42,11 @@
       </v-layout>
       <div style="position: relative; display: flex; flex-direction: column;">
         <div v-if="searchOn" class="side-menu">
-          <v-layout v-if="getKeywords.length < 3" align-center style="width: 100%; padding: 10px">
+          <v-layout
+            v-if="searchKeywords.length < 3"
+            align-center
+            style="width: 100%; padding: 10px"
+          >
             <b-input style="flex-grow: 1" type="text" v-model="searchKeyword" />
             <div v-if="!searchCheck">
               <v-btn icon style="margin: 0 0 0 10px" @click="search">
@@ -49,26 +62,35 @@
               </v-btn>
             </div>
           </v-layout>
-          <v-layout align-center class="menu" v-for="keyword in getKeywords" :key="keyword.data">
+          <v-layout align-center class="menu" v-for="keyword in searchKeywords" :key="keyword.data">
             {{keyword.data}}
             <v-spacer></v-spacer>
             <v-btn
               icon
               style="width: 30px; height: 30px; margin: 0;"
-              @click="removeKeyword(keyword.data)"
+              @click="removeFeed(keyword)"
             >
               <v-icon>delete</v-icon>
             </v-btn>
           </v-layout>
           <div v-if="searchCheck" class="side-menu line">
-            <div v-for="(news, i) in searchPreviewList" :key="i" style="padding: 10px;">
-              <div v-html="news.title" style="font-size: 16px; font-weight: bold;"></div>
-              <div class="mt10" style="font-size: 14px;" v-html="news.description"></div>
+            <div v-for="(feed, i) in searchPreviewList" :key="i" style="padding: 10px;">
+              <div
+                v-if="feed.title"
+                v-html="feed.title"
+                style="font-size: 16px; font-weight: bold;"
+              ></div>
+              <div
+                v-if="feed.description"
+                class="mt10"
+                style="font-size: 14px;"
+                v-html="feed.description"
+              ></div>
             </div>
           </div>
         </div>
         <div v-else>
-          <div class="search-menu" @click="searchOn = true;">
+          <div class="search-menu" @click="showSearch('NAVER_KEY_WORD')">
             <img src="../assets/img/common/naver2-on.svg" style="width: 25px; margin-right: 5px;" />
             <div>News Search</div>
           </div>
@@ -133,21 +155,47 @@ export default {
         facebook: false,
         twitter: false
       },
+      searchType: "",
       searchKeyword: "",
       searchOn: false,
       searchCheck: false,
-      searchPreviewList: []
+      searchPreviewList: [],
+      searchKeywords: []
     };
   },
   computed: {
-    ...mapGetters(["monitorSlideMenu", "getKeywords", "getFeeds"])
+    ...mapGetters(["monitorSlideMenu", "getNaverKeywords", "getTwitterKeywords", "getFeeds"])
+  },
+  watch: {
+    getNaverKeywords(newValue, oldValue) {
+      console.log("#@# getNaverKeywords", newValue)
+      this.searchKeywords = [];
+      this.searchKeywords = newValue;
+    },
+    getTwitterKeywords(newValue, oldValue) {
+      this.searchKeywords = [];
+      this.searchKeywords = newValue;
+    },
   },
   created() {
-    this.setKeywords();
+    this.setFeeds();
+    this.$store.watch(
+      (state, getters) => getters.getFeeds,
+      (newValue, oldValue) => {
+        switch (this.searchType) {
+        case "NAVER_KEY_WORD":
+          this.searchKeywords = this.getNaverKeywords;
+          break;
+        case "TWITTER_KEY_WORD":
+          this.searchKeywords = this.getTwitterKeywords;
+          break;
+      }
+      },
+    );
   },
   methods: {
     ...mapMutations(["hideMonitorSlideMenu"]),
-    ...mapActions(["setKeywords", "removeKeyword", "addKeyword"]),
+    ...mapActions(["setFeeds", "removeFeed", "addFeed"]),
     search() {
       if (this.searchKeyword.length == 0) {
         this.$showToast("검색어를 입력해 주세요!");
@@ -160,7 +208,7 @@ export default {
         return;
       }
 
-      if (_.find(this.getKeywords, d => d == this.searchKeyword)) {
+      if (_.find(this.getNaverKeywords, d => d == this.searchKeyword)) {
         this.$showToast("존재하는 검색어 입니다.");
         this.searchKeyword = "";
         return;
@@ -188,7 +236,8 @@ export default {
     acceptKeyword() {
       this.searchCheck = false;
       this.searchPreviewList = [];
-      this.addKeyword(this.searchKeyword);
+
+      this.addFeed({ type: this.searchType, data: this.searchKeyword });
       this.searchKeyword = "";
     },
     cancelKeyword() {
@@ -213,12 +262,12 @@ export default {
       }
     },
     twitter(type) {
-      if (!this.$store.state.snsConnect.twitter) {
-        this.$showToast("twitter 연결이 필요합니다.");
-        this.$store.state.showConnections = true;
-        this.hideMonitorSlideMenu();
-        return;
-      }
+      // if (!this.$store.state.snsConnect.twitter) {
+      //   this.$showToast("twitter 연결이 필요합니다.");
+      //   this.$store.state.showConnections = true;
+      //   this.hideMonitorSlideMenu();
+      //   return;
+      // }
       switch (type) {
         case "Mentions":
           break;
@@ -228,6 +277,7 @@ export default {
         case "Likes":
           break;
         case "KeywordSearch":
+          this.showSearch("TWITTER_KEY_WORD");
           break;
         case "UserSearch":
           break;
@@ -238,8 +288,21 @@ export default {
     sideMenuClose() {
       if (this.searchOn) {
         this.searchOn = false;
+        this.searchType = "";
       } else {
         this.hideMonitorSlideMenu();
+      }
+    },
+    showSearch(type) {
+      this.searchOn = true;
+      this.searchType = type;
+      switch (type) {
+        case "NAVER_KEY_WORD":
+          this.searchKeywords = this.getNaverKeywords;
+          break;
+        case "TWITTER_KEY_WORD":
+          this.searchKeywords = this.getTwitterKeywords;
+          break;
       }
     }
   }

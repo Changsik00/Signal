@@ -1,11 +1,11 @@
 <template>
   <div class="feed-column">
-    <v-layout v-if="data.type == $store.state.FEED_TYPE.KEY_WORD" align-center class="feed-column-title">
+    <v-layout v-if="data.type == $store.state.FEED_TYPE.NAVER_KEY_WORD" align-center class="feed-column-title">
       <v-icon class="icon">search</v-icon>
       <div>{{ data.data}}</div>
       <v-spacer></v-spacer>
-      <v-btn icon style="width: 30px; height: 30px; margin: 0;" @click="removeKeyword(data.data)">
-        <v-icon style="color: #b2ebf2;">delete</v-icon>
+      <v-btn icon style="width: 30px; height: 30px; margin: 0;" @click="removeFeed(data)">
+        <v-icon style="color: #b2ebf2;"">delete</v-icon>
       </v-btn>
     </v-layout>
     <v-layout v-if="data.type == $store.state.FEED_TYPE.TIWTTER_TIMELINE" align-center class="feed-column-title">
@@ -14,7 +14,7 @@
     </v-layout>
     <div class="feeds-layer">
       <KeywordCard
-        v-if="data.type == $store.state.FEED_TYPE.KEY_WORD"
+        v-if="data.type == $store.state.FEED_TYPE.NAVER_KEY_WORD"
         v-for="(feed, index) in feedList"
         :item="feed"
         :index="index"
@@ -58,11 +58,11 @@ export default {
     console.log("#@# data", this.data)
   },
   methods: {
-    ...mapActions(["removeKeyword"]),
+    ...mapActions(["removeFeed"]),
     requestfeed() {
       if (!this.requestLock) {
         this.requestLock = true;
-        if (this.data.type == "KEY_WORD") {
+        if (this.data.type == "NAVER_KEY_WORD") {
           let baseURL = "https://test.signal.bz/api/news/";
           this.$axios
             .get(baseURL, {
