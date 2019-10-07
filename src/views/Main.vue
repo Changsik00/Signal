@@ -65,11 +65,7 @@
           <v-layout align-center class="menu" v-for="keyword in searchKeywords" :key="keyword.data">
             {{keyword.data}}
             <v-spacer></v-spacer>
-            <v-btn
-              icon
-              style="width: 30px; height: 30px; margin: 0;"
-              @click="removeFeed(keyword)"
-            >
+            <v-btn icon style="width: 30px; height: 30px; margin: 0;" @click="removeFeed(keyword)">
               <v-icon>delete</v-icon>
             </v-btn>
           </v-layout>
@@ -86,6 +82,7 @@
                 style="font-size: 14px;"
                 v-html="feed.description"
               ></div>
+              <div v-if="feed.text" class="mt10" style="font-size: 14px;" v-html="feed.text"></div>
             </div>
           </div>
         </div>
@@ -107,9 +104,18 @@
                 style="width: 25px; margin-right: 5px;"
               /> Facebook
             </v-layout>
-            <div class="menu" @click="facebook('VisitorPosts')">Visitor Posts</div>
-            <div class="menu" @click="facebook('PageMentions')">Page Mentions</div>
-            <div class="menu" @click="facebook('PageSearch')">Page Search</div>
+            <div class="menu" @click="facebook('VisitorPosts')">
+              Visitor Posts
+              <span style="font-size: 12px; color: #9da6af">(준비중)</span>
+            </div>
+            <div class="menu" @click="facebook('PageMentions')">
+              Page Mentions
+              <span style="font-size: 12px; color: #9da6af">(준비중)</span>
+            </div>
+            <div class="menu" @click="facebook('PageSearch')">
+              Page Search
+              <span style="font-size: 12px; color: #9da6af">(준비중)</span>
+            </div>
           </div>
           <div class="side-menu line">
             <v-layout align-center class="title">
@@ -122,15 +128,32 @@
                 v-else
                 src="../assets/img/common/twitter-off.svg"
                 style="width: 25px; margin-right: 5px;"
-              />
-              Twitter
+              /> Twitter
             </v-layout>
-            <div class="menu" @click="twitter('Mentions')">Mentions</div>
-            <div class="menu" @click="twitter('Timeline')">Timeline</div>
-            <div class="menu" @click="twitter('Likes')">Likes</div>
-            <div class="menu" @click="twitter('KeywordSearch')">Keyword Search</div>
-            <div class="menu" @click="twitter('UserSearch')">User Search</div>
-            <div class="menu" @click="twitter('Lists')">Lists</div>
+            <div class="menu" @click="twitter('Mentions')">
+              Mentions
+              <span v-if="connectTwitterMention">(모니터링)</span>
+            </div>
+            <div class="menu" @click="twitter('Timeline')">
+              Timeline
+              <span v-if="connectTwitterTimeline">(모니터링)</span>
+            </div>
+            <div class="menu" @click="twitter('Likes')">
+              Likes
+              <span style="font-size: 12px; color: #9da6af">(준비중)</span>
+            </div>
+            <div class="menu" @click="twitter('KeywordSearch')">
+              Keyword Search
+              <span style="font-size: 12px; color: #9da6af">(준비중)</span>
+            </div>
+            <div class="menu" @click="twitter('UserSearch')">
+              User Search
+              <span style="font-size: 12px; color: #9da6af">(준비중)</span>
+            </div>
+            <div class="menu" @click="twitter('Lists')">
+              Lists
+              <span style="font-size: 12px; color: #9da6af">(준비중)</span>
+            </div>
           </div>
         </div>
       </div>
@@ -164,18 +187,18 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["monitorSlideMenu", "getNaverKeywords", "getTwitterKeywords", "getFeeds"])
-  },
-  watch: {
-    getNaverKeywords(newValue, oldValue) {
-      console.log("#@# getNaverKeywords", newValue)
-      this.searchKeywords = [];
-      this.searchKeywords = newValue;
+    ...mapGetters([
+      "monitorSlideMenu",
+      "getNaverKeywords",
+      "getTwitterKeywords",
+      "getFeeds"
+    ]),
+    connectTwitterTimeline() {
+      return _.findIndex(this.getFeeds, d => d.type == "TWITTER_TIMELINE") > 0;
     },
-    getTwitterKeywords(newValue, oldValue) {
-      this.searchKeywords = [];
-      this.searchKeywords = newValue;
-    },
+    connectTwitterMention() {
+      return _.findIndex(this.getFeeds, d => d.type == "TWITTER_TENTION") > 0;
+    }
   },
   created() {
     this.setFeeds();
@@ -183,14 +206,14 @@ export default {
       (state, getters) => getters.getFeeds,
       (newValue, oldValue) => {
         switch (this.searchType) {
-        case "NAVER_KEY_WORD":
-          this.searchKeywords = this.getNaverKeywords;
-          break;
-        case "TWITTER_KEY_WORD":
-          this.searchKeywords = this.getTwitterKeywords;
-          break;
+          case "NAVER_KEY_WORD":
+            this.searchKeywords = this.getNaverKeywords;
+            break;
+          case "TWITTER_KEY_WORD":
+            this.searchKeywords = this.getTwitterKeywords;
+            break;
+        }
       }
-      },
     );
   },
   methods: {
@@ -216,22 +239,48 @@ export default {
 
       this.searchPreviewList = [];
       let baseURL = "https://www.signal.bz/api/news/";
-      if (
-        window.location.href.startsWith("http://localhost") ||
-        window.location.href.startsWith("https://test.signal.bz")
-      ) {
-        baseURL = "https://test.signal.bz/api/news/";
+      if (this.searchType == "NAVER_KEY_WORD") {
+        if (
+          window.location.href.startsWith("http://localhost") ||
+          window.location.href.startsWith("https://test.signal.bz")
+        ) {
+          baseURL = "https://test.signal.bz/api/news/";
+        }
+      } else if (this.searchType == "TWITTER_KEY_WORD") {
+        if (
+          window.location.href.startsWith("http://localhost") ||
+          window.location.href.startsWith("https://test.signal.bz")
+        ) {
+          baseURL = "/twitter/user_keywords/";
+        }
       }
-      this.$axios
-        .get(baseURL, {
-          params: { keyword: this.searchKeyword, start: 1 }
-        })
-        .then(res => {
-          res.data.items.forEach(item => {
-            this.searchPreviewList.push(item);
+
+      if (this.searchType == "NAVER_KEY_WORD") {
+        this.$axios
+          .get(baseURL, {
+            params: { keyword: this.searchKeyword, start: 1 }
+          })
+          .then(res => {
+            res.data.items.forEach(item => {
+              this.searchPreviewList.push(item);
+            });
+            this.searchCheck = true;
           });
-          this.searchCheck = true;
-        });
+      } else if (this.searchType == "TWITTER_KEY_WORD") {
+        this.$axios
+          .post(baseURL, {
+            params: {
+              text: this.searchKeyword,
+              firebase_access_token: this.$store.state.userToken
+            }
+          })
+          .then(res => {
+            res.data.items.forEach(item => {
+              this.searchPreviewList.push(item);
+            });
+            this.searchCheck = true;
+          });
+      }
     },
     acceptKeyword() {
       this.searchCheck = false;
@@ -270,9 +319,14 @@ export default {
       // }
       switch (type) {
         case "Mentions":
+          if (!this.connectTwitterMention) {
+            this.getFeeds.push({ type: "TWITTER_MENTION", data: "" });
+          }
           break;
         case "Timeline":
-          this.$store.state.snsConnect.twitterTimeline = true;
+          if (!this.connectTwitterTimeline) {
+            this.getFeeds.push({ type: "TWITTER_TIMELINE", data: "" });
+          }
           break;
         case "Likes":
           break;

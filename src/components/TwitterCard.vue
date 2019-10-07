@@ -4,20 +4,10 @@
       column
       style="padding: 20px; background-color: white"
     >
-      <!-- <div style="font-size: 18px; font-weight: bold;" v-html="item.title"></div>
-      <div style="font-size: 14px; color: #9da6af">{{dateToFormat(item.pubDate)}}</div>
-      <div class="mt10" style="word-break: break-all;" v-html="item.description"></div>
-      <div class="see-more">
-        <a @click="seeMore">See More</a>
-      </div>
-      <v-img
-        v-if="ogImage.length > 1"
-        class="feed-image"
-        @click="seeMore"
-        :aspect-ratio="2 / 1"
-        :src="ogImage"
-      ></v-img> -->
-      <div class="mt10" style="word-break: break-all;" v-html="item.text"></div>
+      <div v-if="item.text" class="mt10" style="word-break: break-all;" v-html="item.text"></div>
+      <div v-if="item.mention" class="mt10" style="word-break: break-all;" v-html="item.mention"></div>
+      <div v-if="item.created_at" class="mt10" style="font-size: 14px; color: #9da6af" v-html="item.created_at"></div>
+      <div v-if="item.create_time" class="mt10" style="font-size: 14px; color: #9da6af" v-html="item.create_time"></div>
     </v-layout>
   </div>
 </template>

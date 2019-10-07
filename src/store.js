@@ -30,17 +30,13 @@ const store = new Vuex.Store({
     feeds: [],
     snsConnect: {
       facebook: false,
-      facebookAccessToken: "",
-      twitter: false,
-      twitterTimeline: false,
-      twitterAccessTotken: "",
-      twitterName: "",
-      twitterSecret: ""
+      twitter: false
     },
     FEED_TYPE: {
       NAVER_KEY_WORD: "NAVER_KEY_WORD",
       TWITTER_KEY_WORD: "TWITTER_KEY_WORD",
-      TIWTTER_TIMELINE: "TIWTTER_TIMELINE"
+      TWITTER_TIMELINE: "TWITTER_TIMELINE",
+      TWITTER_MENTION: "TWITTER_MENTION"
     }
   },
   getters: {
@@ -110,9 +106,11 @@ const store = new Vuex.Store({
       clearTimeout(state.snackbarTimeout);
       state.snackbarTimeout = null;
     },
-    setToken(state, userToken) {
-      localStorage.setItem("access_token", userToken);
-      state.userToken = userToken;
+    login(state, data) {
+      localStorage.setItem("access_token", data.access_token);
+      state.userToken = data.access_token;
+      state.snsConnect.facebook = data.facebook;
+      state.snsConnect.twitter = data.twitter;
       state.showLogin = false;
     },
     logout(state) {
@@ -134,7 +132,7 @@ const store = new Vuex.Store({
       if (state.feeds.length == 0) {
         dummyFeeds.push({ type: "NAVER_KEY_WORD", data: "bts" });
         dummyFeeds.push({ type: "NAVER_KEY_WORD", data: "블랙핑크" });
-        dummyFeeds.push({ type: "TIWTTER_TIMELINE", data: "" });
+        dummyFeeds.push({ type: "TWITTER_TIMELINE", data: "" });
       }
       state.feeds = dummyFeeds;
     },
@@ -168,7 +166,7 @@ const store = new Vuex.Store({
     login({ commit }, params) {
       const loginApi = "/firebase/auth/";
       axios.post(loginApi, params).then(response => {
-        commit("setToken", response.data.access_token);
+        commit("login", response.data);
         router.push({ name: "main" });
       });
     },
@@ -188,11 +186,6 @@ const store = new Vuex.Store({
     requestTwitterConnection({ commit }, params) {
       axios.post("/twitter/users/", params).then(response => {
         commit("twiiterConnection", params);
-        // axios.post("/twitter/timeline/", params).then(response2 => {
-        //   if (response2.data.success) {
-        //     console.log("#@# twitter2", response2);
-        //   }
-        // });
       });
     },
     requestFacebookConnection({ commit }, params) {

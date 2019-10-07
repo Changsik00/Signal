@@ -1,16 +1,40 @@
 <template>
   <div class="feed-column">
-    <v-layout v-if="data.type == $store.state.FEED_TYPE.NAVER_KEY_WORD" align-center class="feed-column-title">
+    <v-layout
+      v-if="data.type == $store.state.FEED_TYPE.NAVER_KEY_WORD"
+      align-center
+      class="feed-column-title"
+    >
       <v-icon class="icon">search</v-icon>
       <div>{{ data.data}}</div>
       <v-spacer></v-spacer>
       <v-btn icon style="width: 30px; height: 30px; margin: 0;" @click="removeFeed(data)">
-        <v-icon style="color: #b2ebf2;"">delete</v-icon>
+        <v-icon style="color: #b2ebf2;">delete</v-icon>
       </v-btn>
     </v-layout>
-    <v-layout v-if="data.type == $store.state.FEED_TYPE.TIWTTER_TIMELINE" align-center class="feed-column-title">
+    <v-layout
+      v-if="data.type == $store.state.FEED_TYPE.TWITTER_TIMELINE"
+      align-center
+      class="feed-column-title"
+    >
       <img class="icon" src="../assets/img/common/twitter-on.svg" />
       <div>Timeline</div>
+      <v-spacer></v-spacer>
+      <v-btn icon style="width: 30px; height: 30px; margin: 0;" @click="removeFeed(data)">
+        <v-icon style="color: #b2ebf2;">delete</v-icon>
+      </v-btn>
+    </v-layout>
+    <v-layout
+      v-if="data.type == $store.state.FEED_TYPE.TWITTER_MENTION"
+      align-center
+      class="feed-column-title"
+    >
+      <img class="icon" src="../assets/img/common/twitter-on.svg" />
+      <div>Mention</div>
+      <v-spacer></v-spacer>
+      <v-btn icon style="width: 30px; height: 30px; margin: 0;" @click="removeFeed(data)">
+        <v-icon style="color: #b2ebf2;">delete</v-icon>
+      </v-btn>
     </v-layout>
     <div class="feeds-layer">
       <KeywordCard
@@ -23,12 +47,17 @@
         @detectLastPosition="detectLastPosition"
       />
       <TwitterCard
-        v-if="data.type == $store.state.FEED_TYPE.TIWTTER_TIMELINE"
+        v-if="data.type == $store.state.FEED_TYPE.TWITTER_TIMELINE"
         v-for="(feed, index) in feedList"
         :item="feed"
         :key="index"
       />
-      <!-- FeedCard 에서 분기처리..?-->
+      <TwitterCard
+        v-if="data.type == $store.state.FEED_TYPE.TWITTER_MENTION"
+        v-for="(feed, index) in feedList"
+        :item="feed"
+        :key="index"
+      />
     </div>
   </div>
 </template>
@@ -55,7 +84,6 @@ export default {
   },
   created() {
     this.requestfeed();
-    console.log("#@# data", this.data)
   },
   methods: {
     ...mapActions(["removeFeed"]),
@@ -80,11 +108,19 @@ export default {
               this.requestLock = false;
             })
             .catch(error => (this.requestLock = false));
-        }
-
-        if (this.data.type == "TIWTTER_TIMELINE") {
+        } else if (this.data.type == "TWITTER_TIMELINE") {
           this.$axios
-            .get("/twitter/timeline", {
+            .get("/twitter/timeline/", {
+              params: { firebase_access_token: this.$store.state.userToken }
+            })
+            .then(res => {
+              this.feedList = res.data;
+              this.requestLock = false;
+            })
+            .catch(error => (this.requestLock = false));
+        } else if (this.data.type == "TWITTER_MENTION") {
+          this.$axios
+            .get("/twitter/mention/", {
               params: { firebase_access_token: this.$store.state.userToken }
             })
             .then(res => {
