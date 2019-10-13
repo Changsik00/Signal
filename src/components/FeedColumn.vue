@@ -63,24 +63,24 @@
     <div class="feeds-layer">
       <KeywordCard
         v-if="data.type == $store.state.FEED_TYPE.NAVER_KEY_WORD"
-        v-for="(feed, index) in feedList"
+        v-for="(feed, index) in data.feedList"
         :item="feed"
         :index="index"
-        :last="feedList.length"
+        :last="data.feedList.length"
         :key="index"
         @detectLastPosition="detectLastPosition"
       />
       <TwitterCard
         v-if="data.type == $store.state.FEED_TYPE.TWITTER_TIMELINE 
          || data.type == $store.state.FEED_TYPE.TWITTER_MENTIONS"
-        v-for="(feed, index) in feedList"
+        v-for="(feed, index) in data.feedList"
         :item="feed"
         :key="index"
       />
       <FacebookCard
         v-if="data.type == $store.state.FEED_TYPE.FACEBOOK_POSTS 
          || data.type == $store.state.FEED_TYPE.FACEBOOK_MENTIONS"
-        v-for="(feed, index) in feedList"
+        v-for="(feed, index) in data.feedList"
         :item="feed"
         :key="index"
       />
@@ -103,7 +103,6 @@ export default {
   },
   data() {
     return {
-      feedList: [],
       total: 0,
       start: 1,
       offset: 30,
@@ -130,10 +129,10 @@ export default {
                 this.total = res.data.total;
                 if (this.total > this.start) {
                   res.data.items.forEach(item => {
-                    this.feedList.push(item);
+                    this.data.feedList.push(item);
                   });
 
-                  this.start = this.feedList.length + 1;
+                  this.start = this.data.feedList.length + 1;
                 }
                 this.requestLock = false;
               })
@@ -148,7 +147,7 @@ export default {
                 }
               })
               .then(res => {
-                this.feedList = res.data;
+                this.data.feedList = res.data;
                 this.requestLock = false;
               })
               .catch(error => (this.requestLock = false));
@@ -162,7 +161,7 @@ export default {
                 }
               })
               .then(res => {
-                this.feedList = res.data;
+                this.data.feedList = res.data;
                 this.requestLock = false;
               })
               .catch(error => (this.requestLock = false));
@@ -177,7 +176,7 @@ export default {
                 }
               })
               .then(res => {
-                this.feedList = res.data;
+                this.data.feedList = res.data;
                 this.requestLock = false;
               })
               .catch(error => (this.requestLock = false));
@@ -191,7 +190,7 @@ export default {
                 }
               })
               .then(res => {
-                this.feedList = res.data;
+                this.data.feedList = res.data;
                 this.requestLock = false;
               })
               .catch(error => (this.requestLock = false));

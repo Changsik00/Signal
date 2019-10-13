@@ -144,8 +144,8 @@ const store = new Vuex.Store({
       );
     },
     addFeed(state, feed) {
+      feed.feedList = [];
       state.feeds.push(feed);
-      // localStorage.setItem("feeds", JSON.stringify(state.feeds));
     },
     twiiterConnection(state, params) {
       state.snsConnect.twitter = true;
@@ -158,12 +158,13 @@ const store = new Vuex.Store({
       state.snsConnect.facebookAccessTotken = params.access_token;
     },
     feedSwap(state, dropResult) {
-      // console.log("feedSwap1", state.feeds);
-      // const removedObj = state.feeds[dropResult.removedIndex];
-      // const addedObj = state.feeds[dropResult.addedIndex];
-      // state.feeds[dropResult.removedIndex] = addedObj;
-      // state.feeds[dropResult.addedIndex] = removedObj;
-      // console.log("feedSwap2", state.feeds);
+      const removedObj = state.feeds[dropResult.removedIndex];
+      const addedObj = state.feeds[dropResult.addedIndex];
+      const temp = state.feeds;
+      temp[dropResult.removedIndex] = addedObj;
+      temp[dropResult.addedIndex] = removedObj;
+      state.feeds = [];
+      state.feeds = temp;
     }
   },
   actions: {
