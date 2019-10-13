@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import router from "./router";
 import axios from "axios";
 import firebase from "firebase";
+import { stat } from "fs";
 var firebaseConfig = {
   apiKey: "AIzaSyCo8MlwzJ_FMuWCbhhhaHpaGluLfX7hTak",
   authDomain: "signal-97eaf.firebaseapp.com",
@@ -25,18 +26,22 @@ const store = new Vuex.Store({
     snackbar: false,
     snackbarMessage: "",
     snackbarTimeout: null,
+    userId: localStorage.getItem("id"),
     userToken: localStorage.getItem("access_token"),
     monitorSlideMenu: false,
     feeds: [],
     snsConnect: {
-      facebook: false,
-      twitter: false
+      facebook: localStorage.getItem("facebook"),
+      twitter: localStorage.getItem("twitter")
     },
     FEED_TYPE: {
       NAVER_KEY_WORD: "NAVER_KEY_WORD",
       TWITTER_KEY_WORD: "TWITTER_KEY_WORD",
       TWITTER_TIMELINE: "TWITTER_TIMELINE",
-      TWITTER_MENTION: "TWITTER_MENTION"
+      TWITTER_MENTIONS: "TWITTER_MENTIONS",
+      FACEBOOK_POSTS: "FACEBOOK_POSTS",
+      FACEBOOK_MENTIONS: "FACEBOOK_MENTIONS",
+      FACEBOOK_SEARCH: "FACEBOOK_SEARCH"
     }
   },
   getters: {
@@ -59,6 +64,9 @@ const store = new Vuex.Store({
       return state.feeds.filter(d => d.type == "TWITTER_KEY_WORD");
     },
     getFeeds(state) {
+      if (state.feeds == null || state.feeds == "") {
+        return [];
+      }
       return state.feeds;
     },
     monitorSlideMenu(state) {
@@ -107,18 +115,26 @@ const store = new Vuex.Store({
       state.snackbarTimeout = null;
     },
     login(state, data) {
+      localStorage.setItem("id", data.login_id);
       localStorage.setItem("access_token", data.access_token);
+      localStorage.setItem("facebook", data.facebook);
+      localStorage.setItem("twitter", data.twitter);
+      state.userId = data.login_id;
       state.userToken = data.access_token;
       state.snsConnect.facebook = data.facebook;
       state.snsConnect.twitter = data.twitter;
       state.showLogin = false;
+      if (data.feed_list) state.feeds = JSON.parse(data.feed_list);
     },
     logout(state) {
       state.userToken = null;
       state.showLogin = false;
       state.showConnections = false;
       firebase.auth().signOut();
+      localStorage.setItem("id", "");
       localStorage.setItem("access_token", "");
+      localStorage.setItem("facebook", "");
+      localStorage.setItem("twitter", "");
       router.push({ name: "home" });
     },
     removeFeed(state, feed) {
@@ -127,17 +143,9 @@ const store = new Vuex.Store({
         d => !(d.data == feed.data && d.type == feed.type)
       );
     },
-    setFeeds(state) {
-      let dummyFeeds = [];
-      if (state.feeds.length == 0) {
-        dummyFeeds.push({ type: "NAVER_KEY_WORD", data: "bts" });
-        dummyFeeds.push({ type: "NAVER_KEY_WORD", data: "블랙핑크" });
-        dummyFeeds.push({ type: "TWITTER_TIMELINE", data: "" });
-      }
-      state.feeds = dummyFeeds;
-    },
     addFeed(state, feed) {
       state.feeds.push(feed);
+      // localStorage.setItem("feeds", JSON.stringify(state.feeds));
     },
     twiiterConnection(state, params) {
       state.snsConnect.twitter = true;
@@ -148,6 +156,14 @@ const store = new Vuex.Store({
     facebookConnection(state, params) {
       state.snsConnect.facebook = true;
       state.snsConnect.facebookAccessTotken = params.access_token;
+    },
+    feedSwap(state, dropResult) {
+      // console.log("feedSwap1", state.feeds);
+      // const removedObj = state.feeds[dropResult.removedIndex];
+      // const addedObj = state.feeds[dropResult.addedIndex];
+      // state.feeds[dropResult.removedIndex] = addedObj;
+      // state.feeds[dropResult.addedIndex] = removedObj;
+      // console.log("feedSwap2", state.feeds);
     }
   },
   actions: {
@@ -173,9 +189,6 @@ const store = new Vuex.Store({
     logout({ commit }) {
       firebase.auth().signOut();
       commit("logout");
-    },
-    setFeeds({ commit }) {
-      commit("setFeeds");
     },
     addFeed({ commit }, feed) {
       commit("addFeed", feed);

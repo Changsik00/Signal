@@ -1,7 +1,7 @@
 <template>
   <section>
     <v-layout class="main-layer">
-      <Container style="display: flex; " :orientation="'horizontal'">
+      <Container @drop="onDrop" style="display: flex; " :orientation="'horizontal'">
         <Draggable v-for="(feed, i) in getFeeds" :key="i">
           <FeedColumn :data="feed" />
         </Draggable>
@@ -106,11 +106,17 @@
             </v-layout>
             <div class="menu" @click="facebook('VisitorPosts')">
               Visitor Posts
-              <span style="font-size: 12px; color: #9da6af">(준비중)</span>
+              <span
+                v-if="connectFacebookPosts"
+                style="font-size: 12px; color: #9da6af"
+              >(모니터링)</span>
             </div>
             <div class="menu" @click="facebook('PageMentions')">
               Page Mentions
-              <span style="font-size: 12px; color: #9da6af">(준비중)</span>
+              <span
+                v-if="connectFacebookMentions"
+                style="font-size: 12px; color: #9da6af"
+              >(모니터링)</span>
             </div>
             <div class="menu" @click="facebook('PageSearch')">
               Page Search
@@ -132,11 +138,17 @@
             </v-layout>
             <div class="menu" @click="twitter('Mentions')">
               Mentions
-              <span v-if="connectTwitterMention">(모니터링)</span>
+              <span
+                v-if="connectTwitterMentions"
+                style="font-size: 12px; color: #9da6af"
+              >(모니터링)</span>
             </div>
             <div class="menu" @click="twitter('Timeline')">
               Timeline
-              <span v-if="connectTwitterTimeline">(모니터링)</span>
+              <span
+                v-if="connectTwitterTimeline"
+                style="font-size: 12px; color: #9da6af"
+              >(모니터링)</span>
             </div>
             <div class="menu" @click="twitter('Likes')">
               Likes
@@ -194,14 +206,19 @@ export default {
       "getFeeds"
     ]),
     connectTwitterTimeline() {
-      return _.findIndex(this.getFeeds, d => d.type == "TWITTER_TIMELINE") > 0;
+      return _.findIndex(this.getFeeds, d => d.type == "TWITTER_TIMELINE") >= 0;
     },
-    connectTwitterMention() {
-      return _.findIndex(this.getFeeds, d => d.type == "TWITTER_TENTION") > 0;
+    connectTwitterMentions() {
+      return _.findIndex(this.getFeeds, d => d.type == "TWITTER_MENTIONS") >= 0;
+    },
+    connectFacebookPosts() {
+      return _.findIndex(this.getFeeds, d => d.type == "FACEBOOK_POSTS") >= 0;
+    },
+    connectFacebookMentions() {
+      return _.findIndex(this.getFeeds, d => d.type == "FACEBOOK_MENTIONS") >= 0;
     }
   },
   created() {
-    this.setFeeds();
     this.$store.watch(
       (state, getters) => getters.getFeeds,
       (newValue, oldValue) => {
@@ -217,8 +234,8 @@ export default {
     );
   },
   methods: {
-    ...mapMutations(["hideMonitorSlideMenu"]),
-    ...mapActions(["setFeeds", "removeFeed", "addFeed"]),
+    ...mapMutations(["hideMonitorSlideMenu", "feedSwap"]),
+    ...mapActions(["removeFeed", "addFeed"]),
     search() {
       if (this.searchKeyword.length == 0) {
         this.$showToast("검색어를 입력해 주세요!");
@@ -271,7 +288,8 @@ export default {
           .post(baseURL, {
             params: {
               text: this.searchKeyword,
-              firebase_access_token: this.$store.state.userToken
+              firebase_access_token: this.$store.state.userToken,
+              signal_id: this.$store.state.userId
             }
           })
           .then(res => {
@@ -303,29 +321,35 @@ export default {
       }
       switch (type) {
         case "VisitorPosts":
+          if (!this.connectFacebookPosts) {
+            this.addFeed({ type: "FACEBOOK_POSTS", data: "" });
+          }
           break;
         case "PageMentions":
+          if (!this.connectFacebookMentions) {
+            this.addFeed({ type: "FACEBOOK_MENTIONS", data: "" });
+          }
           break;
         case "PageSearch":
           break;
       }
     },
     twitter(type) {
-      // if (!this.$store.state.snsConnect.twitter) {
-      //   this.$showToast("twitter 연결이 필요합니다.");
-      //   this.$store.state.showConnections = true;
-      //   this.hideMonitorSlideMenu();
-      //   return;
-      // }
+      if (!this.$store.state.snsConnect.twitter) {
+        this.$showToast("twitter 연결이 필요합니다.");
+        this.$store.state.showConnections = true;
+        this.hideMonitorSlideMenu();
+        return;
+      }
       switch (type) {
         case "Mentions":
-          if (!this.connectTwitterMention) {
-            this.getFeeds.push({ type: "TWITTER_MENTION", data: "" });
+          if (!this.connectTwitterMentions) {
+            this.addFeed({ type: "TWITTER_MENTIONS", data: "" });
           }
           break;
         case "Timeline":
           if (!this.connectTwitterTimeline) {
-            this.getFeeds.push({ type: "TWITTER_TIMELINE", data: "" });
+            this.addFeed({ type: "TWITTER_TIMELINE", data: "" });
           }
           break;
         case "Likes":
@@ -358,6 +382,9 @@ export default {
           this.searchKeywords = this.getTwitterKeywords;
           break;
       }
+    },
+    onDrop(dropResult){
+      this.feedSwap(dropResult)
     }
   }
 };

@@ -104,7 +104,6 @@ export default {
       let params = null;
       switch (sns) {
         case "facebook":
-          console.log("#@# facebook result", result);
           const token = result.credential.accessToken;
           // if (token && token.length > 0) {
           //   this.$axios
@@ -123,6 +122,7 @@ export default {
           //       }
           //       const params = {
           //         firebase_access_token: this.$store.state.userToken,
+          //         signal_id: this.$store.state.userId,
           //         // id: page[0].id,
           //         id: result.additionalUserInfo.profile.id,
           //         access_token: page[0].access_token,
@@ -134,6 +134,7 @@ export default {
 
           params = {
             firebase_access_token: this.$store.state.userToken,
+            signal_id: this.$store.state.userId,
             id: result.additionalUserInfo.profile.id,
             access_token: token,
             secret: ""
@@ -144,6 +145,7 @@ export default {
         case "twitter":
           params = {
             firebase_access_token: this.$store.state.userToken,
+            signal_id: this.$store.state.userId,
             id: result.additionalUserInfo.username,
             access_token: result.credential.accessToken,
             secret: result.credential.secret

@@ -25,12 +25,36 @@
       </v-btn>
     </v-layout>
     <v-layout
-      v-if="data.type == $store.state.FEED_TYPE.TWITTER_MENTION"
+      v-if="data.type == $store.state.FEED_TYPE.TWITTER_MENTIONS"
       align-center
       class="feed-column-title"
     >
       <img class="icon" src="../assets/img/common/twitter-on.svg" />
-      <div>Mention</div>
+      <div>Mentions</div>
+      <v-spacer></v-spacer>
+      <v-btn icon style="width: 30px; height: 30px; margin: 0;" @click="removeFeed(data)">
+        <v-icon style="color: #b2ebf2;">delete</v-icon>
+      </v-btn>
+    </v-layout>
+    <v-layout
+      v-if="data.type == $store.state.FEED_TYPE.FACEBOOK_POSTS"
+      align-center
+      class="feed-column-title"
+    >
+      <img class="icon" src="../assets/img/common/facebook-on.svg" />
+      <div>Page Posts</div>
+      <v-spacer></v-spacer>
+      <v-btn icon style="width: 30px; height: 30px; margin: 0;" @click="removeFeed(data)">
+        <v-icon style="color: #b2ebf2;">delete</v-icon>
+      </v-btn>
+    </v-layout>
+    <v-layout
+      v-if="data.type == $store.state.FEED_TYPE.FACEBOOK_MENTIONS"
+      align-center
+      class="feed-column-title"
+    >
+      <img class="icon" src="../assets/img/common/facebook-on.svg" />
+      <div>Mentions</div>
       <v-spacer></v-spacer>
       <v-btn icon style="width: 30px; height: 30px; margin: 0;" @click="removeFeed(data)">
         <v-icon style="color: #b2ebf2;">delete</v-icon>
@@ -47,13 +71,15 @@
         @detectLastPosition="detectLastPosition"
       />
       <TwitterCard
-        v-if="data.type == $store.state.FEED_TYPE.TWITTER_TIMELINE"
+        v-if="data.type == $store.state.FEED_TYPE.TWITTER_TIMELINE 
+         || data.type == $store.state.FEED_TYPE.TWITTER_MENTIONS"
         v-for="(feed, index) in feedList"
         :item="feed"
         :key="index"
       />
-      <TwitterCard
-        v-if="data.type == $store.state.FEED_TYPE.TWITTER_MENTION"
+      <FacebookCard
+        v-if="data.type == $store.state.FEED_TYPE.FACEBOOK_POSTS 
+         || data.type == $store.state.FEED_TYPE.FACEBOOK_MENTIONS"
         v-for="(feed, index) in feedList"
         :item="feed"
         :key="index"
@@ -65,13 +91,15 @@
 <script>
 import KeywordCard from "./KeywordCard";
 import TwitterCard from "./TwitterCard";
+import FacebookCard from "./FacebookCard";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
   props: ["data"],
   components: {
     KeywordCard,
-    TwitterCard
+    TwitterCard,
+    FacebookCard
   },
   data() {
     return {
@@ -90,44 +118,84 @@ export default {
     requestfeed() {
       if (!this.requestLock) {
         this.requestLock = true;
-        if (this.data.type == "NAVER_KEY_WORD") {
-          let baseURL = "https://test.signal.bz/api/news/";
-          this.$axios
-            .get(baseURL, {
-              params: { keyword: this.data.data, start: this.start }
-            })
-            .then(res => {
-              this.total = res.data.total;
-              if (this.total > this.start) {
-                res.data.items.forEach(item => {
-                  this.feedList.push(item);
-                });
+        let baseURL = "";
+        switch (this.data.type) {
+          case "NAVER_KEY_WORD":
+            baseURL = "https://test.signal.bz/api/news/";
+            this.$axios
+              .get(baseURL, {
+                params: { keyword: this.data.data, start: this.start }
+              })
+              .then(res => {
+                this.total = res.data.total;
+                if (this.total > this.start) {
+                  res.data.items.forEach(item => {
+                    this.feedList.push(item);
+                  });
 
-                this.start = this.feedList.length + 1;
-              }
-              this.requestLock = false;
-            })
-            .catch(error => (this.requestLock = false));
-        } else if (this.data.type == "TWITTER_TIMELINE") {
-          this.$axios
-            .get("/twitter/timeline/", {
-              params: { firebase_access_token: this.$store.state.userToken }
-            })
-            .then(res => {
-              this.feedList = res.data;
-              this.requestLock = false;
-            })
-            .catch(error => (this.requestLock = false));
-        } else if (this.data.type == "TWITTER_MENTION") {
-          this.$axios
-            .get("/twitter/mention/", {
-              params: { firebase_access_token: this.$store.state.userToken }
-            })
-            .then(res => {
-              this.feedList = res.data;
-              this.requestLock = false;
-            })
-            .catch(error => (this.requestLock = false));
+                  this.start = this.feedList.length + 1;
+                }
+                this.requestLock = false;
+              })
+              .catch(error => (this.requestLock = false));
+            break;
+          case "TWITTER_TIMELINE":
+            this.$axios
+              .get("/twitter/timeline/", {
+                params: {
+                  firebase_access_token: this.$store.state.userToken,
+                  signal_id: this.$store.state.userId
+                }
+              })
+              .then(res => {
+                this.feedList = res.data;
+                this.requestLock = false;
+              })
+              .catch(error => (this.requestLock = false));
+            break;
+          case "TWITTER_MENTIONS":
+            this.$axios
+              .get("/twitter/mention/", {
+                params: {
+                  firebase_access_token: this.$store.state.userToken,
+                  signal_id: this.$store.state.userId
+                }
+              })
+              .then(res => {
+                this.feedList = res.data;
+                this.requestLock = false;
+              })
+              .catch(error => (this.requestLock = false));
+            break;
+
+          case "FACEBOOK_POSTS":
+            this.$axios
+              .get("/facebook/page_posts/", {
+                params: {
+                  firebase_access_token: this.$store.state.userToken,
+                  signal_id: this.$store.state.userId
+                }
+              })
+              .then(res => {
+                this.feedList = res.data;
+                this.requestLock = false;
+              })
+              .catch(error => (this.requestLock = false));
+            break;  
+          case "FACEBOOK_MENTIONS":
+            this.$axios
+              .get("/facebook/page_mentions/", {
+                params: {
+                  firebase_access_token: this.$store.state.userToken,
+                  signal_id: this.$store.state.userId
+                }
+              })
+              .then(res => {
+                this.feedList = res.data;
+                this.requestLock = false;
+              })
+              .catch(error => (this.requestLock = false));
+            break;  
         }
       }
     },
