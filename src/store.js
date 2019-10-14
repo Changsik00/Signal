@@ -64,10 +64,23 @@ const store = new Vuex.Store({
       return state.feeds.filter(d => d.type == "TWITTER_KEY_WORD");
     },
     getFeeds(state) {
-      if (state.feeds == null || state.feeds == "") {
-        return [];
+      if (state.feeds == null || state.feeds == "" || state.feeds.length == 0) {
+        const params = {
+          signal_id: state.userId,
+          access_token: state.userToken
+        };
+        axios
+          .get("/firebase/user/feed_list/", {
+            params
+          })
+          .then(response => {
+            try {
+              store.commit("setFeeds", JSON.parse(response.data));
+            } catch (e) {}
+          });
+      } else {
+        return state.feeds;
       }
-      return state.feeds;
     },
     monitorSlideMenu(state) {
       return state.monitorSlideMenu;
@@ -124,7 +137,11 @@ const store = new Vuex.Store({
       state.snsConnect.facebook = data.facebook;
       state.snsConnect.twitter = data.twitter;
       state.showLogin = false;
-      if (data.feed_list) state.feeds = JSON.parse(data.feed_list);
+      if (data.data && data.data != "") {
+        try {
+          state.feeds = JSON.parse(data.data);
+        } catch (e) {}
+      }
     },
     logout(state) {
       state.userToken = null;
@@ -146,6 +163,16 @@ const store = new Vuex.Store({
     addFeed(state, feed) {
       feed.feedList = [];
       state.feeds.push(feed);
+
+      const params = {
+        signal_id: state.userId,
+        access_token: state.userToken,
+        data: JSON.stringify(state.feeds)
+      };
+      axios.post("/firebase/user/feed_list/", params);
+    },
+    setFeeds(state, feeds) {
+      state.feeds = feeds;
     },
     twiiterConnection(state, params) {
       state.snsConnect.twitter = true;
@@ -165,6 +192,13 @@ const store = new Vuex.Store({
       temp[dropResult.addedIndex] = removedObj;
       state.feeds = [];
       state.feeds = temp;
+
+      const params = {
+        signal_id: state.userId,
+        access_token: state.userToken,
+        data: JSON.stringify(state.feeds)
+      };
+      axios.post("/firebase/user/feed_list/", params);
     }
   },
   actions: {
