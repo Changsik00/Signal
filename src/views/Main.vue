@@ -255,21 +255,11 @@ export default {
       }
 
       this.searchPreviewList = [];
-      let baseURL = "https://www.signal.bz/api/news/";
+      let baseURL = "";
       if (this.searchType == "NAVER_KEY_WORD") {
-        if (
-          window.location.href.startsWith("http://localhost") ||
-          window.location.href.startsWith("https://test.signal.bz")
-        ) {
-          baseURL = "https://test.signal.bz/api/news/";
-        }
+        baseURL = "https://test.signal.bz/api/news/";
       } else if (this.searchType == "TWITTER_KEY_WORD") {
-        if (
-          window.location.href.startsWith("http://localhost") ||
-          window.location.href.startsWith("https://test.signal.bz")
-        ) {
-          baseURL = "/twitter/user_keywords/";
-        }
+        baseURL = "/twitter/user_keywords/";
       }
 
       if (this.searchType == "NAVER_KEY_WORD") {
@@ -278,20 +268,21 @@ export default {
             params: { keyword: this.searchKeyword, start: 1 }
           })
           .then(res => {
-            res.data.items.forEach(item => {
-              this.searchPreviewList.push(item);
-            });
+            if(res.data.items) {
+                res.data.items.forEach(item => {
+                this.searchPreviewList.push(item);
+              });
+            }
             this.searchCheck = true;
           });
       } else if (this.searchType == "TWITTER_KEY_WORD") {
         this.$axios
           .post(baseURL, {
-            params: {
               text: this.searchKeyword,
               firebase_access_token: this.$store.state.userToken,
               signal_id: this.$store.state.userId
             }
-          })
+          )
           .then(res => {
             res.data.items.forEach(item => {
               this.searchPreviewList.push(item);

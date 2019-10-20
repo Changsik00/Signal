@@ -186,10 +186,9 @@ const store = new Vuex.Store({
     },
     feedSwap(state, dropResult) {
       const removedObj = state.feeds[dropResult.removedIndex];
-      const addedObj = state.feeds[dropResult.addedIndex];
+      state.feeds.splice(dropResult.removedIndex, 1);
+      state.feeds.splice(dropResult.addedIndex, 0, removedObj);
       const temp = state.feeds;
-      temp[dropResult.removedIndex] = addedObj;
-      temp[dropResult.addedIndex] = removedObj;
       state.feeds = [];
       state.feeds = temp;
 
