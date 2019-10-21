@@ -5,7 +5,7 @@
       align-center
       class="feed-column-title"
     >
-      <v-icon class="icon">search</v-icon>
+      <img class="icon" src="../assets/img/common/naver2-on.svg" />
       <div>{{ data.data}}</div>
       <v-spacer></v-spacer>
       <v-btn icon style="width: 30px; height: 30px; margin: 0;" @click="removeFeed(data)">
