@@ -159,6 +159,12 @@ const store = new Vuex.Store({
         state.feeds,
         d => !(d.data == feed.data && d.type == feed.type)
       );
+      const params = {
+        signal_id: state.userId,
+        access_token: state.userToken,
+        data: JSON.stringify(state.feeds)
+      };
+      axios.post("/firebase/user/feed_list/", params);
     },
     addFeed(state, feed) {
       feed.feedList = [];
