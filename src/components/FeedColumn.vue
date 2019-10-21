@@ -13,6 +13,18 @@
       </v-btn>
     </v-layout>
     <v-layout
+      v-if="data.type == $store.state.FEED_TYPE.TWITTER_KEY_WORD"
+      align-center
+      class="feed-column-title"
+    >
+      <img class="icon" src="../assets/img/common/twitter-on.svg" />
+      <div>{{ data.data}}</div>
+      <v-spacer></v-spacer>
+      <v-btn icon style="width: 30px; height: 30px; margin: 0;" @click="removeFeed(data)">
+        <v-icon style="color: #b2ebf2;">delete</v-icon>
+      </v-btn>
+    </v-layout>
+    <v-layout
       v-if="data.type == $store.state.FEED_TYPE.TWITTER_TIMELINE"
       align-center
       class="feed-column-title"
@@ -71,7 +83,8 @@
         @detectLastPosition="detectLastPosition"
       />
       <TwitterCard
-        v-if="data.type == $store.state.FEED_TYPE.TWITTER_TIMELINE 
+        v-if="data.type == $store.state.FEED_TYPE.TWITTER_KEY_WORD
+         || data.type == $store.state.FEED_TYPE.TWITTER_TIMELINE 
          || data.type == $store.state.FEED_TYPE.TWITTER_MENTIONS"
         v-for="(feed, index) in data.feedList"
         :item="feed"
@@ -138,12 +151,25 @@ export default {
               })
               .catch(error => (this.requestLock = false));
             break;
+          case "TWITTER_KEY_WORD":
+            this.$axios
+              .post("/twitter/user_keywords/", {
+                firebase_access_token: this.$store.state.userToken,
+                signal_id: this.$store.state.userId,
+                text: this.data.data
+              })
+              .then(res => {
+                this.data.feedList = res.data;
+                this.requestLock = false;
+              })
+              .catch(error => (this.requestLock = false));
+            break;  
           case "TWITTER_TIMELINE":
             this.$axios
               .get("/twitter/timeline/", {
                 params: {
                   firebase_access_token: this.$store.state.userToken,
-                  signal_id: this.$store.state.userId
+                  signal_id: this.$store.state.userId,
                 }
               })
               .then(res => {

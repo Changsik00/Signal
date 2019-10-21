@@ -83,6 +83,17 @@
                 v-html="feed.description"
               ></div>
               <div v-if="feed.text" class="mt10" style="font-size: 14px;" v-html="feed.text"></div>
+              <div
+                v-if="feed.tweet"
+                v-html="feed.tweet"
+                style="font-size: 16px;"
+              ></div>
+              <div
+                v-if="feed.user"
+                class="mt5"
+                style="font-size: 14px; font-weight: bold;"
+                v-html="feed.user"
+              ></div>
             </div>
           </div>
         </div>
@@ -215,7 +226,9 @@ export default {
       return _.findIndex(this.getFeeds, d => d.type == "FACEBOOK_POSTS") >= 0;
     },
     connectFacebookMentions() {
-      return _.findIndex(this.getFeeds, d => d.type == "FACEBOOK_MENTIONS") >= 0;
+      return (
+        _.findIndex(this.getFeeds, d => d.type == "FACEBOOK_MENTIONS") >= 0
+      );
     }
   },
   created() {
@@ -268,8 +281,8 @@ export default {
             params: { keyword: this.searchKeyword, start: 1 }
           })
           .then(res => {
-            if(res.data.items) {
-                res.data.items.forEach(item => {
+            if (res.data.items) {
+              res.data.items.forEach(item => {
                 this.searchPreviewList.push(item);
               });
             }
@@ -278,15 +291,12 @@ export default {
       } else if (this.searchType == "TWITTER_KEY_WORD") {
         this.$axios
           .post(baseURL, {
-              text: this.searchKeyword,
-              firebase_access_token: this.$store.state.userToken,
-              signal_id: this.$store.state.userId
-            }
-          )
+            text: this.searchKeyword,
+            firebase_access_token: this.$store.state.userToken,
+            signal_id: this.$store.state.userId
+          })
           .then(res => {
-            res.data.items.forEach(item => {
-              this.searchPreviewList.push(item);
-            });
+            this.searchPreviewList = res.data;
             this.searchCheck = true;
           });
       }
@@ -294,7 +304,6 @@ export default {
     acceptKeyword() {
       this.searchCheck = false;
       this.searchPreviewList = [];
-
       this.addFeed({ type: this.searchType, data: this.searchKeyword });
       this.searchKeyword = "";
     },
@@ -365,6 +374,7 @@ export default {
     showSearch(type) {
       this.searchOn = true;
       this.searchType = type;
+      this.searchKeyword = "";
       switch (type) {
         case "NAVER_KEY_WORD":
           this.searchKeywords = this.getNaverKeywords;
@@ -374,8 +384,8 @@ export default {
           break;
       }
     },
-    onDrop(dropResult){
-      this.feedSwap(dropResult)
+    onDrop(dropResult) {
+      this.feedSwap(dropResult);
     }
   }
 };
