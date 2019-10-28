@@ -83,11 +83,7 @@
                 v-html="feed.description"
               ></div>
               <div v-if="feed.text" class="mt10" style="font-size: 14px;" v-html="feed.text"></div>
-              <div
-                v-if="feed.tweet"
-                v-html="feed.tweet"
-                style="font-size: 16px;"
-              ></div>
+              <div v-if="feed.tweet" v-html="feed.tweet" style="font-size: 16px;"></div>
               <div
                 v-if="feed.user"
                 class="mt5"
@@ -235,13 +231,15 @@ export default {
     this.$store.watch(
       (state, getters) => getters.getFeeds,
       (newValue, oldValue) => {
-        switch (this.searchType) {
-          case "NAVER_KEY_WORD":
-            this.searchKeywords = this.getNaverKeywords;
-            break;
-          case "TWITTER_KEY_WORD":
-            this.searchKeywords = this.getTwitterKeywords;
-            break;
+        if (newValue) {
+          switch (this.searchType) {
+            case "NAVER_KEY_WORD":
+              this.searchKeywords = this.getNaverKeywords;
+              break;
+            case "TWITTER_KEY_WORD":
+              this.searchKeywords = this.getTwitterKeywords;
+              break;
+          }
         }
       }
     );
@@ -276,6 +274,13 @@ export default {
       }
 
       if (this.searchType == "NAVER_KEY_WORD") {
+        if(!this.searchKeyword.startsWith('"')) {
+            this.searchKeyword = '"' + this.searchKeyword;
+        }
+
+        if(!this.searchKeyword.endsWith('"')) {
+          this.searchKeyword = this.searchKeyword + '"';
+        } 
         this.$axios
           .get(baseURL, {
             params: { keyword: this.searchKeyword, start: 1 }
@@ -366,7 +371,10 @@ export default {
     sideMenuClose() {
       if (this.searchOn) {
         this.searchOn = false;
+        this.searchCheck = false;
         this.searchType = "";
+        this.searchKeyword = "";
+        this.searchKeywords = [];
       } else {
         this.hideMonitorSlideMenu();
       }
