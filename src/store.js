@@ -64,7 +64,7 @@ const store = new Vuex.Store({
       return state.feeds.filter(d => d.type == "TWITTER_KEY_WORD");
     },
     getFeeds(state) {
-      if (state.feeds == null || state.feeds == "" || state.feeds.length == 0) {
+      if (state.feeds == null) {
         const params = {
           signal_id: state.userId,
           access_token: state.userToken
