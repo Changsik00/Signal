@@ -274,13 +274,6 @@ export default {
       }
 
       if (this.searchType == "NAVER_KEY_WORD") {
-        if(!this.searchKeyword.startsWith('"')) {
-            this.searchKeyword = '"' + this.searchKeyword;
-        }
-
-        if(!this.searchKeyword.endsWith('"')) {
-          this.searchKeyword = this.searchKeyword + '"';
-        } 
         this.$axios
           .get(baseURL, {
             params: { keyword: this.searchKeyword, start: 1 }
