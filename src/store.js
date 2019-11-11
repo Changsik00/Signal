@@ -29,7 +29,7 @@ const store = new Vuex.Store({
     userId: localStorage.getItem("id"),
     userToken: localStorage.getItem("access_token"),
     monitorSlideMenu: false,
-    feeds: [],
+    feeds: null,
     snsConnect: {
       facebook: localStorage.getItem("facebook"),
       twitter: localStorage.getItem("twitter")
@@ -167,17 +167,26 @@ const store = new Vuex.Store({
       axios.post("/firebase/user/feed_list/", params);
     },
     addFeed(state, feed) {
+      if (feed.type == null || feed.type == "") {
+        return;
+      }
       feed.feedList = [];
       state.feeds.push(feed);
 
+      const temp = state.feeds
+        .filter(d => d.type != null && d.type != "")
+        .map(d => {
+          return { data: d.data, type: d.type, feedList: [] };
+        });
       const params = {
         signal_id: state.userId,
         access_token: state.userToken,
-        data: JSON.stringify(state.feeds)
+        data: JSON.stringify(temp)
       };
       axios.post("/firebase/user/feed_list/", params);
     },
     setFeeds(state, feeds) {
+      feeds = feeds.filter(d => d.type != null && d.type != "");
       state.feeds = feeds;
     },
     twiiterConnection(state, params) {
