@@ -19,8 +19,10 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
+    currentMode: "",
     showLogin: false,
     showConnections: false,
+    showNewPost: false,
     loadingCheckSum: 0,
     loadingTimeout: null,
     snackbar: false,
@@ -147,6 +149,7 @@ const store = new Vuex.Store({
       state.userToken = null;
       state.showLogin = false;
       state.showConnections = false;
+      state.showNewPost = false;
       firebase.auth().signOut();
       localStorage.setItem("id", "");
       localStorage.setItem("access_token", "");

@@ -36,10 +36,14 @@ const Login = () =>
 const Connections = () =>
   import(/* webpackChunkName: "Connections" */ "./components/Connections.vue");
 
+const NewPost = () =>
+  import(/* webpackChunkName: "NewPost" */ "./components/NewPost.vue");
+
 Vue.component("Loading", Loading);
 Vue.component("Snackbar", Snackbar);
 Vue.component("Login", Login);
 Vue.component("Connections", Connections);
+Vue.component("NewPost", NewPost);
 
 // https://kr.vuejs.org/v2/api/index.html
 Vue.config.productionTip = false;

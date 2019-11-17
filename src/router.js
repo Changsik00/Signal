@@ -30,6 +30,7 @@ const router = new Router({
 });
 function homeGuard(to, from, next) {
   if (store.getters.isLogin) {
+    store.state.currentMode = "MONITOR";
     next("/main");
   } else {
     next();
@@ -38,6 +39,9 @@ function homeGuard(to, from, next) {
 
 function loginGuard(to, from, next) {
   if (store.getters.isLogin) {
+    if (to.path.includes("main")) {
+      store.state.currentMode = "MONITOR";
+    }
     next();
   } else {
     next("/");

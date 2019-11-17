@@ -9,6 +9,7 @@
     <Snackbar/>
     <Login />
     <Connections />
+    <NewPost />
   </v-app>
 </template>
 
