@@ -1,0 +1,1502 @@
+[
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 1,
+    "date": "AM00:00"
+  },
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 3,
+    "date": "AM00:05"
+  },
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 5,
+    "date": "AM00:10"
+  },
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 60,
+    "date": "AM00:15"
+  },
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 90,
+    "date": "AM00:20"
+  },
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 95,
+    "date": "AM00:25"
+  },
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 110,
+    "date": "AM00:30"
+  },
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 120,
+    "date": "AM00:35"
+  },
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 140,
+    "date": "AM00:40"
+  },
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 150,
+    "date": "AM00:45"
+  },
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 170,
+    "date": "AM00:50"
+  },
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 180,
+    "date": "AM00:55"
+  },
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 190,
+    "date": "AM01:00"
+  },
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 191,
+    "date": "AM01:05"
+  },
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 193,
+    "date": "AM01:10"
+  },
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 195,
+    "date": "AM01:15"
+  },
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 200,
+    "date": "AM01:20"
+  },
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 210,
+    "date": "AM01:25"
+  },
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 211,
+    "date": "AM01:30"
+  },
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 213,
+    "date": "AM01:35"
+  },
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 215,
+    "date": "AM01:40"
+  },
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 216,
+    "date": "AM01:45"
+  },
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 219,
+    "date": "AM01:50"
+  },
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 220,
+    "date": "AM01:55"
+  },
+  {
+    "name": "memebox",
+    "type": "",
+    "value": 230,
+    "date": "AM02:00"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 13,
+    "date": "AM00:00"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 14,
+    "date": "AM00:05"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 15,
+    "date": "AM00:10"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 40,
+    "date": "AM00:15"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 55,
+    "date": "AM00:20"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 60,
+    "date": "AM00:25"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 80,
+    "date": "AM00:30"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 90,
+    "date": "AM00:35"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 95,
+    "date": "AM00:40"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 96,
+    "date": "AM00:45"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 110,
+    "date": "AM00:50"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 120,
+    "date": "AM00:55"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 130,
+    "date": "AM01:00"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 140,
+    "date": "AM01:05"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 170,
+    "date": "AM01:10"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 191,
+    "date": "AM01:15"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 210,
+    "date": "AM01:20"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 240,
+    "date": "AM01:25"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 250,
+    "date": "AM01:30"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 260,
+    "date": "AM01:35"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 280,
+    "date": "AM01:40"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 290,
+    "date": "AM01:45"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 330,
+    "date": "AM01:50"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 340,
+    "date": "AM01:55"
+  },
+  {
+    "name": "freshcode",
+    "type": "",
+    "value": 350,
+    "date": "AM02:00"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 3,
+    "date": "AM00:00"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 4,
+    "date": "AM00:05"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 70,
+    "date": "AM00:10"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 80,
+    "date": "AM00:15"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 90,
+    "date": "AM00:20"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 95,
+    "date": "AM00:25"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 96,
+    "date": "AM00:30"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 99,
+    "date": "AM00:35"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 100,
+    "date": "AM00:40"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 140,
+    "date": "AM00:45"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 150,
+    "date": "AM00:50"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 160,
+    "date": "AM00:55"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 180,
+    "date": "AM01:00"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 200,
+    "date": "AM01:05"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 210,
+    "date": "AM01:10"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 240,
+    "date": "AM01:15"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 260,
+    "date": "AM01:20"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 280,
+    "date": "AM01:25"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 400,
+    "date": "AM01:30"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 500,
+    "date": "AM01:35"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 515,
+    "date": "AM01:40"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 530,
+    "date": "AM01:45"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 550,
+    "date": "AM01:50"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 580,
+    "date": "AM01:55"
+  },
+  {
+    "name": "adidas",
+    "type": "",
+    "value": 600,
+    "date": "AM02:00"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 4,
+    "date": "AM00:00"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 34,
+    "date": "AM00:05"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 50,
+    "date": "AM00:10"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 55,
+    "date": "AM00:15"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 67,
+    "date": "AM00:20"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 80,
+    "date": "AM00:25"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 88,
+    "date": "AM00:30"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 90,
+    "date": "AM00:35"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 110,
+    "date": "AM00:40"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 200,
+    "date": "AM00:45"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 220,
+    "date": "AM00:50"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 240,
+    "date": "AM00:55"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 270,
+    "date": "AM01:00"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 300,
+    "date": "AM01:05"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 310,
+    "date": "AM01:10"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 360,
+    "date": "AM01:15"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 380,
+    "date": "AM01:20"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 400,
+    "date": "AM01:25"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 410,
+    "date": "AM01:30"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 440,
+    "date": "AM01:35"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 500,
+    "date": "AM01:40"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 550,
+    "date": "AM01:45"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 560,
+    "date": "AM01:50"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 580,
+    "date": "AM01:55"
+  },
+  {
+    "name": "gogo",
+    "type": "",
+    "value": 660,
+    "date": "AM02:00"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 2,
+    "date": "AM00:00"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 33,
+    "date": "AM00:05"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 45,
+    "date": "AM00:10"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 56,
+    "date": "AM00:15"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 78,
+    "date": "AM00:20"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 80,
+    "date": "AM00:25"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 90,
+    "date": "AM00:30"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 100,
+    "date": "AM00:35"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 130,
+    "date": "AM00:40"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 150,
+    "date": "AM00:45"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 170,
+    "date": "AM00:50"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 200,
+    "date": "AM00:55"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 210,
+    "date": "AM01:00"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 220,
+    "date": "AM01:05"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 240,
+    "date": "AM01:10"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 270,
+    "date": "AM01:15"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 300,
+    "date": "AM01:20"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 350,
+    "date": "AM01:25"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 370,
+    "date": "AM01:30"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 400,
+    "date": "AM01:35"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 420,
+    "date": "AM01:40"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 440,
+    "date": "AM01:45"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 460,
+    "date": "AM01:50"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 480,
+    "date": "AM01:55"
+  },
+  {
+    "name": "nike",
+    "type": "",
+    "value": 550,
+    "date": "AM02:00"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 22,
+    "date": "AM00:00"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 30,
+    "date": "AM00:05"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 45,
+    "date": "AM00:10"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 55,
+    "date": "AM00:15"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 56,
+    "date": "AM00:20"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 59,
+    "date": "AM00:25"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 60,
+    "date": "AM00:30"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 80,
+    "date": "AM00:35"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 90,
+    "date": "AM00:40"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 110,
+    "date": "AM00:45"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 130,
+    "date": "AM00:50"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 150,
+    "date": "AM00:55"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 170,
+    "date": "AM01:00"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 190,
+    "date": "AM01:05"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 210,
+    "date": "AM01:10"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 240,
+    "date": "AM01:15"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 280,
+    "date": "AM01:20"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 300,
+    "date": "AM01:25"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 330,
+    "date": "AM01:30"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 400,
+    "date": "AM01:35"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 390,
+    "date": "AM01:40"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 450,
+    "date": "AM01:45"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 600,
+    "date": "AM01:50"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 700,
+    "date": "AM01:55"
+  },
+  {
+    "name": "samsung",
+    "type": "",
+    "value": 800,
+    "date": "AM02:00"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 12,
+    "date": "AM00:00"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 13,
+    "date": "AM00:05"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 15,
+    "date": "AM00:10"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 20,
+    "date": "AM00:15"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 22,
+    "date": "AM00:20"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 40,
+    "date": "AM00:25"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 50,
+    "date": "AM00:30"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 70,
+    "date": "AM00:35"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 90,
+    "date": "AM00:40"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 110,
+    "date": "AM00:45"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 150,
+    "date": "AM00:50"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 160,
+    "date": "AM00:55"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 200,
+    "date": "AM01:00"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 220,
+    "date": "AM01:05"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 230,
+    "date": "AM01:10"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 260,
+    "date": "AM01:15"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 280,
+    "date": "AM01:20"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 300,
+    "date": "AM01:25"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 310,
+    "date": "AM01:30"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 330,
+    "date": "AM01:35"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 360,
+    "date": "AM01:40"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 400,
+    "date": "AM01:45"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 450,
+    "date": "AM01:50"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 470,
+    "date": "AM01:55"
+  },
+  {
+    "name": "lg",
+    "type": "",
+    "value": 480,
+    "date": "AM02:00"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 21,
+    "date": "AM00:00"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 24,
+    "date": "AM00:05"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 30,
+    "date": "AM00:10"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 40,
+    "date": "AM00:15"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 55,
+    "date": "AM00:20"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 70,
+    "date": "AM00:25"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 90,
+    "date": "AM00:30"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 110,
+    "date": "AM00:35"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 130,
+    "date": "AM00:40"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 150,
+    "date": "AM00:45"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 200,
+    "date": "AM00:50"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 220,
+    "date": "AM00:55"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 250,
+    "date": "AM01:00"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 280,
+    "date": "AM01:05"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 310,
+    "date": "AM01:10"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 330,
+    "date": "AM01:15"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 360,
+    "date": "AM01:20"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 380,
+    "date": "AM01:25"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 400,
+    "date": "AM01:30"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 500,
+    "date": "AM01:35"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 510,
+    "date": "AM01:40"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 520,
+    "date": "AM01:45"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 550,
+    "date": "AM01:50"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 560,
+    "date": "AM01:55"
+  },
+  {
+    "name": "SSS",
+    "type": "",
+    "value": 570,
+    "date": "AM02:00"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 1,
+    "date": "AM00:00"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 20,
+    "date": "AM00:05"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 23,
+    "date": "AM00:10"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 25,
+    "date": "AM00:15"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 29,
+    "date": "AM00:20"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 40,
+    "date": "AM00:25"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 41,
+    "date": "AM00:30"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 50,
+    "date": "AM00:35"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 60,
+    "date": "AM00:40"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 80,
+    "date": "AM00:45"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 100,
+    "date": "AM00:50"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 140,
+    "date": "AM00:55"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 170,
+    "date": "AM01:00"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 200,
+    "date": "AM01:05"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 210,
+    "date": "AM01:10"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 250,
+    "date": "AM01:15"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 280,
+    "date": "AM01:20"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 330,
+    "date": "AM01:25"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 400,
+    "date": "AM01:30"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 450,
+    "date": "AM01:35"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 500,
+    "date": "AM01:40"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 560,
+    "date": "AM01:45"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 590,
+    "date": "AM01:50"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 610,
+    "date": "AM01:55"
+  },
+  {
+    "name": "super",
+    "type": "",
+    "value": 620,
+    "date": "AM02:00"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 20,
+    "date": "AM00:00"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 30,
+    "date": "AM00:05"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 40,
+    "date": "AM00:10"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 90,
+    "date": "AM00:15"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 110,
+    "date": "AM00:20"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 230,
+    "date": "AM00:25"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 300,
+    "date": "AM00:30"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 330,
+    "date": "AM00:35"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 340,
+    "date": "AM00:40"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 360,
+    "date": "AM00:45"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 370,
+    "date": "AM00:50"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 400,
+    "date": "AM00:55"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 410,
+    "date": "AM01:00"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 430,
+    "date": "AM01:05"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 440,
+    "date": "AM01:10"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 450,
+    "date": "AM01:15"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 500,
+    "date": "AM01:20"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 510,
+    "date": "AM01:25"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 520,
+    "date": "AM01:30"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 530,
+    "date": "AM01:35"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 550,
+    "date": "AM01:40"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 570,
+    "date": "AM01:45"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 600,
+    "date": "AM01:50"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 610,
+    "date": "AM01:55"
+  },
+  {
+    "name": "signal",
+    "type": "",
+    "value": 660,
+    "date": "AM02:00"
+  }
+]

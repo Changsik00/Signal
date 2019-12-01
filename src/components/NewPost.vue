@@ -64,9 +64,6 @@ export default {
       datePicker: new Date().toISOString().substr(0, 10)
     };
   },
-  created() {
-    console.log("#@# created")
-  },
   methods: {
   }
 };

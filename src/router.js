@@ -3,6 +3,7 @@ import Router from "vue-router";
 import store from "./store";
 const Home = () => import(/* webpackChunkName: "home" */ "./views/Home.vue");
 const Main = () => import(/* webpackChunkName: "main" */ "./views/Main.vue");
+const Test = () => import(/* webpackChunkName: "main" */ "./views/Test.vue");
 
 Vue.use(Router);
 
@@ -20,6 +21,11 @@ const router = new Router({
       name: "main",
       component: Main,
       beforeEnter: loginGuard
+    },
+    {
+      path: "/test",
+      name: "test",
+      component: Test
     },
     {
       path: "*",

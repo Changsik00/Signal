@@ -237,7 +237,6 @@ export default {
         .auth()
         .signInWithPopup(provider)
         .then(result => {
-          console.log("#@# ", sns, result);
           let loginId = result.user.email;
           if (loginId == null) {
             loginId = `${result.user.uid}@${sns}.com`;
@@ -251,7 +250,6 @@ export default {
           this.$store.dispatch("login", params);
         })
         .catch(error => {
-          console.log("#@# error", error);
           this.$showToast("Error : " + error.message);
         });
     },
@@ -271,12 +269,10 @@ export default {
                 this.$store.dispatch("login", params);
               },
               error => {
-                console.log("#@# error", error);
                 this.$showToast("Error : " + error.message);
               }
             )
             .catch(error => {
-              console.log("#@# err", error);
               this.$showToast("Error : " + error.message);
             });
         } else {
