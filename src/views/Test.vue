@@ -1,7 +1,18 @@
 <template>
-  <section>
-    <div style="border: 1px solid red; margin: auto; text-align: center;">
-      <svg width="1024" height="400" />
+  <section class="container">
+    <div style="font-size: 24px; font-weight: bold; margin-top: 30px;">실시간 검색어</div>
+    <div>매일 일어난 실시간 검색어를 12시간 누적데이터 기준으로 정리하여 제공합니다.</div>
+    <div style="margin-top: 20px; color: ##5C5C5C; font-weight: bold;">{{date}} ~ 현재</div>
+    <svg width="1024" height="400" />
+    <div v-for="index in 10" :key="index">
+      <div style="color: ##5C5C5C; font-weight: bold;">누적 검색 {{index}}위</div>
+      <div style="display: flex; margin: 10px 30px 20px 30px;">
+        <img style="width: 40px; height: 40px;" src />
+        <div style="margin-left: 20px;">
+          <div>title</div>
+          <div>desc</div>
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -9,14 +20,67 @@
 <script>
 import "../assets/js/history-chart/config.js";
 import dummy from "../assets/js/history-chart/example.json";
+import { async } from 'q';
 export default {
   data() {
-    return {};
+    return {
+      date: "",
+      totalResultTop10: []
+    };
   },
   mounted() {
-    this.draw(dummy);
+    const now = new Date();
+    now.setHours(now.getHours() - 12);
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      hour12: true,
+      minute: "numeric"
+    };
+    this.date = now.toLocaleDateString("ko-KR", options);
+
+    const chartData = dummy;
+
+    var holder = {};
+    chartData.forEach(d => {
+      if (holder.hasOwnProperty(d.name)) {
+        holder[d.name] = holder[d.name] + d.value;
+      } else {
+        holder[d.name] = d.value;
+      }
+      d.value = holder[d.name];
+    });
+    var totalResult = [];
+    for (var prop in holder) {
+      totalResult.push({ name: prop, value: holder[prop] });
+    }
+    const temp = totalResult.sort((a, b) => b.value - a.value).slice(0, 10);
+    this.requestTop10(temp);
+    this.draw(chartData);
   },
   methods: {
+    async requestTop10(top10) {
+      const newsURL = "https://test.signal.bz/api/news/";
+      const imageURL = "https://test.signal.bz/api/ogimage/?url=";
+    
+      top10.forEach(async d => {
+        const result =  await this.$axios.get(newsURL, {params: { keyword: d.name}});
+        if(result.status == 200 && result.data && result.data.items && result.data.items.length > 0) {
+          const item = result.data.items[0];
+          const imageResult = await this.$axios.get(imageURL + item.link);
+          if (imageResult.data.image.startsWith("http") && (imageResult.data.image.endsWith("png") || imageResult.data.image.endsWith("jpg"))) {
+            item.image = imageResult.data.image;
+          }else {
+            item.image = '';
+          }
+          this.totalResultTop10.push(item);
+        }
+      });
+      console.log("#@# result", this.totalResultTop10)
+    },
     draw(data) {
       const config = {
         // 数据源的编码方式。
@@ -69,11 +133,18 @@ export default {
         // 如果该项为true，那么按照src/color_ranges.js中的color_ranges变色，默认色板为color_range
         // 一个具体的设置模板见src/_color_ranges.js，将其更名为color_ranges.js再设置即可
         divide_changeable_color_by_type: false,
-        color_range: ["#ff7e5f", "#feb47b"],
-        color_ranges: {
-          label1: ["#3a6073", "#3a7bd5"],
-          label2: ["#11998e", "#38ef7d"]
-        },
+        color_range: [
+          "#ff7e5f",
+          "#feb47b",
+          "#3a6073",
+          "#3a7bd5",
+          "#11998e",
+          "#38ef7d"
+        ],
+        // color_ranges: {
+        //   label1: ["#3a6073", "#3a7bd5"],
+        //   label2: ["#11998e", "#38ef7d"]
+        // },
 
         // 附加信息内容。
         // left label
@@ -129,10 +200,10 @@ export default {
 
         // 图表左右上下间距。
         // 注意，left_margin不包括左侧的label，修改数值较小会导致左侧label不显示
-        left_margin: 250,
+        left_margin: 50,
         right_margin: 150,
-        top_margin: 180,
-        bottom_margin: 0,
+        top_margin: 50,
+        bottom_margin: 50,
 
         // 是否开启时间标签。
         dateLabel_switch: true,
@@ -172,15 +243,6 @@ export default {
         labelx: -10,
 
         use_img: false,
-
-        // 图片路径，本地图片或者网上图片。
-        // 也可在imgs.js中配置。
-        imgs: {
-          条目:
-            "http://i1.hdslb.com/bfs/face/983034448f81f45f05956d0455a86fe0639d6a36.jpg",
-          任意名称: "path/to/img"
-        },
-
         // 全局背景颜色
         background_color: "#FFFFFF",
 
@@ -190,8 +252,6 @@ export default {
         // 是否显示x轴轴线
         show_x_tick: true,
 
-        // 限制bar info 展示的长度
-        // limit bar info display length
         bar_name_max: 30
       };
 
@@ -1060,201 +1120,5 @@ export default {
 </script>
 
 <style lang="scss">
-// @import "../assets/css/history-chart.css";
-.domain {
-    display: none;
-}
-
-.tick line {
-    stroke: #C0C0BB;
-}
-
-.tick text {
-    fill: #8E8883;
-    font-size: 12pt;
-}
-
-.label {
-    fill: #5C5C5C;
-    font-size: 16px;
-    font-weight: bold
-}
-
-.dateLabel {
-    fill: #5C5C5C;
-    display: table-cell;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.dateLabelRed {
-    fill: #A72E2E;
-    display: table-cell;
-    font-size: 30px;
-    font-weight: bold;
-}
-
-
-.days {
-    fill: #5C5C5C;
-    font-weight: bold;
-    font-size: 25px;
-}
-
-.topLabel {
-    fill: #5C5C5C;
-    font-weight: bold;
-    font-size: 20pt;
-}
-
-.top {
-    fill: #5C5C5C;
-    font-weight: bold;
-    font-size: 22px;
-}
-
-.value {
-    fill: #8A2E2E;
-    font-size: 20px;
-    font-weight: 400;
-}
-
-.barInfo {
-    fill: #FFFFFF;
-    font-weight: 800;
-    font-size: 18px;
-}
-
-.axis-label {
-    fill: #635F5D;
-    font-size: 18px;
-}
-
-.days {
-    fill: r#5C5C5C;
-    font-weight: bold;
-    font-size: 20px;
-}
-
-.dayslabel {
-    fill: #5C5C5C;
-    font-weight: bold;
-    font-size: 26px;
-}
-
-.growth {
-    fill: #5C5C5C;
-    font-weight: bold;
-    font-size: 20px;
-}
-
-/* MIKU色 */
-.L {
-    fill: #39C5BB;
-}
-
-/* 龙牙绿 */
-.M {
-    fill: #006666
-}
-
-.L {
-    fill: #66CCFF
-}
-
-.N {
-    fill: #EB0000
-}
-
-.O {
-    fill: #009714
-}
-
-.P {
-    fill: #B11111
-}
-
-.Q {
-    fill: #E24000
-}
-
-.R {
-    fill: #8605D1
-}
-
-.S {
-    fill: #00A5BB
-}
-
-.T {
-    fill: #C21178
-}
-
-.U {
-    fill: #00A048
-}
-
-.W {
-    fill: #FFC012
-}
-
-.V {
-    fill: #F39303
-}
-
-.X {
-    fill: #933DDA
-}
-
-.Y {
-    fill: #EE5677
-}
-
-.Z {
-    fill: #C0620B
-}
-
-.H {
-    fill: #787878
-}
-
-.G {
-    fill: #CB1B45
-}
-
-.K {
-    fill: #0775BE
-}
-
-.J {
-    fill: #B49D33
-}
-
-.I {
-    fill: #1B813E
-}
-
-.F {
-    fill: #DD3287
-}
-
-.E {
-    fill: #00AF89
-}
-
-.D {
-    fill: #0F2540
-}
-
-.C {
-    fill: #2EA9DF
-}
-
-.B {
-    fill: #0A83E6
-}
-
-.A {
-    fill: #CF9237
-}
+@import "../assets/css/history-chart.css";
 </style>
