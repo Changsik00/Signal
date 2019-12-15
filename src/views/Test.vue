@@ -4,13 +4,13 @@
     <div>매일 일어난 실시간 검색어를 12시간 누적데이터 기준으로 정리하여 제공합니다.</div>
     <div style="margin-top: 20px; color: ##5C5C5C; font-weight: bold;">{{date}} ~ 현재</div>
     <svg width="1024" height="400" />
-    <div v-for="index in 10" :key="index">
-      <div style="color: ##5C5C5C; font-weight: bold;">누적 검색 {{index}}위</div>
-      <div style="display: flex; margin: 10px 30px 20px 30px;">
-        <img style="width: 40px; height: 40px;" src />
+    <div v-for="(d, i) in totalResultTop10" :key="i">
+      <div style="color: ##5C5C5C; font-weight: bold;">누적 검색 {{i + 1}}위</div>
+      <div style="display: flex; margin: 10px 30px 20px 30px; cursor: pointer" @click="link(d.link)">
+        <img style="width: auto; height: 100px; object-fit: contain;" :src="d.image" />
         <div style="margin-left: 20px;">
-          <div>title</div>
-          <div>desc</div>
+          <div v-html="d.title" style="font-size: 18px; font-weight: bold;"></div>
+          <div v-html="d.description"></div>
         </div>
       </div>
     </div>
@@ -20,7 +20,7 @@
 <script>
 import "../assets/js/history-chart/config.js";
 import dummy from "../assets/js/history-chart/example.json";
-import { async } from 'q';
+import { async } from "q";
 export default {
   data() {
     return {
@@ -42,44 +42,62 @@ export default {
     };
     this.date = now.toLocaleDateString("ko-KR", options);
 
-    const chartData = dummy;
+    this.$axios
+      .get("/naver/hot_issues/")
+      .then(res => {
+        const chartData = [];
+        const groupData = _.groupBy(res.data, d => d.date);
+        var holder = {};
+        for (var date in groupData) {
+          groupData[date].forEach(d => {
+            if (holder.hasOwnProperty(d.name)) {
+              d.value = holder[d.name].value + (11 - d.value);
+            } else {
+              d.value = 11 - d.value;
+            }
+            holder[d.name] = d;
+          });
+          for (var name in holder) {
+            chartData.push({
+              name: name,
+              date: date,
+              value: holder[name].value
+            });
+          }
+        }
+        const totalResult = [];
+        for (var prop in holder) {
+          totalResult.push(holder[prop]);
+        }
 
-    var holder = {};
-    chartData.forEach(d => {
-      if (holder.hasOwnProperty(d.name)) {
-        holder[d.name] = holder[d.name] + d.value;
-      } else {
-        holder[d.name] = d.value;
-      }
-      d.value = holder[d.name];
-    });
-    var totalResult = [];
-    for (var prop in holder) {
-      totalResult.push({ name: prop, value: holder[prop] });
-    }
-    const temp = totalResult.sort((a, b) => b.value - a.value).slice(0, 10);
-    this.requestTop10(temp);
-    this.draw(chartData);
+        const top10 = totalResult
+          .sort((a, b) => b.value - a.value)
+          .slice(0, 10);
+        this.requestTop10(top10);
+        this.draw(chartData);
+      })
+      .catch(error => {});
   },
   methods: {
+    link(l) {
+      window.open(l);
+    },
     async requestTop10(top10) {
-      const newsURL = "https://test.signal.bz/api/news/";
+      this.totalResultTop10 = [];
       const imageURL = "https://test.signal.bz/api/ogimage/?url=";
-    
       top10.forEach(async d => {
-        const result =  await this.$axios.get(newsURL, {params: { keyword: d.name}});
-        if(result.status == 200 && result.data && result.data.items && result.data.items.length > 0) {
-          const item = result.data.items[0];
-          const imageResult = await this.$axios.get(imageURL + item.link);
-          if (imageResult.data.image.startsWith("http") && (imageResult.data.image.endsWith("png") || imageResult.data.image.endsWith("jpg"))) {
-            item.image = imageResult.data.image;
-          }else {
-            item.image = '';
-          }
-          this.totalResultTop10.push(item);
+        const imageResult = await this.$axios.get(imageURL + d.link);
+        if (
+          imageResult.data.image.startsWith("http") &&
+          (imageResult.data.image.endsWith("png") ||
+            imageResult.data.image.endsWith("jpg"))
+        ) {
+          d.image = imageResult.data.image;
+        } else {
+          d.image = "";
         }
+        this.totalResultTop10.push(d);
       });
-      console.log("#@# result", this.totalResultTop10)
     },
     draw(data) {
       const config = {
@@ -93,7 +111,7 @@ export default {
         encoding: "UTF-8",
 
         // 每个时间节点最多显示的条目数。
-        max_number: 20,
+        max_number: 10,
 
         // 控制是否显示顶部附加信息文字。
         showMessage: false,
@@ -114,7 +132,8 @@ export default {
         reverse: false,
 
         // 类型根据什么字段区分？如果是name，则关闭类型显示
-        divide_by: "type",
+        // divide_by: "type",
+        divide_by: "value",
 
         // 颜色根据什么字段区分？
         divide_color_by: "name",
@@ -331,13 +350,17 @@ export default {
       // 长度小于display_barInfo的bar将不显示barInfo
       var display_barInfo = config.display_barInfo;
       // 显示类型
-      if (config.use_type_info) {
-        var use_type_info = config.use_type_info;
-      } else if (divide_by != "name") {
-        var use_type_info = true;
-      } else {
-        var use_type_info = false;
-      }
+
+      var use_type_info = false;
+
+      // if (config.use_type_info) {
+      //   var use_type_info = config.use_type_info;
+      // } else if (divide_by != "name") {
+      //   var use_type_info = true;
+      // } else {
+      //   var use_type_info = false;
+      // }
+
       // 使用计数器
       var use_counter = config.use_counter;
       // 每个数据的间隔日期
@@ -496,17 +519,15 @@ export default {
       function getCurrentData(date) {
         let rate = [];
         currentData = [];
-        // indexList = [];
         let tail = "";
         data.forEach(element => {
           if (element["date"] == date && parseFloat(element["value"]) != 0) {
-            if (element.name.length > config.bar_name_max) {
-              tail = "...";
-            } else {
-              tail = "";
-            }
-            element.name =
-              element.name.slice(0, config.bar_name_max - 1) + tail;
+            // if (element.name.length > config.bar_name_max) {
+            //   tail = "...";
+            // } else {
+            //   tail = "";
+            // }
+            // element.name = element.name.slice(0, config.bar_name_max - 1) + tail;
             currentData.push(element);
           }
         });
@@ -514,7 +535,6 @@ export default {
         rate["MAX_RATE"] = 0;
         rate["MIN_RATE"] = 1;
         currentData.forEach(e => {
-          // _cName = e.name;
           lastData.forEach(el => {
             if (el.name == e.name) {
               rate[e.name] = Number(Number(e.value) - Number(el.value));
@@ -529,8 +549,8 @@ export default {
             rate["MIN_RATE"] = rate[e.name];
           }
         });
-        currentData = currentData.slice(0, max_number);
         dataSort();
+        currentData = currentData.slice(0, max_number);
 
         d3.transition("2")
           .each(redraw)
