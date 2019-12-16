@@ -5,7 +5,11 @@
     <div style="margin-top: 20px; color: ##5C5C5C; font-weight: bold;">{{date}} ~ 현재</div>
     <svg width="1024" height="400" />
     <div v-for="(d, i) in totalResultTop10" :key="i">
-      <div style="color: ##5C5C5C; font-weight: bold;">누적 검색 {{i + 1}}위</div>
+      <div style="display:flex">
+        <div style="color: #5C5C5C; font-weight: bold;">누적 검색 {{i + 1}}위</div>
+        <div style="color: #3CAEA3; font-weight: bold; margin-left: 10px;">{{d.name}} [검색량 : {{d.value}}]</div>
+      </div>
+      
       <div style="display: flex; margin: 10px 30px 20px 30px; cursor: pointer" @click="link(d.link)">
         <img style="width: auto; height: 100px; object-fit: contain;" :src="d.image" />
         <div style="margin-left: 20px;">
@@ -98,6 +102,7 @@ export default {
         }
         this.totalResultTop10.push(d);
       });
+      console.log("#@# top10", this.totalResultTop10)
     },
     draw(data) {
       const config = {
