@@ -9,9 +9,9 @@
             </Container>
           </v-layout>
           <v-layout v-show="$store.state.currentMode == 'POSTS'">
-              <div style="margintop: 50px; text-align: center">Posts</div>
+                <div style="margintop: 50px; text-align: center">Posts</div>
           </v-layout>
-          <Trend v-show="$store.state.currentMode == 'TREND'" />
+          <Trend v-if="$store.state.currentMode == 'TREND'" />
         </v-layout>
     
         <v-navigation-drawer v-model="$store.state.monitorSlideMenu" absolute temporary right width="320" style="padding-bottom: 20px">
@@ -212,7 +212,7 @@ export default {
             this.searchPreviewList = [];
             let baseURL = "";
             if (this.searchType == "NAVER_KEY_WORD") {
-                baseURL = "https://test.signal.bz/api/news/";
+                baseURL = "/naver/news/";
             } else if (this.searchType == "TWITTER_KEY_WORD") {
                 baseURL = "/twitter/user_keywords/";
             }
