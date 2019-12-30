@@ -88,7 +88,7 @@ export default {
     },
     async requestTop10(top10) {
       this.totalResultTop10 = [];
-      const imageURL = "https://test.signal.bz/api/ogimage/?url=";
+      const imageURL = "/naver/ogimage/?url=";
       top10.forEach(async d => {
         const imageResult = await this.$axios.get(imageURL + d.link);
         if (
