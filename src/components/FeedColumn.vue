@@ -133,7 +133,7 @@ export default {
         let baseURL = "";
         switch (this.data.type) {
           case "NAVER_KEY_WORD":
-            baseURL = "https://test.signal.bz/api/news/";
+            baseURL = "/naver/news/";
             this.$axios
               .get(baseURL, {
                 params: { keyword: this.data.data, start: this.start }

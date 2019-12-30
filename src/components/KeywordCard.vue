@@ -31,7 +31,7 @@ export default {
     };
   },
   created() {
-    let baseURL = "https://test.signal.bz/api/ogimage/?url=";
+    let baseURL = "/naver/ogimage/?url=";
     this.$axios
       .get(baseURL + this.item.link)
       .then(res => {
