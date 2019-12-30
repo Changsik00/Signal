@@ -3,8 +3,6 @@ import Router from "vue-router";
 import store from "./store";
 const Home = () => import(/* webpackChunkName: "home" */ "./views/Home.vue");
 const Main = () => import(/* webpackChunkName: "main" */ "./views/Main.vue");
-const Ranking = () =>
-  import(/* webpackChunkName: "main" */ "./views/Ranking.vue");
 
 Vue.use(Router);
 
@@ -22,11 +20,6 @@ const router = new Router({
       name: "main",
       component: Main,
       beforeEnter: loginGuard
-    },
-    {
-      path: "/ranking",
-      name: "ranking",
-      component: Ranking
     },
     {
       path: "*",

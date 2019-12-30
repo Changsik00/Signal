@@ -11,6 +11,7 @@
           <v-layout v-show="$store.state.currentMode == 'POSTS'">
               <div style="margintop: 50px; text-align: center">Posts</div>
           </v-layout>
+          <Trend v-show="$store.state.currentMode == 'TREND'" />
         </v-layout>
     
         <v-navigation-drawer v-model="$store.state.monitorSlideMenu" absolute temporary right width="320" style="padding-bottom: 20px">
@@ -124,13 +125,15 @@
 <script>
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import FeedColumn from "../components/FeedColumn";
+import Trend from "../components/Trend";
 import { Container, Draggable } from "vue-smooth-dnd";
 
 export default {
     components: {
         FeedColumn,
+        Trend,
         Container,
-        Draggable
+        Draggable,
     },
     data() {
         return {

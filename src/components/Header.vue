@@ -25,6 +25,13 @@
         <v-spacer />
         <v-btn
           class="text-capitalize top-button"
+          :class="{'active' : $store.state.currentMode == 'TREND'}"
+          outline round color="primary"
+          @click="clickTrend">
+          Trend
+        </v-btn>
+        <v-btn
+          class="text-capitalize top-button"
           outline round color="primary"
           @click="clickNewPost">
           New Post
@@ -73,6 +80,9 @@ export default {
     },
     clickNewPost() {
       this.$store.state.showNewPost = true;
+    },
+    clickTrend() {
+      this.$store.state.currentMode = "TREND";
     }
   }
 };
