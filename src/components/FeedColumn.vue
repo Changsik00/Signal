@@ -6,7 +6,7 @@
       class="feed-column-title"
     >
       <img class="icon" src="../assets/img/common/naver2-on.svg" />
-      <div>{{ data.data}}</div>
+      <div>{{ data.data }}</div>
       <v-spacer></v-spacer>
       <v-btn icon style="width: 30px; height: 30px; margin: 0;" @click="removeFeed(data)">
         <v-icon style="color: #b2ebf2;">delete</v-icon>
@@ -118,11 +118,12 @@ export default {
     return {
       total: 0,
       start: 1,
-      offset: 30,
+      offset: 10,
       requestLock: false
     };
   },
   created() {
+    this.data.feedList = [];
     this.requestfeed();
   },
   methods: {
