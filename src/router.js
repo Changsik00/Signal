@@ -3,6 +3,10 @@ import Router from "vue-router";
 import store from "./store";
 const Home = () => import(/* webpackChunkName: "home" */ "./views/Home.vue");
 const Main = () => import(/* webpackChunkName: "main" */ "./views/Main.vue");
+const PolicyTerms = () =>
+  import(/* webpackChunkName: "terms" */ "./views/PolicyTerms.vue");
+const PolicyPrivacy = () =>
+  import(/* webpackChunkName: "privacy" */ "./views/PolicyPrivacy.vue");
 
 Vue.use(Router);
 
@@ -16,6 +20,16 @@ const router = new Router({
       beforeEnter: homeGuard
     },
     {
+      path: "/policy/terms",
+      name: "terms",
+      component: PolicyTerms
+    },
+    {
+      path: "/policy/privacy",
+      name: "privacy",
+      component: PolicyPrivacy
+    },
+    {
       path: "/main",
       name: "main",
       component: Main,
@@ -26,7 +40,10 @@ const router = new Router({
       component: Home,
       beforeEnter: homeGuard
     }
-  ]
+  ],
+  scrollBehavior() {
+    return { x: 0, y: 0 };
+  }
 });
 function homeGuard(to, from, next) {
   if (store.getters.isLogin) {

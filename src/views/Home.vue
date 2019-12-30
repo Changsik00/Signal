@@ -10,9 +10,9 @@
     >지금 당신의 관심사를 검색하세요.</div>
     <div style="color: #393f45; margin-top: 10px; text-align: center;">
       당신의 서비스, 브랜드, 경쟁사등 다양한 소식을
-      <br />카카오톡으로 쉽게 전달해드립니다.
+      <br />시그널이 쉽게 전달해드립니다.
     </div>
-    <div
+    <!-- <div
       class="home-layer-margin"
       style="display: flex; 
                 justify-content: center;  
@@ -32,7 +32,7 @@
         <div style="color: #272c31; font-size: 14px;">사용자 수</div>
         <div style="color: #34d499; font-size: 36px;">123</div>
       </div>
-    </div>
+    </div> -->
     <div class="home-layer-margin">
       <v-layout v-for="(item, index) in this.itemList" :key="index">
         <div class="home-layer1">
@@ -46,44 +46,17 @@
         </div>
       </v-layout>
     </div>
-    <div class="home-layer-margin">
-      <v-layout>
-        <div class="home-layer1">
-          <div
-            class="item"
-            style="font-size: 24px; font-weight: 300; color: #393f45"
-          >이미 23,444 파트너사가 시그널을 이용하여 원하는 관심사를 받아보고 계십니다.</div>
-          <div class="item">
-            <div style="text-align: center">
-              <v-avatar class="circle-size" v-for="(url, index) in imgList1" :key="index">
-                <img :src="url" />
-              </v-avatar>
-            </div>
-            <div style="text-align: center">
-              <v-avatar class="circle-size" v-for="(url, index) in imgList2" :key="index">
-                <img :src="url" />
-              </v-avatar>
-            </div>
-          </div>
-        </div>
-      </v-layout>
-    </div>
     <div class="home-layer1 home-layer-margin bottom">
       <v-carousel hide-delimiters light height="200" style="box-shadow:none; padding: 0 20px;">
-        <v-carousel-item v-for="(img, i) in imgList3" :key="i">
+        <v-carousel-item v-for="(item, i) in itemList2" :key="i">
           <v-layout align-center justify-center fill-height>
             <div style="text-align: center; flex-grow: 1;">
-              <div>EASY {{i}}</div>
-              <div>검색은 간편! 정보는 정확!</div>
-              <div>
-                키워드만 입력해서 검색하면 소셜미디어상에
-                <br />다양한 정보를 한꺼번에 받아볼 수 있어요!
-              </div>
-              <div>줌마렐라 이기원 대표</div>
+              <div style="font-weight: bold; font-size: 20px; color: #393f45">{{item.title}}</div>
+              <div v-html="item.info"></div>
             </div>
             <div style="text-align: center; flex-grow: 1;">
               <v-avatar>
-                <img :src="img" />
+                <img :src="item.imgUrl" />
               </v-avatar>
             </div>
           </v-layout>
@@ -100,39 +73,37 @@ export default {
       itemList: [
         {
           title: "원하는 소식만 정확하게!",
-          info:
-            "나의 서비스나 경쟁사 뉴스 또는 평상시 관심 있었던 주제등 키워드를 지정하여 원하는 소식만 정확하게 전달해 드립니다.",
+          info: "나의 서비스나 경쟁사 뉴스 또는 평상시 관심 있었던 주제등 키워드를 지정하여 원하는 소식만 정확하게 전달해 드립니다.",
           imgUrl: "https://t1.kakaocdn.net/kakaocorp/admin/main-banner/1657"
         },
         {
           title: "경쟁사 소식을 실시간으로!",
-          info:
-            "매일 온라인에서 찾아보던 경쟁사 소식을 이제는 찾아볼 필요 없이 소식이 있을 때마다 실시간 업데이트 하여 카카오톡으로 알려드립니다.",
-          imgUrl:
-            "https://t1.kakaocdn.net/kakaocorp/operating/co/main-banner/3189.png"
+          info: "매일 온라인에서 찾아보던 경쟁사 소식을 이제는 찾아볼 필요 없이 소식이 있을 때마다 실시간 업데이트 하여 알려드립니다.",
+          imgUrl: "https://t1.kakaocdn.net/kakaocorp/operating/co/main-banner/3189.png"
         },
         {
-          title: "카카오톡으로 쉽고 빠르게!",
-          info:
-            "회원가입이나 로그인 없이 평상시 사용하던 카카오톡에서 키워드 입력만으로 쉽게 받아볼 수 있습니다.",
+          title: "실시간 이슈를 쉽고 빠르게!",
+          info: "매일 일어난 실시간 검색어를 12시간 누적데이터 기준으로 정리해서 제공함으로써 그날의 이슈를 쉽게 확인할 수 있습니다.",
           imgUrl: "https://t1.kakaocdn.net/kakaocorp/admin/main-banner/1652"
         }
       ],
-      imgList1: [
-        "https://picsum.photos/510/300?image=1",
-        "https://picsum.photos/510/300?image=10",
-        "https://picsum.photos/510/300?image=20"
-      ],
-      imgList2: [
-        "https://picsum.photos/510/300?image=30",
-        "https://picsum.photos/510/300?image=40",
-        "https://picsum.photos/510/300?image=50"
-      ],
-      imgList3: [
-        "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-        "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
-        "https://cdn.vuetifyjs.com/images/carousel/bird.jpg",
-        "https://cdn.vuetifyjs.com/images/carousel/planet.jpg"
+      itemList2: [
+        { title: "EASY  검색은 간편! 정보는 정확!",
+          info: "키워드만 입력해서 검색하면 소셜미디어상에<br>다양한 정보를 한꺼번에 받아볼 수 있어요!",
+          imgUrl: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg"
+        },
+        { title: "ONE  많은 소셜미디어 계정 관리를 하나의 채널에서!",
+          info: "페이스북, 인스타, 트위터등 관리해야할 많은<br>소셜미디어를 하나의의 채널에서 관리할 수 있어 편리해요!",
+          imgUrl: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
+        },
+        { title: "SAVE  시간을 절약 할 수 있어요!",
+          info: "다양한 소셜미디어 채널에 글을 한번에<br>작성할 수 있어 시간을 절약할 수 있어요!",
+          imgUrl: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg",
+        },
+        { title: "DATA 경쟁사를 알게 되었어요!",
+          info: "항상 궁금했지만 알 수 없었던 경쟁사와<br>우리의 현재 상황을 명확하게 인지할 수있게 되었어요.",
+          imgUrl: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg"
+        },
       ]
     };
   }
