@@ -103,7 +103,6 @@ export default {
                 }
                 this.totalResultTop10.push(d);
             });
-            console.log("#@# top10", this.totalResultTop10);
         },
         draw(data) {
             const config = {
