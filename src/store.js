@@ -60,7 +60,8 @@ const store = new Vuex.Store({
       return state.userToken != null && state.userToken.length > 0;
     },
     getNaverKeywords(state) {
-      return state.feeds.filter(d => d.type == "NAVER_KEY_WORD");
+      // return state.feeds.filter(d => d.type == "NAVER_KEY_WORD");
+      return state.feeds.filter(d => d.type.startsWith("NAVER_KEY_WORD"));
     },
     getTwitterKeywords(state) {
       return state.feeds.filter(d => d.type == "TWITTER_KEY_WORD");

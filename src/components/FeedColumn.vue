@@ -1,14 +1,18 @@
 <template>
   <div class="feed-column">
     <v-layout
-      v-if="data.type == $store.state.FEED_TYPE.NAVER_KEY_WORD"
+      v-if="data.type.startsWith($store.state.FEED_TYPE.NAVER_KEY_WORD)"
       align-center
       class="feed-column-title"
     >
       <img class="icon" src="../assets/img/common/naver2-on.svg" />
       <div>{{ data.data }}</div>
       <v-spacer></v-spacer>
-      <v-btn icon style="width: 30px; height: 30px; margin: 0;" @click="removeFeed(data)">
+      <v-btn
+        icon
+        style="width: 30px; height: 30px; margin: 0;"
+        @click="removeFeed(data)"
+      >
         <v-icon style="color: #b2ebf2;">delete</v-icon>
       </v-btn>
     </v-layout>
@@ -18,9 +22,13 @@
       class="feed-column-title"
     >
       <img class="icon" src="../assets/img/common/twitter-on.svg" />
-      <div>{{ data.data}}</div>
+      <div>{{ data.data }}</div>
       <v-spacer></v-spacer>
-      <v-btn icon style="width: 30px; height: 30px; margin: 0;" @click="removeFeed(data)">
+      <v-btn
+        icon
+        style="width: 30px; height: 30px; margin: 0;"
+        @click="removeFeed(data)"
+      >
         <v-icon style="color: #b2ebf2;">delete</v-icon>
       </v-btn>
     </v-layout>
@@ -32,7 +40,11 @@
       <img class="icon" src="../assets/img/common/twitter-on.svg" />
       <div>Timeline</div>
       <v-spacer></v-spacer>
-      <v-btn icon style="width: 30px; height: 30px; margin: 0;" @click="removeFeed(data)">
+      <v-btn
+        icon
+        style="width: 30px; height: 30px; margin: 0;"
+        @click="removeFeed(data)"
+      >
         <v-icon style="color: #b2ebf2;">delete</v-icon>
       </v-btn>
     </v-layout>
@@ -44,7 +56,11 @@
       <img class="icon" src="../assets/img/common/twitter-on.svg" />
       <div>Mentions</div>
       <v-spacer></v-spacer>
-      <v-btn icon style="width: 30px; height: 30px; margin: 0;" @click="removeFeed(data)">
+      <v-btn
+        icon
+        style="width: 30px; height: 30px; margin: 0;"
+        @click="removeFeed(data)"
+      >
         <v-icon style="color: #b2ebf2;">delete</v-icon>
       </v-btn>
     </v-layout>
@@ -56,7 +72,11 @@
       <img class="icon" src="../assets/img/common/facebook-on.svg" />
       <div>Page Posts</div>
       <v-spacer></v-spacer>
-      <v-btn icon style="width: 30px; height: 30px; margin: 0;" @click="removeFeed(data)">
+      <v-btn
+        icon
+        style="width: 30px; height: 30px; margin: 0;"
+        @click="removeFeed(data)"
+      >
         <v-icon style="color: #b2ebf2;">delete</v-icon>
       </v-btn>
     </v-layout>
@@ -68,34 +88,42 @@
       <img class="icon" src="../assets/img/common/facebook-on.svg" />
       <div>Mentions</div>
       <v-spacer></v-spacer>
-      <v-btn icon style="width: 30px; height: 30px; margin: 0;" @click="removeFeed(data)">
+      <v-btn
+        icon
+        style="width: 30px; height: 30px; margin: 0;"
+        @click="removeFeed(data)"
+      >
         <v-icon style="color: #b2ebf2;">delete</v-icon>
       </v-btn>
     </v-layout>
     <div class="feeds-layer">
       <KeywordCard
-        v-if="data.type == $store.state.FEED_TYPE.NAVER_KEY_WORD"
         v-for="(feed, index) in data.feedList"
+        v-if="data.type.startsWith($store.state.FEED_TYPE.NAVER_KEY_WORD)"
+        :key="index"
         :item="feed"
         :index="index"
         :last="data.feedList.length"
-        :key="index"
         @detectLastPosition="detectLastPosition"
       />
       <TwitterCard
-        v-if="data.type == $store.state.FEED_TYPE.TWITTER_KEY_WORD
-         || data.type == $store.state.FEED_TYPE.TWITTER_TIMELINE 
-         || data.type == $store.state.FEED_TYPE.TWITTER_MENTIONS"
         v-for="(feed, index) in data.feedList"
-        :item="feed"
+        v-if="
+          data.type == $store.state.FEED_TYPE.TWITTER_KEY_WORD ||
+            data.type == $store.state.FEED_TYPE.TWITTER_TIMELINE ||
+            data.type == $store.state.FEED_TYPE.TWITTER_MENTIONS
+        "
         :key="index"
+        :item="feed"
       />
       <FacebookCard
-        v-if="data.type == $store.state.FEED_TYPE.FACEBOOK_POSTS 
-         || data.type == $store.state.FEED_TYPE.FACEBOOK_MENTIONS"
         v-for="(feed, index) in data.feedList"
-        :item="feed"
+        v-if="
+          data.type == $store.state.FEED_TYPE.FACEBOOK_POSTS ||
+            data.type == $store.state.FEED_TYPE.FACEBOOK_MENTIONS
+        "
         :key="index"
+        :item="feed"
       />
     </div>
   </div>
@@ -108,12 +136,12 @@ import FacebookCard from "./FacebookCard";
 import { mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
-  props: ["data"],
   components: {
     KeywordCard,
     TwitterCard,
     FacebookCard
   },
+  props: ["data"],
   data() {
     return {
       total: 0,
@@ -134,7 +162,17 @@ export default {
         let baseURL = "";
         switch (this.data.type) {
           case "NAVER_KEY_WORD":
-            baseURL = "/naver/news/";
+          case "NAVER_KEY_WORD_NEWS":
+          case "NAVER_KEY_WORD_BLOG":
+          case "NAVER_KEY_WORD_CAFE":
+            if (this.data.type == "NAVER_KEY_WORD_CAFE") {
+              baseURL = "/naver/cafe_search/";
+            } else if (this.data.type == "NAVER_KEY_WORD_BLOG") {
+              baseURL = "/naver/blog_search/";
+            } else {
+              baseURL = "/naver/news/";
+            }
+
             this.$axios
               .get(baseURL, {
                 params: { keyword: this.data.data, start: this.start }
@@ -145,12 +183,12 @@ export default {
                   res.data.items.forEach(item => {
                     this.data.feedList.push(item);
                   });
-
                   this.start = this.data.feedList.length + 1;
                 }
                 this.requestLock = false;
               })
               .catch(error => (this.requestLock = false));
+
             break;
           case "TWITTER_KEY_WORD":
             this.$axios
@@ -164,13 +202,13 @@ export default {
                 this.requestLock = false;
               })
               .catch(error => (this.requestLock = false));
-            break;  
+            break;
           case "TWITTER_TIMELINE":
             this.$axios
               .get("/twitter/timeline/", {
                 params: {
                   firebase_access_token: this.$store.state.userToken,
-                  signal_id: this.$store.state.userId,
+                  signal_id: this.$store.state.userId
                 }
               })
               .then(res => {
@@ -207,7 +245,7 @@ export default {
                 this.requestLock = false;
               })
               .catch(error => (this.requestLock = false));
-            break;  
+            break;
           case "FACEBOOK_MENTIONS":
             this.$axios
               .get("/facebook/page_mentions/", {
@@ -221,7 +259,7 @@ export default {
                 this.requestLock = false;
               })
               .catch(error => (this.requestLock = false));
-            break;  
+            break;
         }
       }
     },
