@@ -1,22 +1,34 @@
-<template >
+<template>
   <div style="background-color: var(--ice-blue); padding-bottom: 5px;">
     <v-layout
       v-observe-visibility="visibilityChanged"
       column
       style="padding: 20px; background-color: white"
     >
-      <div style="font-size: 18px; font-weight: bold;" v-html="item.title"></div>
-      <div style="font-size: 14px; color: #9da6af">{{dateToFormat(item.pubDate)}}</div>
-      <div class="mt10" style="word-break: break-all;" v-html="item.description"></div>
+      <div
+        style="font-size: 18px; font-weight: bold;"
+        v-html="item.title"
+      ></div>
+      <div v-if="item.pubDate" style="font-size: 14px; color: #9da6af">
+        {{ dateToFormat(item.pubDate) }}
+      </div>
+      <div v-if="item.postdate" style="font-size: 14px; color: #9da6af">
+        {{ dateToFormat2(item.postdate) }}
+      </div>
+      <div
+        class="mt10"
+        style="word-break: break-all;"
+        v-html="item.description"
+      ></div>
       <div class="see-more">
         <a @click="seeMore">See More</a>
       </div>
       <v-img
         v-if="ogImage.length > 1"
         class="feed-image"
-        @click="seeMore"
         :aspect-ratio="2 / 1"
         :src="ogImage"
+        @click="seeMore"
       ></v-img>
     </v-layout>
   </div>
@@ -35,7 +47,10 @@ export default {
     this.$axios
       .get(baseURL + this.item.link)
       .then(res => {
-        if (res.data.image.startsWith("http") && (res.data.image.endsWith("png") || res.data.image.endsWith("jpg"))) {
+        if (
+          res.data.image.startsWith("http") &&
+          (res.data.image.endsWith("png") || res.data.image.endsWith("jpg"))
+        ) {
           this.ogImage = res.data.image;
         }
       })
@@ -71,6 +86,16 @@ export default {
         ((parseInt(d.getMinutes() / 5) * 5).toString().length == 2
           ? (parseInt(d.getMinutes() / 5) * 5).toString()
           : "0" + (parseInt(d.getMinutes() / 5) * 5).toString())
+      );
+    },
+    dateToFormat2(postdate) {
+      return (
+        postdate.substring(0, 4) +
+        "년" +
+        postdate.substring(4, 2) +
+        "월" +
+        postdate.substring(6, 8) +
+        "일 "
       );
     }
   }
