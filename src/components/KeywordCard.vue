@@ -92,7 +92,7 @@ export default {
       return (
         postdate.substring(0, 4) +
         "년" +
-        postdate.substring(4, 2) +
+        postdate.substring(4, 6) +
         "월" +
         postdate.substring(6, 8) +
         "일 "
