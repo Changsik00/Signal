@@ -1,92 +1,8 @@
 <template>
   <div class="feed-column">
-    <v-layout
-      v-if="data.type.startsWith($store.state.FEED_TYPE.NAVER_KEY_WORD)"
-      align-center
-      class="feed-column-title"
-    >
-      <img class="icon" src="../assets/img/common/naver2-on.svg" />
-      <div>{{ data.data }}</div>
-      <v-spacer></v-spacer>
-      <v-btn
-        icon
-        style="width: 30px; height: 30px; margin: 0;"
-        @click="removeFeed(data)"
-      >
-        <v-icon style="color: #b2ebf2;">delete</v-icon>
-      </v-btn>
-    </v-layout>
-    <v-layout
-      v-if="data.type == $store.state.FEED_TYPE.TWITTER_KEY_WORD"
-      align-center
-      class="feed-column-title"
-    >
-      <img class="icon" src="../assets/img/common/twitter-on.svg" />
-      <div>{{ data.data }}</div>
-      <v-spacer></v-spacer>
-      <v-btn
-        icon
-        style="width: 30px; height: 30px; margin: 0;"
-        @click="removeFeed(data)"
-      >
-        <v-icon style="color: #b2ebf2;">delete</v-icon>
-      </v-btn>
-    </v-layout>
-    <v-layout
-      v-if="data.type == $store.state.FEED_TYPE.TWITTER_TIMELINE"
-      align-center
-      class="feed-column-title"
-    >
-      <img class="icon" src="../assets/img/common/twitter-on.svg" />
-      <div>Timeline</div>
-      <v-spacer></v-spacer>
-      <v-btn
-        icon
-        style="width: 30px; height: 30px; margin: 0;"
-        @click="removeFeed(data)"
-      >
-        <v-icon style="color: #b2ebf2;">delete</v-icon>
-      </v-btn>
-    </v-layout>
-    <v-layout
-      v-if="data.type == $store.state.FEED_TYPE.TWITTER_MENTIONS"
-      align-center
-      class="feed-column-title"
-    >
-      <img class="icon" src="../assets/img/common/twitter-on.svg" />
-      <div>Mentions</div>
-      <v-spacer></v-spacer>
-      <v-btn
-        icon
-        style="width: 30px; height: 30px; margin: 0;"
-        @click="removeFeed(data)"
-      >
-        <v-icon style="color: #b2ebf2;">delete</v-icon>
-      </v-btn>
-    </v-layout>
-    <v-layout
-      v-if="data.type == $store.state.FEED_TYPE.FACEBOOK_POSTS"
-      align-center
-      class="feed-column-title"
-    >
-      <img class="icon" src="../assets/img/common/facebook-on.svg" />
-      <div>Page Posts</div>
-      <v-spacer></v-spacer>
-      <v-btn
-        icon
-        style="width: 30px; height: 30px; margin: 0;"
-        @click="removeFeed(data)"
-      >
-        <v-icon style="color: #b2ebf2;">delete</v-icon>
-      </v-btn>
-    </v-layout>
-    <v-layout
-      v-if="data.type == $store.state.FEED_TYPE.FACEBOOK_MENTIONS"
-      align-center
-      class="feed-column-title"
-    >
-      <img class="icon" src="../assets/img/common/facebook-on.svg" />
-      <div>Mentions</div>
+    <v-layout align-center class="feed-column-title">
+      <img class="icon" :src="iconImage" style="border-radius: 50%;" />
+      <div>{{ title }}</div>
       <v-spacer></v-spacer>
       <v-btn
         icon
@@ -147,10 +63,55 @@ export default {
       total: 0,
       start: 1,
       offset: 10,
-      requestLock: false
+      requestLock: false,
+      iconImage: "",
+      title: ""
     };
   },
   created() {
+    switch (this.data.type) {
+      case "NAVER_KEY_WORD":
+      case "NAVER_KEY_WORD_NEWS":
+        this.iconImage = require("../assets/img/common/naver2-on.svg");
+        this.title = this.data.data;
+        break;
+
+      case "NAVER_KEY_WORD_CAFE":
+        this.iconImage = require("../assets/img/common/naver-cafe.png");
+        this.title = this.data.data;
+        break;
+
+      case "NAVER_KEY_WORD_BLOG":
+        this.iconImage = require("../assets/img/common/naver-blog.png");
+        this.title = this.data.data;
+        break;
+
+      case "TWITTER_KEY_WORD":
+        this.iconImage = require("../assets/img/common/twitter-on.svg");
+        this.title = this.data.data;
+        break;
+
+      case "TWITTER_TIMELINE":
+        this.iconImage = require("../assets/img/common/twitter-on.svg");
+        this.title = "Timeline";
+        break;
+
+      case "TWITTER_MENTIONS":
+        this.iconImage = require("../assets/img/common/twitter-on.svg");
+        this.title = "Mentions";
+        break;
+
+      case "FACEBOOK_POSTS":
+        this.iconImage = require("../assets/img/common/facebook-on.svg");
+        this.title = "Page Posts";
+        break;
+
+      case "FACEBOOK_MENTIONS":
+        this.iconImage = require("../assets/img/common/facebook-on.svg");
+        this.title = "Mentions";
+        break;
+    }
+
     this.data.feedList = [];
     this.requestfeed();
   },
