@@ -3,7 +3,6 @@ import Vuex from "vuex";
 import router from "./router";
 import axios from "axios";
 import firebase from "firebase";
-import { stat } from "fs";
 var firebaseConfig = {
   apiKey: "AIzaSyCo8MlwzJ_FMuWCbhhhaHpaGluLfX7hTak",
   authDomain: "signal-97eaf.firebaseapp.com",
@@ -60,7 +59,6 @@ const store = new Vuex.Store({
       return state.userToken != null && state.userToken.length > 0;
     },
     getNaverKeywords(state) {
-      // return state.feeds.filter(d => d.type == "NAVER_KEY_WORD");
       return state.feeds.filter(d => d.type.startsWith("NAVER_KEY_WORD"));
     },
     getTwitterKeywords(state) {
@@ -72,15 +70,11 @@ const store = new Vuex.Store({
           signal_id: state.userId,
           access_token: state.userToken
         };
-        axios
-          .get("/firebase/user/feed_list/", {
-            params
-          })
-          .then(response => {
-            try {
-              store.commit("setFeeds", JSON.parse(response.data));
-            } catch (e) {}
-          });
+        axios.get("/firebase/user/feed_list/", { params }).then(response => {
+          try {
+            store.commit("setFeeds", JSON.parse(response.data));
+          } catch (e) {}
+        });
       } else {
         return state.feeds;
       }
@@ -140,7 +134,7 @@ const store = new Vuex.Store({
       state.snsConnect.facebook = data.facebook;
       state.snsConnect.twitter = data.twitter;
       state.showLogin = false;
-      if (data.data && data.data != "") {
+      if (data?.data != "") {
         try {
           state.feeds = JSON.parse(data.data);
         } catch (e) {}

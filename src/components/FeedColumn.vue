@@ -15,7 +15,7 @@
     <div class="feeds-layer">
       <KeywordCard
         v-for="(feed, index) in data.feedList"
-        v-if="data.type.startsWith($store.state.FEED_TYPE.NAVER_KEY_WORD)"
+        v-if="data.type.startsWith('NAVER')"
         :key="index"
         :item="feed"
         :index="index"
@@ -24,20 +24,13 @@
       />
       <TwitterCard
         v-for="(feed, index) in data.feedList"
-        v-if="
-          data.type == $store.state.FEED_TYPE.TWITTER_KEY_WORD ||
-            data.type == $store.state.FEED_TYPE.TWITTER_TIMELINE ||
-            data.type == $store.state.FEED_TYPE.TWITTER_MENTIONS
-        "
+        v-if="data.type.startsWith('TWITTER')"
         :key="index"
         :item="feed"
       />
       <FacebookCard
         v-for="(feed, index) in data.feedList"
-        v-if="
-          data.type == $store.state.FEED_TYPE.FACEBOOK_POSTS ||
-            data.type == $store.state.FEED_TYPE.FACEBOOK_MENTIONS
-        "
+        v-if="data.type.startsWith('FACEBOOK')"
         :key="index"
         :item="feed"
       />
@@ -68,55 +61,62 @@ export default {
       title: ""
     };
   },
-  created() {
-    switch (this.data.type) {
-      case "NAVER_KEY_WORD":
-      case "NAVER_KEY_WORD_NEWS":
-        this.iconImage = require("../assets/img/common/naver2-on.svg");
-        this.title = this.data.data;
-        break;
-
-      case "NAVER_KEY_WORD_CAFE":
-        this.iconImage = require("../assets/img/common/naver-cafe.png");
-        this.title = this.data.data;
-        break;
-
-      case "NAVER_KEY_WORD_BLOG":
-        this.iconImage = require("../assets/img/common/naver-blog.png");
-        this.title = this.data.data;
-        break;
-
-      case "TWITTER_KEY_WORD":
-        this.iconImage = require("../assets/img/common/twitter-on.svg");
-        this.title = this.data.data;
-        break;
-
-      case "TWITTER_TIMELINE":
-        this.iconImage = require("../assets/img/common/twitter-on.svg");
-        this.title = "Timeline";
-        break;
-
-      case "TWITTER_MENTIONS":
-        this.iconImage = require("../assets/img/common/twitter-on.svg");
-        this.title = "Mentions";
-        break;
-
-      case "FACEBOOK_POSTS":
-        this.iconImage = require("../assets/img/common/facebook-on.svg");
-        this.title = "Page Posts";
-        break;
-
-      case "FACEBOOK_MENTIONS":
-        this.iconImage = require("../assets/img/common/facebook-on.svg");
-        this.title = "Mentions";
-        break;
+  watch: {
+    data() {
+      this.setTitle();
     }
-
+  },
+  created() {
     this.data.feedList = [];
+    this.setTitle();
     this.requestfeed();
   },
   methods: {
     ...mapActions(["removeFeed"]),
+    setTitle() {
+      switch (this.data.type) {
+        case "NAVER_KEY_WORD":
+        case "NAVER_KEY_WORD_NEWS":
+          this.iconImage = require("../assets/img/common/naver2-on.svg");
+          this.title = this.data.data;
+          break;
+
+        case "NAVER_KEY_WORD_CAFE":
+          this.iconImage = require("../assets/img/common/naver-cafe.png");
+          this.title = this.data.data;
+          break;
+
+        case "NAVER_KEY_WORD_BLOG":
+          this.iconImage = require("../assets/img/common/naver-blog.png");
+          this.title = this.data.data;
+          break;
+
+        case "TWITTER_KEY_WORD":
+          this.iconImage = require("../assets/img/common/twitter-on.svg");
+          this.title = this.data.data;
+          break;
+
+        case "TWITTER_TIMELINE":
+          this.iconImage = require("../assets/img/common/twitter-on.svg");
+          this.title = "Timeline";
+          break;
+
+        case "TWITTER_MENTIONS":
+          this.iconImage = require("../assets/img/common/twitter-on.svg");
+          this.title = "Mentions";
+          break;
+
+        case "FACEBOOK_POSTS":
+          this.iconImage = require("../assets/img/common/facebook-on.svg");
+          this.title = "Page Posts";
+          break;
+
+        case "FACEBOOK_MENTIONS":
+          this.iconImage = require("../assets/img/common/facebook-on.svg");
+          this.title = "Mentions";
+          break;
+      }
+    },
     requestfeed() {
       if (!this.requestLock) {
         this.requestLock = true;
@@ -222,6 +222,7 @@ export default {
               .catch(error => (this.requestLock = false));
             break;
         }
+        this.setTitle();
       }
     },
     detectLastPosition() {
