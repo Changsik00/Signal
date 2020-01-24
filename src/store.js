@@ -184,8 +184,12 @@ const store = new Vuex.Store({
       axios.post("/firebase/user/feed_list/", params);
     },
     setFeeds(state, feeds) {
-      feeds = feeds.filter(d => d.type != null && d.type != "");
-      state.feeds = feeds;
+      if (feeds == "" || feeds.length == 0) {
+        state.feeds = [];
+      } else {
+        feeds = feeds.filter(d => d.type != null && d.type != "");
+        state.feeds = feeds;
+      }
     },
     twiiterConnection(state, params) {
       state.snsConnect.twitter = true;
