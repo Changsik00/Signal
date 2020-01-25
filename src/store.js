@@ -138,6 +138,8 @@ const store = new Vuex.Store({
         try {
           state.feeds = JSON.parse(data.data);
         } catch (e) {}
+      } else {
+        state.feeds = [];
       }
     },
     logout(state) {
