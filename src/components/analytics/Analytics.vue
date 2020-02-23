@@ -1,4 +1,3 @@
-/* eslint-disable vue/order-in-components */
 <template>
   <section style="width: 100%; background-color: white;">
     <div class="search-keywords-layer">
@@ -14,43 +13,46 @@
         <v-icon style="font-size: 20px; margin-left: 5px;" @click="showDialog(item)">close</v-icon>
       </div>
     </div>
-    <div
-      v-if="tabIndex == 0"
-      style="margin-top: 100px; display: flex; flex-direction: column;
+    <div style="height: 100%; overflow-y: auto; padding-bottom: 100px;">
+      <div
+        style="margin-top: 100px; display: flex; flex-direction: column;
             align-items: center;"
-    >
-      <div style="width: 500px; text-align: center;">
-        빅데이터를 시각화하여 제공합니다.
-        <div style="margin-top: 20px;">
-          <div v-for="(keyword, i) in newKeywords" :key="i">
-            <v-text-field
-              v-model="newKeywords[i]"
-              :label="'keyword' + (i + 1)"
-              placeholder="분석하기 원하는 키워드를 입력하세요"
-              outline
-              flat
-            ></v-text-field>
-          </div>
-          <div v-if="newKeywords.length < 4" @click="addKeywords">
-            <div
-              style="display:flex; align-items: center; padding: 10px 20px; 
-                border: 2px dotted #888888; border-radius: 5px;"
-            >
+      >
+        <div style="width: 500px; text-align: center;">
+          빅데이터를 시각화하여 제공합니다.
+          <div style="margin-top: 20px;">
+            <div v-for="(keyword, i) in newKeywords" :key="i">
+              <v-text-field
+                v-model="newKeywords[i]"
+                :label="'keyword' + (i + 1)"
+                placeholder="분석하기 원하는 키워드를 입력하세요"
+                outline
+                flat
+              ></v-text-field>
+            </div>
+            <div v-if="newKeywords.length < 4" @click="addKeywords">
               <div
-                style="flex-grow: 1; text-align: left; color: #888888; padding-top: 4px;"
-              >비교 분석하기 원하는 키워드를 추가하세요</div>
-              <v-icon>add</v-icon>
+                style="display:flex; align-items: center; padding: 10px 20px; 
+                border: 2px dotted #888888; border-radius: 5px;"
+              >
+                <div
+                  style="flex-grow: 1; text-align: left; color: #888888; padding-top: 4px;"
+                >비교 분석하기 원하는 키워드를 추가하세요</div>
+                <v-icon>add</v-icon>
+              </div>
             </div>
           </div>
-        </div>
-        <div style="margin-top: 30px;">
-          <v-btn color="success" dark>분석하기</v-btn>
-          <v-btn color="blue-grey" dark @click="bookmark">즐겨찾기</v-btn>
+          <div style="margin-top: 30px;">
+            <v-btn color="success" dark>분석하기</v-btn>
+            <v-btn color="blue-grey" dark @click="bookmark">즐겨찾기</v-btn>
+          </div>
         </div>
       </div>
+      <HorizontalBarChart />
+      <LineChart />
+      <VerticalBarChart />
+      <BubbleChart />
     </div>
-    <div v-else style="margin-top: 0px;">결과</div>
-
     <v-dialog v-model="dialog" max-width="400">
       <v-card>
         <v-card-text>
@@ -67,8 +69,20 @@
 </template>
 
 <script>
+import moment from "moment";
 import { mapGetters } from "vuex";
+import HorizontalBarChart from "./HorizontalBarChart";
+import VerticalBarChart from "./VerticalBarChart";
+import LineChart from "./LineChart";
+import BubbleChart from "./BubbleChart";
+
 export default {
+  components: {
+    HorizontalBarChart,
+    LineChart,
+    VerticalBarChart,
+    BubbleChart
+  },
   data() {
     return {
       dialog: false,
@@ -79,9 +93,16 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["isLoading"])
+    ...mapGetters(["isLoading"]),
+    computedDateFormatted() {
+      return this.date ? moment(this.date).format("LL") : "";
+    },
+    computedDateFormatted2() {
+      return this.date2 ? moment(this.date2).format("LL") : "";
+    }
   },
   created() {
+    moment.locale("ko");
     this.searchKeywords = [
       ["프래쉬코드"],
       ["다방", "직방"],

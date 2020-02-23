@@ -196,7 +196,7 @@
 <script>
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import FeedColumn from "../components/FeedColumn";
-import Analytics from "../components/Analytics";
+import Analytics from "../components/analytics/Analytics";
 import Trend from "../components/Trend";
 import { Container, Draggable } from "vue-smooth-dnd";
 
