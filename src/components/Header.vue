@@ -1,12 +1,16 @@
 <template>
   <section>
     <v-toolbar class="header">
-      <img
-        src="../assets/img/common/logo-signal.svg"
-        class="pointer"
-        @click="$router.push('/')"
-      />
+      <img src="../assets/img/common/logo-signal.svg" class="pointer" @click="$router.push('/')" />
       <v-layout v-if="isLogin" class="ml30">
+        <v-btn
+          class="text-capitalize top-button"
+          :class="{ active: $store.state.currentMode == 'ANALYTICS' }"
+          outline
+          round
+          color="primary"
+          @click="clickAnalytics"
+        >분석</v-btn>
         <v-btn
           class="text-capitalize top-button"
           :class="{ active: $store.state.currentMode == 'MONITOR' }"
@@ -14,9 +18,7 @@
           round
           color="primary"
           @click="clickMonitor"
-        >
-          Monitor
-        </v-btn>
+        >모니터</v-btn>
         <v-btn
           class="text-capitalize top-button"
           :class="{ active: $store.state.currentMode == 'TREND' }"
@@ -24,9 +26,7 @@
           round
           color="primary"
           @click="clickTrend"
-        >
-          Trend
-        </v-btn>
+        >트랜드</v-btn>
         <!-- <v-btn
           class="text-capitalize top-button"
           :class="{ active: $store.state.currentMode == 'POSTS' }"
@@ -35,7 +35,7 @@
           color="primary"
           @click="clickPosts"
           >Posts
-        </v-btn> -->
+        </v-btn>-->
         <v-spacer />
         <v-btn
           class="text-capitalize top-button"
@@ -43,9 +43,7 @@
           round
           color="primary"
           @click="$store.state.showConnections = true"
-        >
-          Connections
-        </v-btn>
+        >연결</v-btn>
         <!-- <v-btn
           class="text-capitalize top-button"
           outline
@@ -54,14 +52,12 @@
           @click="clickNewPost"
         >
           New Post
-        </v-btn> -->
-        <v-btn flat round color="primary" @click="logout"> 로그아웃 </v-btn>
+        </v-btn>-->
+        <v-btn flat round color="primary" @click="logout">로그아웃</v-btn>
       </v-layout>
       <v-layout v-else>
         <v-spacer></v-spacer>
-        <v-btn flat round color="info" @click="$store.state.showLogin = true">
-          로그인
-        </v-btn>
+        <v-btn flat round color="info" @click="$store.state.showLogin = true">로그인</v-btn>
       </v-layout>
     </v-toolbar>
   </section>
@@ -81,6 +77,10 @@ export default {
   },
   methods: {
     ...mapMutations(["logout", "showMonitorSlideMenu", "hideMonitorSlideMenu"]),
+    clickAnalytics() {
+      this.hideMonitorSlideMenu();
+      this.$store.state.currentMode = "ANALYTICS";
+    },
     clickMonitor() {
       this.$store.state.currentMode = "MONITOR";
       if (this.monitorSlideMenu) {
@@ -90,12 +90,15 @@ export default {
       }
     },
     clickPosts() {
+      this.hideMonitorSlideMenu();
       this.$store.state.currentMode = "POSTS";
     },
     clickNewPost() {
+      this.hideMonitorSlideMenu();
       this.$store.state.showNewPost = true;
     },
     clickTrend() {
+      this.hideMonitorSlideMenu();
       this.$store.state.currentMode = "TREND";
     }
   }

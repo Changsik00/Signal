@@ -1,6 +1,7 @@
 <template>
   <section>
     <v-layout class="main-layer">
+      <Analytics v-if="$store.state.currentMode == 'ANALYTICS'" />
       <v-layout v-show="$store.state.currentMode == 'MONITOR'">
         <Container @drop="onDrop" style="display: flex; " :orientation="'horizontal'">
           <Draggable v-for="(feed, i) in getFeeds" :key="i">
@@ -195,12 +196,14 @@
 <script>
 import { mapGetters, mapMutations, mapActions } from "vuex";
 import FeedColumn from "../components/FeedColumn";
+import Analytics from "../components/Analytics";
 import Trend from "../components/Trend";
 import { Container, Draggable } from "vue-smooth-dnd";
 
 export default {
   components: {
     FeedColumn,
+    Analytics,
     Trend,
     Container,
     Draggable
