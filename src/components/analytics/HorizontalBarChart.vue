@@ -36,7 +36,9 @@
         </v-menu>
       </div>
     </div>
-    <div>horizontal-bar chart</div>
+    <div id="chart">
+      <apexchart type="bar" height="350" :options="chartOptions" :series="series"></apexchart>
+    </div>
   </section>
 </template>
 <script>
@@ -47,7 +49,19 @@ export default {
       date: null,
       date2: null,
       menu1: false,
-      menu2: false
+      menu2: false,
+      chartOptions: {
+        chart: {
+          id: 'vuechart-example'
+        },
+        xaxis: {
+          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+        }
+      },
+      series: [{
+        name: 'series-1',
+        data: [30, 40, 45, 50, 49, 60, 70, 91]
+      }]
     };
   },
   computed: {
