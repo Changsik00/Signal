@@ -36,8 +36,8 @@
         </v-menu>
       </div>
     </div>
-    <div id="chart">
-      <apexchart type="bar" height="350" :options="chartOptions" :series="series"></apexchart>
+    <div style="width: 1000px; margin: auto; padding: 20px;">
+      <apexchart type="bar" height="250" :options="chartOptions" :series="series"></apexchart>
     </div>
   </section>
 </template>
@@ -51,17 +51,49 @@ export default {
       menu1: false,
       menu2: false,
       chartOptions: {
-        chart: {
-          id: 'vuechart-example'
+        plotOptions: {
+          bar: {
+            horizontal: true,
+            barHeight: "40%",
+            endingShape: "rounded"
+          }
         },
         xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+          categories: ["배달의민족", "요기요", "배달통"]
+        },
+        fill: {
+          colors: [
+            ({ value, dataPointIndex }) => {
+              if (dataPointIndex == 0) {
+                return "#008FFB";
+              } else if (dataPointIndex == 1) {
+                return "#00E396";
+              } else if (dataPointIndex == 2) {
+                return "#FEB019";
+              } else {
+                return "#FF4560";
+              }
+            }
+          ]
+        },
+        yaxis: {
+          labels: {
+            style: {
+              fontSize: "12px",
+              fontWeight: 400
+            }
+          }
+        },
+        tooltip: {
+          enabled: false
         }
       },
-      series: [{
-        name: 'series-1',
-        data: [30, 40, 45, 50, 49, 60, 70, 91]
-      }]
+      series: [
+        {
+          name: "검색량",
+          data: [30, 40, 50]
+        }
+      ]
     };
   },
   computed: {
