@@ -1,13 +1,17 @@
 <template>
   <section style="padding: 50px; ">
-    <div style="display:flex;">검색량 (수집기간: 전체기간)</div>
+    <div style="display:flex; align-items: center;">
+      <ChartRagneSelector :title="'채널별 컨텐츠량'" @change="rangeChange" />
+    </div>
     <div id="chart" style="width: 1000px; margin: auto; padding: 20px;">
       <apexchart type="bar" height="350" :options="chartOptions" :series="series"></apexchart>
     </div>
   </section>
 </template>
 <script>
+import ChartRagneSelector from "./ChartRagneSelector";
 export default {
+  components: { ChartRagneSelector },
   data() {
     return {
       // https://apexcharts.com/vue-chart-demos/column-charts/basic/
@@ -28,7 +32,6 @@ export default {
       chartOptions: {
         plotOptions: {
           bar: {
-            horizontal: false,
             columnWidth: "40%",
             endingShape: "rounded"
           }
@@ -41,14 +44,24 @@ export default {
           categories: ["뉴스", "카페", "블로그", "기타"]
         },
         tooltip: {
-          y: {
-            formatter: function(val) {
-              return "$ " + val + " thousands";
-            }
-          }
+          enabled: false
         }
       }
     };
+  },
+  methods: {
+    rangeChange(currentRange) {
+      switch (currentRange) {
+        case "all":
+          break;
+        case "year":
+          break;
+        case "half":
+          break;
+        case "quarter":
+          break;
+      }
+    }
   }
 };
 </script>

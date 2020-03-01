@@ -1,75 +1,19 @@
 <template>
   <section style="padding: 50px; ">
-    <div style="display:flex;">
-      <div style="flex-grow: 1;">
-        검색량 추이 (수집기간:
-        {{ computedDateFormatted }} ~ {{ computedDateFormatted2 }})
-      </div>
-      <div style="margin-top: -20px; display:flex; align-items: center">
-        <v-menu v-model="menu1" :close-on-content-click="false" max-width="290px" min-width="290px">
-          <template v-slot:activator="{ on }">
-            <v-text-field
-              :value="computedDateFormatted"
-              prepend-icon="event"
-              clearable
-              readonly
-              style="width: 175px;"
-              v-on="on"
-              @click:clear="date = null"
-            ></v-text-field>
-          </template>
-          <v-date-picker v-model="date" no-title locale="ko" @change="menu1 = false"></v-date-picker>
-        </v-menu>
-        <div style="font-size: 25px; color: #888888">&nbsp;~&nbsp;</div>
-        <v-menu v-model="menu2" :close-on-content-click="false" max-width="290px" min-width="290px">
-          <template v-slot:activator="{ on }">
-            <v-text-field
-              :value="computedDateFormatted2"
-              clearable
-              readonly
-              style="width: 140px;"
-              v-on="on"
-              @click:clear="date2 = null"
-            ></v-text-field>
-          </template>
-          <v-date-picker v-model="date2" no-title locale="ko" @change="menu2 = false"></v-date-picker>
-        </v-menu>
-      </div>
-    </div>
-    <div>
-      <button
-        id="one_month"
-        :class="{ active: selection === 'one_month' }"
-        @click="updateData('one_month')"
-      >1M</button>
-      <button
-        id="six_months"
-        :class="{ active: selection === 'six_months' }"
-        @click="updateData('six_months')"
-      >6M</button>
-      <button
-        id="one_year"
-        :class="{ active: selection === 'one_year' }"
-        @click="updateData('one_year')"
-      >1Y</button>
-      <button id="ytd" :class="{ active: selection === 'ytd' }" @click="updateData('ytd')">YTD</button>
-      <button id="all" :class="{ active: selection === 'all' }" @click="updateData('all')">ALL</button>
+    <div style="display:flex; align-items: center;">
+      <ChartRagneSelector :title="'검색량 추이'" @change="rangeChange" />
     </div>
     <div id="chart" style="width: 1000px; margin: auto; padding: 20px;">
-      <!-- <apexchart type="line" :options="chartOptions" :series="series"></apexchart> -->
       <apexchart height="350" :options="chartOptions" :series="series"></apexchart>
     </div>
   </section>
 </template>
 <script>
-import moment from "moment";
+import ChartRagneSelector from "./ChartRagneSelector";
 export default {
+  components: { ChartRagneSelector },
   data() {
     return {
-      date: null,
-      date2: null,
-      menu1: false,
-      menu2: false,
       series: [
         {
           name: "배달의민족",
@@ -176,25 +120,15 @@ export default {
             format: "yyyy/MM/dd"
           }
         }
-      },
-      selection: "one_year"
+      }
     };
-  },
-  computed: {
-    computedDateFormatted() {
-      return this.date ? moment(this.date).format("LL") : "";
-    },
-    computedDateFormatted2() {
-      return this.date2 ? moment(this.date2).format("LL") : "";
-    }
   },
   mounted() {},
   methods: {
-    updateData: function(timeline) {
-      this.selection = timeline;
-
-      switch (timeline) {
-        case "one_month":
+    rangeChange(currentRange) {
+      console.log("#@# line", currentRange);
+      switch (currentRange) {
+        case "all":
           this.chartOptions = {
             xaxis: {
               min: new Date("28 Jan 2013").getTime(),
@@ -202,31 +136,7 @@ export default {
             }
           };
           break;
-        case "six_months":
-          this.chartOptions = {
-            xaxis: {
-              min: new Date("27 Sep 2012").getTime(),
-              max: new Date("27 Feb 2013").getTime()
-            }
-          };
-          break;
-        case "one_year":
-          this.chartOptions = {
-            xaxis: {
-              min: new Date("27 Feb 2012").getTime(),
-              max: new Date("27 Feb 2013").getTime()
-            }
-          };
-          break;
-        case "ytd":
-          this.chartOptions = {
-            xaxis: {
-              min: new Date("01 Jan 2013").getTime(),
-              max: new Date("27 Feb 2013").getTime()
-            }
-          };
-          break;
-        case "all":
+        case "year":
           this.chartOptions = {
             xaxis: {
               min: undefined,
@@ -234,7 +144,22 @@ export default {
             }
           };
           break;
-        default:
+        case "half":
+          this.chartOptions = {
+            xaxis: {
+              min: new Date("27 Sep 2012").getTime(),
+              max: new Date("27 Feb 2013").getTime()
+            }
+          };
+          break;
+        case "quarter":
+          this.chartOptions = {
+            xaxis: {
+              min: undefined,
+              max: undefined
+            }
+          };
+          break;
       }
     }
   }

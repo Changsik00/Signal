@@ -48,15 +48,13 @@ export default {
   },
   methods: {
     draw(id) {
+      // https://github.com/d3/d3-scale-chromatic/blob/master/README.md#categorical
       var diameter = 800 / 2;
       var fontScale = 4;
-      // https://github.com/d3/d3-scale-chromatic/blob/master/README.md#categorical
-      // var color = d3.scaleOrdinal(d3.schemeTableau10);
       var color = d3
         .scaleOrdinal()
         .domain(this.dataset)
         .range(d3.schemeSet3);
-      // var color = d3.scaleOrdinal(domain(dataset))..scaleSequential(t => d3.schemeBlues(t));
 
       var bubble = d3
         .pack(this.dataset)
