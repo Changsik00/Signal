@@ -13,11 +13,8 @@
         <v-icon style="font-size: 20px; margin-left: 5px;" @click="showDialog(item)">close</v-icon>
       </div>
     </div>
-    <div style="height: 100%; overflow-y: auto; padding-bottom: 100px;">
-      <div
-        style="margin-top: 100px; display: flex; flex-direction: column;
-            align-items: center;"
-      >
+    <div style="height: 100%; overflow-y: auto; padding: 100px 0;">
+      <div v-if="tabIndex == 0" style="display: flex; flex-direction: column; align-items: center;">
         <div style="width: 500px; text-align: center;">
           빅데이터를 시각화하여 제공합니다.
           <div style="margin-top: 20px;">
@@ -137,6 +134,7 @@ export default {
       const newkeyword = this.newKeywords.filter(d => d.length != "");
       if (newkeyword.length > 0) {
         this.searchKeywords.push(newkeyword);
+        this.tabIndex = this.searchKeywords.length;
         this.newKeywords = [""];
       } else {
         this.$showToast(
