@@ -1,7 +1,7 @@
 <template>
   <section style="width: 100%; background-color: white;">
     <div class="search-keywords-layer">
-      <div class="item" :class="{ active: tabIndex == 0 }" @click="tabIndex = 0">검색하기</div>
+      <div class="item" :class="{ active: tabIndex == 0 }" @click="clickKeywordTab(0)">검색하기</div>
       <div
         v-for="(item, i) in searchKeywords"
         :key="i"
@@ -27,7 +27,7 @@
                 flat
               ></v-text-field>
             </div>
-            <div v-if="newKeywords.length < 4" @click="addKeywords">
+            <div v-if="newKeywords.length < 3" @click="addKeywords">
               <div
                 style="display:flex; align-items: center; padding: 10px 20px; 
                 border: 2px dotted #888888; border-radius: 5px;"
@@ -40,15 +40,17 @@
             </div>
           </div>
           <div style="margin-top: 30px;">
-            <v-btn color="success" dark>분석하기</v-btn>
+            <v-btn color="success" dark @click="drawChart">분석하기</v-btn>
             <v-btn color="blue-grey" dark @click="bookmark">즐겨찾기</v-btn>
           </div>
         </div>
       </div>
-      <HorizontalBarChart />
-      <LineChart />
-      <VerticalBarChart />
-      <BubbleChart />
+      <div v-if="keywordCheck">
+        <HorizontalBarChart />
+        <LineChart />
+        <VerticalBarChart />
+        <BubbleChart />
+      </div>
     </div>
     <v-dialog v-model="dialog" max-width="400">
       <v-card>
@@ -84,9 +86,10 @@ export default {
     return {
       dialog: false,
       tabIndex: 0,
-      currentSearchKeywordIndexData: [],
+      currentKeywordData: [],
       searchKeywords: [],
-      newKeywords: [""]
+      newKeywords: [],
+      allowKeywords: []
     };
   },
   computed: {
@@ -96,6 +99,9 @@ export default {
     },
     computedDateFormatted2() {
       return this.date2 ? moment(this.date2).format("LL") : "";
+    },
+    keywordCheck() {
+      return this.currentKeywordData.some(d => d.length > 0);
     }
   },
   created() {
@@ -111,19 +117,24 @@ export default {
       return data.join(" vs ");
     },
     getKeywordsTabTitle2() {
-      return this.getKeywordsTabTitle(this.currentSearchKeywordIndexData);
+      return this.getKeywordsTabTitle(this.currentKeywordData);
     },
     clickKeywordTab(i) {
       this.tabIndex = i;
+      if (this.tabIndex == 0) {
+        this.currentKeywordData = this.allowKeywords;
+      } else {
+        this.currentKeywordData = this.searchKeywords[i - 1];
+      }
     },
     showDialog(data) {
-      this.currentSearchKeywordIndexData = data;
+      this.currentKeywordData = data;
       this.dialog = true;
     },
     deleteKeyword() {
       this.dialog = false;
       this.searchKeywords = this.searchKeywords.filter(
-        d => d.join("") != this.currentSearchKeywordIndexData.join("")
+        d => d.join("") != this.currentKeywordData.join("")
       );
       setTimeout(() => (this.tabIndex = 0), 0);
     },
@@ -131,12 +142,20 @@ export default {
       this.newKeywords.push("");
     },
     bookmark() {
-      const newkeyword = this.newKeywords.filter(d => d.length != "");
-      if (newkeyword.length > 0) {
-        this.searchKeywords.push(newkeyword);
+      this.allowKeywords = this.newKeywords.filter(d => d.length != "");
+      if (this.allowKeywords.length > 0) {
+        this.searchKeywords.push(this.allowKeywords);
         this.tabIndex = this.searchKeywords.length;
         this.newKeywords = [""];
       } else {
+        this.$showToast(
+          "키워드가 입력되지 않았습니다. 키워드를 입력해주시기 바랍니다."
+        );
+      }
+    },
+    drawChart() {
+      this.allowKeywords = this.newKeywords.filter(d => d.length != "");
+      if (this.allowKeywords.length == 0) {
         this.$showToast(
           "키워드가 입력되지 않았습니다. 키워드를 입력해주시기 바랍니다."
         );
