@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import moment from "moment";
+import dayjs from "dayjs";
 export default {
   props: ["title"],
   data() {
@@ -23,27 +23,19 @@ export default {
     dateFormatted() {
       switch (this.range) {
         case "all":
-          return moment()
-            .subtract(1, "months")
-            .format("LL");
+          return dayjs().format("YYYY-MM-DD");
         case "year":
-          return moment()
-            .subtract(11, "months")
-            .format("LL");
+          return dayjs().subtract(1, "year").add(1, "day").format("YYYY-MM-DD");
         case "half":
-          return moment()
-            .subtract(6, "months")
-            .format("LL");
+          return dayjs().subtract(6, "month").add(1, "day").format("YYYY-MM-DD");
         case "quarter":
-          return moment()
-            .subtract(3, "months")
-            .format("LL");
+          return dayjs().subtract(3, "month").add(1, "day").format("YYYY-MM-DD");
         default:
-          return moment().format("LL");
+          return dayjs().format("YYYY-MM-DD");
       }
     },
     dateFormatted2() {
-      return moment().format("LL");
+      return dayjs().format("YYYY-MM-DD");
     }
   },
   watch: {

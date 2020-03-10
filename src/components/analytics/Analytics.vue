@@ -68,7 +68,6 @@
 </template>
 
 <script>
-import moment from "moment";
 import { mapGetters } from "vuex";
 import HorizontalBarChart from "./HorizontalBarChart";
 import VerticalBarChart from "./VerticalBarChart";
@@ -94,18 +93,11 @@ export default {
   },
   computed: {
     ...mapGetters(["isLoading"]),
-    computedDateFormatted() {
-      return this.date ? moment(this.date).format("LL") : "";
-    },
-    computedDateFormatted2() {
-      return this.date2 ? moment(this.date2).format("LL") : "";
-    },
     keywordCheck() {
       return this.currentKeywordData.some(d => d.length > 0);
     }
   },
   created() {
-    moment.locale("ko");
     this.searchKeywords = [
       ["프래쉬코드"],
       ["다방", "직방"],
