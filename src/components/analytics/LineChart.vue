@@ -131,24 +131,24 @@ export default {
         case "all":
           this.chartOptions = {
             xaxis: {
-              min: new Date("28 Jan 2013").getTime(),
-              max: new Date("27 Feb 2013").getTime()
+              min: new Date("25 Jan 2012").getTime(),
+              max: new Date("27 Feb 2012").getTime()
             }
           };
           break;
         case "year":
           this.chartOptions = {
             xaxis: {
-              min: undefined,
-              max: undefined
+              min: new Date("28 Feb 2012").getTime(),
+              max: new Date("05 Mar 2012").getTime()
             }
           };
           break;
         case "half":
           this.chartOptions = {
             xaxis: {
-              min: new Date("27 Sep 2012").getTime(),
-              max: new Date("27 Feb 2013").getTime()
+              min: new Date("27 Feb 2012").getTime(),
+              max: new Date("08 Mar 2012").getTime()
             }
           };
           break;
