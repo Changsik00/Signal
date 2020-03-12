@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="auto" height="auto" fill="none" viewBox="0 0 533 327">
+    <path fill="url(#prefix__pattern0)" stroke="#CED4DA" stroke-width=".824" d="M73.73 58.902H454.327V296.157H73.73z" opacity=".2"/>
+    <circle cx="371.947" cy="177.529" r="98.444" fill="#24C185"/>
+    <g filter="url(#prefix__filter0_d)">
+        <path fill="#fff" d="M32.952 16.476H211.71699999999998V177.941H32.952z"/>
+    </g>
+    <path fill="url(#prefix__pattern1)" stroke="#E9ECEF" stroke-width=".663" d="M33.283 16.808H211.385V177.60999999999999H33.283z"/>
+    <g filter="url(#prefix__filter1_d)">
+        <path fill="#fff" d="M325.402 39.542H500.048V216.66H325.402z"/>
+    </g>
+    <path fill="url(#prefix__pattern2)" d="M325.402 39.542H500.048V216.66H325.402z"/>
+    <g filter="url(#prefix__filter2_d)">
+        <path fill="#fff" d="M126.866 103.799H305.631V276.798H126.866z"/>
+    </g>
+    <path fill="url(#prefix__pattern3)" stroke="#E9ECEF" stroke-width=".663" d="M127.197 104.131H305.299V276.467H127.197z"/>
+    <defs>
+        <pattern id="prefix__pattern0" width="1" height="1" patternContentUnits="objectBoundingBox">
+            <use transform="matrix(.00046 0 0 .00073 0 0)" xlink:href="#prefix__image0"/>
+        </pattern>
+        <pattern id="prefix__pattern1" width="1" height="1" patternContentUnits="objectBoundingBox">
+            <use transform="matrix(.00185 0 0 .00205 -.082 -.041)" xlink:href="#prefix__image1"/>
+        </pattern>
+        <pattern id="prefix__pattern2" width="1" height="1" patternContentUnits="objectBoundingBox">
+            <use transform="matrix(.00187 0 0 .00187 -.019 -.015)" xlink:href="#prefix__image2"/>
+        </pattern>
+        <pattern id="prefix__pattern3" width="1" height="1" patternContentUnits="objectBoundingBox">
+            <use transform="matrix(.00185 0 0 .00185 -1.1 -.038)" xlink:href="#prefix__image1"/>
+        </pattern>
+        <filter id="prefix__filter0_d" width="244.669" height="227.369" x="0" y="0" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+            <feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+            <feOffset dy="16.473"/>
+            <feGaussianBlur stdDeviation="16.473"/>
+            <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+            <feBlend in2="BackgroundImageFix" result="effect1_dropShadow"/>
+            <feBlend in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+        </filter>
+        <filter id="prefix__filter1_d" width="240.55" height="243.022" x="292.45" y="23.067" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+            <feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+            <feOffset dy="16.473"/>
+            <feGaussianBlur stdDeviation="16.473"/>
+            <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+            <feBlend in2="BackgroundImageFix" result="effect1_dropShadow"/>
+            <feBlend in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+        </filter>
+        <filter id="prefix__filter2_d" width="244.669" height="238.903" x="93.914" y="87.323" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+            <feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"/>
+            <feOffset dy="16.473"/>
+            <feGaussianBlur stdDeviation="16.473"/>
+            <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
+            <feBlend in2="BackgroundImageFix" result="effect1_dropShadow"/>
+            <feBlend in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+        </filter>
+    </defs>
+</svg>

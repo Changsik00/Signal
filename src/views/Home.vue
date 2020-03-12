@@ -16,38 +16,184 @@
     </div>
     <div style="display:flex; align-items:center; justify-content: center; margin-top: 30px;">
       <v-text-field v-model="keyword" solo flat class="Normal-form" placeholder="키워드를 입력하세요."></v-text-field>
-      <v-btn flat dark icon class="Button-solid" @click="click">검색</v-btn>
+      <v-btn flat dark class="Button-solid" @click="click">검색</v-btn>
     </div>
 
-    <div class="home-layer-margin">
-      <v-layout v-for="(item, index) in this.itemList" :key="index">
-        <div class="home-layer1">
-          <div class="item">
-            <div style="font-weight: bold; font-size: 20px; color: #393f45">{{ item.title }}</div>
-            <div>{{ item.info }}</div>
-          </div>
-          <div class="item">
-            <v-img :src="item.imgUrl"></v-img>
+    <div style="margin-top: 50px; display: flex; justify-content: center;">
+      <div style="width: 190px; text-align: center;">
+        <img src="~@/assets/img/home/ico-main-1.svg" />
+        <div style=" font-size: 16px; font-weight: bold; color: #393f45;">분석</div>
+      </div>
+      <div style="width: 190px; text-align: center;">
+        <img src="~@/assets/img/home/ico-main-2.svg" />
+        <div style=" font-size: 16px; font-weight: bold; color: #393f45;">모니터링</div>
+      </div>
+      <div style="width: 190px; text-align: center;">
+        <img src="~@/assets/img/home/ico-main-3.svg" />
+        <div style=" font-size: 16px; font-weight: bold; color: #393f45;">트랜드</div>
+      </div>
+      <div style="width: 190px; text-align: center;">
+        <img src="~@/assets/img/home/ico-main-4.svg" />
+        <div style=" font-size: 16px; font-weight: bold; color: #393f45;">이슈어</div>
+      </div>
+      <div style="width: 190px; text-align: center;">
+        <img src="~@/assets/img/home/ico-main-5.svg" />
+        <div style=" font-size: 16px; font-weight: bold; color: #393f45;">칸반보드</div>
+      </div>
+    </div>
+    <div
+      style="margin-top: 50px; background-color: #24c185; 
+                padding: 30px; text-align: center; color: #ffffff;"
+    >
+      <div style="font-size: 30px; font-weight: bold;">키워드 데이터를 한 곳에서 확인하세요!</div>
+      <div style="font-size: 16px; font-weight: bold;">
+        온라인상에 흩어져 있던 키워드 데이터를 한 곳으로 모아드립니다.
+        <br />내가 관심을 가지고 있던 키워드를 한 눈에 확인할 수 있고, 새로운
+        데이터를 실시간으로 알려드립니다.
+      </div>
+    </div>
+    <div style="margin-top: 50px; display:flex; justify-content: center;">
+      <div style="display:flex; flex-direction: column; width: 240px; align-items: center;">
+        <img width="40" src="~@/assets/img/home/ico-insta.png" />
+        <img src="~@/assets/img/home/img-insta.png" />
+      </div>
+      <div
+        style="margin-top: 78px; display:flex; flex-direction: column; width: 240px; align-items: center;"
+      >
+        <img width="40" src="~@/assets/img/home/ico-twitter.png" />
+        <img src="~@/assets/img/home/img-twitter.png" />
+      </div>
+      <div style="display:flex; flex-direction: column; width: 240px; align-items: center;">
+        <img width="40" src="~@/assets/img/home/ico-facebook.png" />
+        <img src="~@/assets/img/home/img-facebook.png" />
+      </div>
+      <div
+        style="margin-top: 78px; display:flex; flex-direction: column; width: 240px; align-items: center;"
+      >
+        <img width="40" src="~@/assets/img/home/ico-naver.png" />
+        <img src="~@/assets/img/home/img-naver.png" />
+      </div>
+    </div>
+    <div style="margin-top: 150px; display: flex; justify-content: center; align-items: center;">
+      <div style="flex-grow: 1; max-width: 470px;">
+        <div style="color: #24c185; font-size: 18px; font-weight: bold;">분석</div>
+        <div style="font-size: 36px; font-weight: bold;">키워드 데이터를 정확하게!</div>
+        <div style="margin-top: 20px; font-size: 16px;">
+          관심 산업 또는 제품에 대한 검색량 추이, 연관어 데이터를 제공하여 현재
+          키워드 상태와 앞으로의 전망을 명확하게 판단할 수 있습니다.
+        </div>
+      </div>
+      <img style="flex-grow: 1; max-width: 470px;" src="~@/assets/img/home/img-data-1.svg" />
+    </div>
+    <div style="margin-top: 150px; display: flex; justify-content: center; align-items: center;">
+      <div style="flex-grow: 1; max-width: 470px;">
+        <div style="color: #24c185; font-size: 18px; font-weight: bold;">모니터링</div>
+        <div style="font-size: 36px; font-weight: bold;">경쟁사 소식을 실시간으로!</div>
+        <div style="margin-top: 20px; font-size: 16px;">
+          매일 온라인에서 찾아보던 경쟁사 소식을 이제는 찾아볼 필요 없이 소식이
+          있을 때마다 실시간 업데이트하여 알려드립니다.
+        </div>
+      </div>
+      <img
+        style="flex-grow: 1; max-width: 470px; width: auto;"
+        src="~@/assets/img/home/img-data-2.svg"
+      />
+    </div>
+    <div style="margin-top: 150px; display: flex; justify-content: center; align-items: center;">
+      <div style="flex-grow: 1; max-width: 470px;">
+        <div style="color: #24c185; font-size: 18px; font-weight: bold;">트렌드</div>
+        <div style="font-size: 36px; font-weight: bold;">실시간 이슈를 쉽고 빠르게!</div>
+        <div style="margin-top: 20px; font-size: 16px;">
+          매일 일어나는 실시간 검색어를 12시간 누적데이터 기준으로 정리해
+          제공함으로써 그날의 이슈를 쉽게 확인할 수 있습니다.
+        </div>
+      </div>
+      <img
+        style="flex-grow: 1; max-width: 470px; width: auto;"
+        src="~@/assets/img/home/img-data-3.svg"
+      />
+    </div>
+    <div style="margin-top: 50px; background-color: #f0f0f0; padding: 50px 0;">
+      <div style="text-align: center; font-size: 36px; font-weight: bold;">우리의 서비스는 원칙이 있습니다.</div>
+      <div style="margin-top: 80px; display: flex; justify-content: center;">
+        <div style="width: 320px; text-align: center;">
+          <img src="~@/assets/img/home/ico-service-1.svg" />
+          <div style="font-size: 18px;">정확한 데이터</div>
+          <div style="font-size: 16px; margin-top: 10px;">사용자가 원하는 데이터를 설저한 키워드에 맞춰 정확하게 제공합니다.</div>
+        </div>
+        <div style="width: 320px; text-align: center;">
+          <img src="~@/assets/img/home/ico-service-2.svg" />
+          <div style="font-size: 18px;">사용자 중심 디자인</div>
+          <div style="font-size: 16px; margin-top: 10px;">한눈에 다양한 데이터를 쉽고 빠르게 이해할 수 있도록 디자인 합니다.</div>
+        </div>
+        <div style="width: 320px; text-align: center;">
+          <img src="~@/assets/img/home/ico-service-3.svg" />
+          <div style="font-size: 18px;">서비스 업데이트</div>
+          <div style="font-size: 16px; margin-top: 10px;">
+            보다 퀘적한 환경에서 사용할 수 있게 지속적인 서비스 업데이트를
+            합니다.
           </div>
         </div>
-      </v-layout>
+      </div>
+      <div style="margin-top: 80px; display: flex; justify-content: center;">
+        <div style="width: 320px; text-align: center;">
+          <img src="~@/assets/img/home/ico-service-4.svg" />
+          <div style="font-size: 18px;">신속한 응답률</div>
+          <div style="font-size: 16px; margin-top: 10px;">문의하신 내용은 접수순서대로 최대한 빠르게 처리합니다.</div>
+        </div>
+        <div style="width: 320px; text-align: center;">
+          <img src="~@/assets/img/home/ico-service-5.svg" />
+          <div style="font-size: 18px;">자동화 툴</div>
+          <div style="font-size: 16px; margin-top: 10px;">
+            한번만 키워드를 입력하면 추가로 입력할 필요없이 관심 키워드를
+            지속적으로 받을 수 있습니다.
+          </div>
+        </div>
+        <div style="width: 320px; text-align: center;">
+          <img src="~@/assets/img/home/ico-service-6.svg" />
+          <div style="font-size: 18px;">상담 봇</div>
+          <div style="font-size: 16px; margin-top: 10px;">
+            채팅 상담봇을 이용하여 간단한 문제는 스스로 확인할 수 있으며, 1:1
+            상담을 통해서도 다양한 문제에 답변을 받을 수 있습니다.
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="home-layer1 home-layer-margin bottom">
-      <v-carousel hide-delimiters light height="200" style="box-shadow:none; padding: 0 20px;">
-        <v-carousel-item v-for="(item, i) in itemList2" :key="i">
-          <v-layout align-center justify-center fill-height>
-            <div style="text-align: center; flex-grow: 1;">
-              <div style="font-weight: bold; font-size: 20px; color: #393f45">{{ item.title }}</div>
-              <div v-html="item.info"></div>
-            </div>
-            <div style="text-align: center; flex-grow: 1;">
-              <v-avatar>
-                <img :src="item.imgUrl" />
-              </v-avatar>
-            </div>
-          </v-layout>
-        </v-carousel-item>
-      </v-carousel>
+    <v-carousel
+      height="auto"
+      hide-delimiters
+      light
+      style="box-shadow:none; max-width: 1024px; margin: auto; padding-top: 50px"
+    >
+      <v-carousel-item v-for="(item, i) in itemList" :key="i">
+        <v-layout align-center fill-height style="padding: 0 70px;">
+          <div style="text-align: left; flex-grow:1;">
+            <div
+              style="width: 75px; text-align: center; color: #24c185; border-radius: 2px; 
+                       border: solid 1px #24c185; padding: 2px 5px;"
+            >EASY</div>
+            <div style="font-weight: bold; font-size: 20px; color: #393f45">{{ item.title }}</div>
+            <div v-html="item.info"></div>
+          </div>
+
+          <div
+            style="min-width: 166px;
+                      min-height: 166px;
+                      margin: auto;
+                      border-radius: 50%;
+                      border: solid 1px #979797;
+                      background-color: #979797;"
+          ></div>
+        </v-layout>
+      </v-carousel-item>
+    </v-carousel>
+    <div style="margin-top: 50px; background-color: #f0f0f0; padding: 50px 0; text-align: center">
+      <div style="font-size: 36px; font-weight: 300;">모든 소셜미디어 관리를 한 곳에서 시작하세요!</div>
+      <div style="font-size: 18px; font-weight: 300; margin: 20px auto 0 auto; max-width: 1024px;">
+        키워드 검색량, 모니터링, 이슈트래킹, 통계까지 복잡하고 어려웠던
+        소셜미디어 관리를 이제는 시그널에서 쉽고 빠르게 관리할 수 있도록
+        도와드립니다.
+      </div>
     </div>
   </section>
 </template>
@@ -58,27 +204,6 @@ export default {
     return {
       keyword: "",
       itemList: [
-        {
-          title: "원하는 소식만 정확하게!",
-          info:
-            "나의 서비스나 경쟁사 뉴스 또는 평상시 관심 있었던 주제등 키워드를 지정하여 원하는 소식만 정확하게 전달해 드립니다.",
-          imgUrl: "https://t1.kakaocdn.net/kakaocorp/admin/main-banner/1657"
-        },
-        {
-          title: "경쟁사 소식을 실시간으로!",
-          info:
-            "매일 온라인에서 찾아보던 경쟁사 소식을 이제는 찾아볼 필요 없이 소식이 있을 때마다 실시간 업데이트 하여 알려드립니다.",
-          imgUrl:
-            "https://t1.kakaocdn.net/kakaocorp/operating/co/main-banner/3189.png"
-        },
-        {
-          title: "실시간 이슈를 쉽고 빠르게!",
-          info:
-            "매일 일어난 실시간 검색어를 12시간 누적데이터 기준으로 정리해서 제공함으로써 그날의 이슈를 쉽게 확인할 수 있습니다.",
-          imgUrl: "https://t1.kakaocdn.net/kakaocorp/admin/main-banner/1652"
-        }
-      ],
-      itemList2: [
         {
           title: "EASY  검색은 간편! 정보는 정확!",
           info:
