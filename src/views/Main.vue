@@ -3,7 +3,7 @@
     <v-layout class="main-layer">
       <Analytics v-if="$store.state.currentMode == 'ANALYTICS'" />
       <v-layout v-show="$store.state.currentMode == 'MONITOR'">
-        <Container @drop="onDrop" style="display: flex; " :orientation="'horizontal'">
+        <Container style="display: flex; " :orientation="'horizontal'" @drop="onDrop">
           <Draggable v-for="(feed, i) in getFeeds" :key="i">
             <FeedColumn :data="feed" />
           </Draggable>
@@ -37,7 +37,6 @@
             style="width: 25px; margin-right: 5px;"
           />
           <div v-if="searchType == 'TWITTER_KEY_WORD'">Twitter Search</div>
-
         </div>
         <div
           v-else
@@ -56,7 +55,7 @@
             align-center
             style="width: 100%; padding: 10px"
           >
-            <b-input style="flex-grow: 1" type="text" v-model="searchKeyword" />
+            <b-input v-model="searchKeyword" style="flex-grow: 1" type="text" />
             <div v-if="!searchCheck">
               <v-btn icon style="margin: 0 0 0 10px" @click="search">
                 <v-icon style="font-size: 30px; color: #393f45; cursor: pointer;">search</v-icon>
@@ -71,8 +70,8 @@
               </v-btn>
             </div>
           </v-layout>
-          <v-layout align-center class="menu" v-for="keyword in searchKeywords" :key="keyword.data">
-            {{keyword.data}}
+          <v-layout v-for="keyword in searchKeywords" :key="keyword.data" align-center class="menu">
+            {{ keyword.data }}
             <v-spacer></v-spacer>
             <v-btn icon style="width: 30px; height: 30px; margin: 0;" @click="removeFeed(keyword)">
               <v-icon>delete</v-icon>
@@ -82,8 +81,8 @@
             <div v-for="(feed, i) in searchPreviewList" :key="i" style="padding: 10px;">
               <div
                 v-if="feed.title"
-                v-html="feed.title"
                 style="font-size: 16px; font-weight: bold;"
+                v-html="feed.title"
               ></div>
               <div
                 v-if="feed.description"
@@ -92,7 +91,7 @@
                 v-html="feed.description"
               ></div>
               <div v-if="feed.text" class="mt10" style="font-size: 14px;" v-html="feed.text"></div>
-              <div v-if="feed.tweet" v-html="feed.tweet" style="font-size: 16px;"></div>
+              <div v-if="feed.tweet" style="font-size: 16px;" v-html="feed.tweet"></div>
               <div
                 v-if="feed.user"
                 class="mt5"
@@ -123,7 +122,8 @@
                 v-else
                 src="../assets/img/common/facebook-off.svg"
                 style="width: 25px; margin-right: 5px;"
-              /> Facebook
+              />
+              Facebook
             </v-layout>
             <div class="menu" @click="facebook('VisitorPosts')">
               Visitor Posts
@@ -142,7 +142,7 @@
             <!-- <div class="menu" @click="facebook('PageSearch')">
               Page Search
               <span style="font-size: 12px; color: #9da6af">(준비중)</span>
-            </div> -->
+            </div>-->
           </div>
           <div class="side-menu line">
             <v-layout align-center class="title">
@@ -155,7 +155,8 @@
                 v-else
                 src="../assets/img/common/twitter-off.svg"
                 style="width: 25px; margin-right: 5px;"
-              /> Twitter
+              />
+              Twitter
             </v-layout>
             <div class="menu" @click="twitter('Mentions')">
               Mentions
@@ -174,18 +175,16 @@
             <!-- <div class="menu" @click="twitter('Likes')">
               Likes
               <span style="font-size: 12px; color: #9da6af">(준비중)</span>
-            </div> -->
-            <div class="menu" @click="twitter('KeywordSearch')">
-              Keyword Search
-            </div>
+            </div>-->
+            <div class="menu" @click="twitter('KeywordSearch')">Keyword Search</div>
             <!-- <div class="menu" @click="twitter('UserSearch')">
               User Search
               <span style="font-size: 12px; color: #9da6af">(준비중)</span>
-            </div> -->
+            </div>-->
             <!-- <div class="menu" @click="twitter('Lists')">
               Lists
               <span style="font-size: 12px; color: #9da6af">(준비중)</span>
-            </div> -->
+            </div>-->
           </div>
         </div>
       </div>
@@ -261,9 +260,28 @@ export default {
         }
       }
     );
+    const keyword = this.$route.params.keyword;
+
+    if (keyword) {
+      this.$store.state.currentMode = "MONITOR";
+      this.showMonitorSlideMenu();
+      this.searchOn = true;
+      this.searchType = "NAVER_KEY_WORD";
+      const mappingTable = { 뉴스: "NEWS", 블로그: "BLOG", 카페: "CAFE" };
+      this.naverType = mappingTable[this.$route.params.mode];
+      this.searchKeyword = keyword;
+      this.search();
+    } else {
+      this.$store.state.currentMode == "";
+      this.hideMonitorSlideMenu();
+    }
   },
   methods: {
-    ...mapMutations(["hideMonitorSlideMenu", "feedSwap"]),
+    ...mapMutations([
+      "showMonitorSlideMenu",
+      "hideMonitorSlideMenu",
+      "feedSwap"
+    ]),
     ...mapActions(["removeFeed", "addFeed"]),
     search() {
       if (this.searchKeyword.length == 0) {
@@ -328,7 +346,7 @@ export default {
       this.searchPreviewList = [];
       let searchType = this.searchType;
       if (this.searchType.startsWith("NAVER_KEY_WORD")) {
-        searchType = searchType + '_' + this.naverType;
+        searchType = searchType + "_" + this.naverType;
       }
       this.addFeed({ type: searchType, data: this.searchKeyword });
       this.searchKeyword = "";

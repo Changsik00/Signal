@@ -1,8 +1,12 @@
 <template>
   <section>
     <v-toolbar class="header">
-      <img src="../assets/img/common/logo-signal.svg" class="pointer" @click="$router.push('/')" />
-      <v-layout v-if="isLogin" class="ml30">
+      <img
+        src="../assets/img/common/logo-signal.svg"
+        class="pointer"
+        @click="$router.push('/')"
+      />
+      <v-layout v-if="$route.path != '/'" class="ml30">
         <v-btn
           class="text-capitalize top-button"
           :class="{ active: $store.state.currentMode == 'ANALYTICS' }"
@@ -10,7 +14,8 @@
           round
           color="primary"
           @click="clickAnalytics"
-        >분석</v-btn>
+          >분석</v-btn
+        >
         <v-btn
           class="text-capitalize top-button"
           :class="{ active: $store.state.currentMode == 'MONITOR' }"
@@ -18,7 +23,8 @@
           round
           color="primary"
           @click="clickMonitor"
-        >모니터</v-btn>
+          >모니터</v-btn
+        >
         <v-btn
           class="text-capitalize top-button"
           :class="{ active: $store.state.currentMode == 'TREND' }"
@@ -26,7 +32,8 @@
           round
           color="primary"
           @click="clickTrend"
-        >트랜드</v-btn>
+          >트랜드</v-btn
+        >
         <!-- <v-btn
           class="text-capitalize top-button"
           :class="{ active: $store.state.currentMode == 'POSTS' }"
@@ -36,14 +43,6 @@
           @click="clickPosts"
           >Posts
         </v-btn>-->
-        <v-spacer />
-        <v-btn
-          class="text-capitalize top-button"
-          outline
-          round
-          color="primary"
-          @click="$store.state.showConnections = true"
-        >연결</v-btn>
         <!-- <v-btn
           class="text-capitalize top-button"
           outline
@@ -53,11 +52,29 @@
         >
           New Post
         </v-btn>-->
-        <v-btn flat round color="primary" @click="logout">로그아웃</v-btn>
       </v-layout>
-      <v-layout v-else>
+      <v-layout>
         <v-spacer></v-spacer>
-        <v-btn flat round color="info" @click="$store.state.showLogin = true">로그인</v-btn>
+        <v-layout v-if="isLogin">
+          <v-spacer></v-spacer>
+          <v-btn
+            class="text-capitalize top-button"
+            outline
+            round
+            color="primary"
+            @click="$store.state.showConnections = true"
+            >연결</v-btn
+          >
+          <v-btn flat round color="primary" @click="logout">로그아웃</v-btn>
+        </v-layout>
+        <v-btn
+          v-else
+          flat
+          round
+          color="info"
+          @click="$store.state.showLogin = true"
+          >로그인</v-btn
+        >
       </v-layout>
     </v-toolbar>
   </section>
@@ -65,15 +82,14 @@
 
 <script>
 import { mapGetters, mapMutations } from "vuex";
-import firebase from "firebase";
 export default {
-  computed: {
-    ...mapGetters(["isLogin", "monitorSlideMenu"])
-  },
   data() {
     return {
       index: 0
     };
+  },
+  computed: {
+    ...mapGetters(["isLogin", "monitorSlideMenu"])
   },
   methods: {
     ...mapMutations(["logout", "showMonitorSlideMenu", "hideMonitorSlideMenu"]),

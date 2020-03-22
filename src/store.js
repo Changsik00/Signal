@@ -164,15 +164,19 @@ const store = new Vuex.Store({
         access_token: state.userToken,
         data: JSON.stringify(state.feeds)
       };
-      axios.post("/firebase/user/feed_list/", params);
+      if (status.isLogin) {
+        axios.post("/firebase/user/feed_list/", params);
+      }
     },
     addFeed(state, feed) {
       if (feed.type == null || feed.type == "") {
         return;
       }
       feed.feedList = [];
+      if (!status.isLogin && state.feeds == null) {
+        state.feeds = [];
+      }
       state.feeds.push(feed);
-
       const temp = state.feeds
         .filter(d => d.type != null && d.type != "")
         .map(d => {
@@ -183,7 +187,9 @@ const store = new Vuex.Store({
         access_token: state.userToken,
         data: JSON.stringify(temp)
       };
-      axios.post("/firebase/user/feed_list/", params);
+      if (status.isLogin) {
+        axios.post("/firebase/user/feed_list/", params);
+      }
     },
     setFeeds(state, feeds) {
       if (feeds == "" || feeds.length == 0) {
@@ -216,7 +222,9 @@ const store = new Vuex.Store({
         access_token: state.userToken,
         data: JSON.stringify(state.feeds)
       };
-      axios.post("/firebase/user/feed_list/", params);
+      if (status.isLogin) {
+        axios.post("/firebase/user/feed_list/", params);
+      }
     }
   },
   actions: {

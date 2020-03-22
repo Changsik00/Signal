@@ -2,21 +2,24 @@
   <section>
     <div
       style=" font-size: 48px;
-              font-weight: bold;
-              text-align: center;
-              margin-top: 60px;
-              color: #393f45"
+                              font-weight: bold;
+                              text-align: center;
+                              margin-top: 60px;
+                              color: #393f45"
     >지금 당신의 관심사를 검색하세요.</div>
     <div
       style="font-size: 24px; color: #393f45; 
-             margin-top: 30px; text-align: center;"
+                             margin-top: 30px; text-align: center;"
     >
       당신의 서비스, 브랜드, 경쟁사등 다양한 소식을
       <br />카카오톡으로 쉽게 전달해드립니다.
     </div>
     <div style="display:flex; align-items:center; justify-content: center; margin-top: 30px;">
       <v-text-field v-model="keyword" solo flat class="Normal-form" placeholder="키워드를 입력하세요."></v-text-field>
-      <v-btn flat dark class="Button-solid" @click="click">검색</v-btn>
+      <div class="Button-solid" style="margin-left: 8px; border: solid 1px #dbdbdb; ">
+        <v-select v-model="selectItem" solo flat :items="selectItems"></v-select>
+      </div>
+      <v-btn flat dark class="Button-solid" @click="search">검색</v-btn>
     </div>
 
     <div style="margin-top: 50px; display: flex; justify-content: center;">
@@ -43,7 +46,7 @@
     </div>
     <div
       style="margin-top: 50px; background-color: #24c185; 
-                padding: 30px; text-align: center; color: #ffffff;"
+                                padding: 30px; text-align: center; color: #ffffff;"
     >
       <div style="font-size: 30px; font-weight: bold;">키워드 데이터를 한 곳에서 확인하세요!</div>
       <div style="font-size: 16px; font-weight: bold;">
@@ -170,7 +173,7 @@
           <div style="text-align: left; flex-grow:1;">
             <div
               style="width: 75px; text-align: center; color: #24c185; border-radius: 2px; 
-                       border: solid 1px #24c185; padding: 2px 5px;"
+                                       border: solid 1px #24c185; padding: 2px 5px;"
             >EASY</div>
             <div style="font-weight: bold; font-size: 20px; color: #393f45">{{ item.title }}</div>
             <div v-html="item.info"></div>
@@ -178,11 +181,11 @@
 
           <div
             style="min-width: 166px;
-                      min-height: 166px;
-                      margin: auto;
-                      border-radius: 50%;
-                      border: solid 1px #979797;
-                      background-color: #979797;"
+                                      min-height: 166px;
+                                      margin: auto;
+                                      border-radius: 50%;
+                                      border: solid 1px #979797;
+                                      background-color: #979797;"
           ></div>
         </v-layout>
       </v-carousel-item>
@@ -195,14 +198,19 @@
         도와드립니다.
       </div>
     </div>
+    <Footer />
   </section>
 </template>
 
 <script>
+import Footer from "../components/Footer";
 export default {
+  components: { Footer },
   data() {
     return {
       keyword: "",
+      selectItem: "",
+      selectItems: ["뉴스", "블로그", "카페"],
       itemList: [
         {
           title: "EASY  검색은 간편! 정보는 정확!",
@@ -230,6 +238,24 @@ export default {
         }
       ]
     };
+  },
+  created() {
+    this.resetSearch();
+  },
+  methods: {
+    search() {
+      if (this.keyword.length > 0) {
+        this.$router.push({
+          name: "main",
+          params: { keyword: this.keyword, type: this.selectItem }
+        });
+        this.resetSearch();
+      }
+    },
+    resetSearch() {
+      this.selectItem = this.selectItems[0];
+      this.keyword = "";
+    }
   }
 };
 </script>
@@ -240,7 +266,6 @@ export default {
   @include tablet {
     margin-top: 100px;
   }
-
   &.bottom {
     margin-bottom: 60px;
     @include tablet {
@@ -255,6 +280,7 @@ export default {
     margin: 0 90px;
   }
 }
+
 .home-layer1 {
   max-width: $desktop-width;
   width: 100%;
@@ -266,7 +292,6 @@ export default {
   @include tablet {
     flex-direction: row;
   }
-
   & > .item {
     width: 100%;
     padding: 10px 20px;
@@ -290,6 +315,7 @@ export default {
     margin: 10px 20px;
   }
 }
+
 .Normal-form {
   width: 330px;
   max-width: 330px;
@@ -297,9 +323,10 @@ export default {
   border-radius: 4px;
   border: solid 1px #dbdbdb;
 }
+
 .Button-solid {
   width: 120px;
-  height: 45px;
+  height: 50px;
   border-radius: 4px;
   background-color: var(--greenblue);
 }

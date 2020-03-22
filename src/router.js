@@ -32,8 +32,7 @@ const router = new Router({
     {
       path: "/main",
       name: "main",
-      component: Main,
-      beforeEnter: loginGuard
+      component: Main
     },
     {
       path: "*",
