@@ -4,7 +4,7 @@
       <ChartRagneSelector :title="'검색량'" @change="rangeChange" />
     </div>
     <div style="width: 1000px; margin: auto; padding: 20px;">
-      <apexchart ref="chart" type="bar" height="250" :options="chartOptions" :series="series"></apexchart>
+      <apexchart type="bar" height="250" :options="chartOptions" :series="series"></apexchart>
     </div>
   </section>
 </template>
@@ -12,8 +12,8 @@
 import dayjs from "dayjs";
 import ChartRagneSelector from "./ChartRagneSelector";
 export default {
-  props: ["keywords"],
   components: { ChartRagneSelector },
+  props: ["keywords"],
   data() {
     return {
       range: "all",
@@ -64,17 +64,9 @@ export default {
       chartData: []
     };
   },
-  watch: {
-    keywords(value, old) {
-      if (_.isEqual(value, old)) {
-        return;
-      }
-      this.setData();
-    }
-  },
   computed: {
     allData() {
-      if(_.isEmpty(this.chartData)) {
+      if (_.isEmpty(this.chartData)) {
         return [];
       } else {
         const data = [];
@@ -84,47 +76,24 @@ export default {
         });
         return data;
       }
-    }, 
+    },
     year() {
-      if(_.isEmpty(this.chartData)) {
-        return [];
-      } else {
-        const data = [];
-        const targetDate = dayjs().subtract(1, "year").add(1, "day");
-        this.chartData.forEach(d => {
-          const count = _.sumBy(d.data.filter(d2 => dayjs(d2.period) >= targetDate), d2 => d2.pcCount);
-          data.push(count);
-        });
-        return data;
-      }
-    }, 
+      return this.getData(this.chartData, 12);
+    },
     halfData() {
-      if(_.isEmpty(this.chartData)) {
-        return [];
-      } else {
-        const data = [];
-        const targetDate = dayjs().subtract(6, "month").add(1, "day");
-        this.chartData.forEach(d => {
-          const count = _.sumBy(d.data.filter(d2 => dayjs(d2.period) >= targetDate), d2 => d2.pcCount);
-          data.push(count);
-        });
-        return data;
-      }
-    }, 
+      return this.getData(this.chartData, 6);
+    },
     quarter() {
-      if(_.isEmpty(this.chartData)) {
-        return [];
-      } else {
-        const data = [];
-        const targetDate = dayjs().subtract(3, "month").add(1, "day");
-        this.chartData.forEach(d => {
-          const count = _.sumBy(d.data.filter(d2 => dayjs(d2.period) >= targetDate), d2 => d2.pcCount);
-          data.push(count);
-        });
-        return data;
+      return this.getData(this.chartData, 3);
+    }
+  },
+  watch: {
+    keywords(value, old) {
+      if (_.isEqual(value, old)) {
+        return;
       }
-    }, 
-
+      this.setData();
+    }
   },
   created() {
     this.setData();
@@ -144,6 +113,24 @@ export default {
         case "quarter":
           this.updateChart(this.quarter);
           break;
+      }
+    },
+    getData(chartData, period) {
+      if (_.isEmpty(chartData)) {
+        return [];
+      } else {
+        const data = [];
+        const targetDate = dayjs()
+          .subtract(period, "month")
+          .add(1, "day");
+        chartData.forEach(d => {
+          const count = _.sumBy(
+            d.data.filter(d2 => dayjs(d2.period) >= targetDate),
+            d2 => d2.pcCount
+          );
+          data.push(count);
+        });
+        return data;
       }
     },
     setData() {

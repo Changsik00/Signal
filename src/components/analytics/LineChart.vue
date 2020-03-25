@@ -123,7 +123,9 @@ export default {
       }
     };
   },
-  mounted() {},
+  created() {
+    this.setData();
+  },
   methods: {
     rangeChange(currentRange) {
       console.log("#@# line", currentRange);
