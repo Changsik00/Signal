@@ -1,6 +1,8 @@
 <template>
   <section style="width: 100%; display: flex; align-items: center;">
-    <div style="flex-grow: 1;">{{ title }} ({{ dateFormatted }} ~ {{ dateFormatted2 }})</div>
+    <div style="flex-grow: 1;">
+      {{ title }} ({{ dateFormatted }} ~ {{ dateFormatted2 }})
+    </div>
     <div class="range-selector-layer">
       <div @click="range = 'year'">1년</div>
       <div @click="range = 'half'">6개월</div>
@@ -23,13 +25,25 @@ export default {
     dateFormatted() {
       switch (this.range) {
         case "all":
-          return dayjs().format("YYYY-MM-DD");
+          return dayjs()
+            .subtract(3, "year")
+            .add(1, "day")
+            .format("YYYY-MM-DD");
         case "year":
-          return dayjs().subtract(1, "year").add(1, "day").format("YYYY-MM-DD");
+          return dayjs()
+            .subtract(1, "year")
+            .add(1, "day")
+            .format("YYYY-MM-DD");
         case "half":
-          return dayjs().subtract(6, "month").add(1, "day").format("YYYY-MM-DD");
+          return dayjs()
+            .subtract(6, "month")
+            .add(1, "day")
+            .format("YYYY-MM-DD");
         case "quarter":
-          return dayjs().subtract(3, "month").add(1, "day").format("YYYY-MM-DD");
+          return dayjs()
+            .subtract(3, "month")
+            .add(1, "day")
+            .format("YYYY-MM-DD");
         default:
           return dayjs().format("YYYY-MM-DD");
       }

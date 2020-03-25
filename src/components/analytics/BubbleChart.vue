@@ -1,20 +1,19 @@
 <template>
   <section style="padding: 50px; ">
     <div style="display:flex;">언급된 이슈어</div>
-    <div style="display: flex; width: 800px; margin: auto">
+    <div style="display: flex; width: 1000px; margin: auto">
       <div id="bubbleBarChart0"></div>
       <div id="bubbleBarChart1"></div>
-    </div>
-    <div style="display: flex; width: 800px; margin: auto">
       <div id="bubbleBarChart2"></div>
-      <div id="bubbleBarChart3"></div>
     </div>
   </section>
 </template>
 <script>
 export default {
+  props: ["keywords"],
   data() {
     return {
+      categories: [],
       dataset: {
         children: [
           { name: "Cocoa", value: 5637 },
@@ -42,16 +41,35 @@ export default {
       }
     };
   },
-  mounted() {
-    // https://api.signal.bz/v1/naver/channel_counts/?keyword=짬뽕,김밥
-    // https://api.signal.bz/v1/naver/related_keywords/?keyword=%EC%A7%AC%EB%BD%95,%EA%B9%80%EB%B0%A5&start_date=2019-12&end_date=2020-02
-    this.draw("bubbleBarChart0");
-    this.draw("bubbleBarChart1");
+  watch: {
+    keywords(value, old) {
+      if (_.isEqual(value, old)) {
+        return;
+      }
+      this.setData();
+    }
   },
+  created() {
+    this.setData();
+  },
+
   methods: {
+    setData() {
+      const params = {
+        keyword: this.keywords.join(",")
+      };
+      this.$axios.get("/naver/related_keywords/", { params }).then(res => {
+        for (var key in res.data) {
+          this.categories.push(key);
+        }
+        this.draw("bubbleBarChart0");
+        this.draw("bubbleBarChart1");
+        this.draw("bubbleBarChart2");
+      });
+    },
     draw(id) {
       // https://github.com/d3/d3-scale-chromatic/blob/master/README.md#categorical
-      var diameter = 800 / 2;
+      var diameter = 1000 / 3;
       var fontScale = 4;
       var color = d3
         .scaleOrdinal()
@@ -62,6 +80,10 @@ export default {
         .pack(this.dataset)
         .size([diameter, diameter])
         .padding(1.5);
+
+      d3.select("#" + id)
+        .select("svg")
+        .remove();
 
       var svg = d3
         .select("#" + id)
