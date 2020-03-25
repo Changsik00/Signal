@@ -3,7 +3,7 @@ import store from "../store";
 
 const MyPlugin = function(Vue) {
   Vue.prototype.$showToast = function(message) {
-    Vue.toasted.show(message);
+    Vue.toasted.show(`<div style="padding: 8px 0; font-size: 14px;">${message}</div>`);
   };
   Vue.prototype.$showLoading = () => {
     store.dispatch("showLoading");

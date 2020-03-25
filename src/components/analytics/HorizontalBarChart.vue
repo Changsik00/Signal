@@ -4,13 +4,15 @@
       <ChartRagneSelector :title="'검색량'" @change="rangeChange" />
     </div>
     <div style="width: 1000px; margin: auto; padding: 20px;">
-      <apexchart type="bar" height="250" :options="chartOptions" :series="series"></apexchart>
+      <apexchart ref="chart" type="bar" height="250" :options="chartOptions" :series="series"></apexchart>
     </div>
   </section>
 </template>
 <script>
+import dayjs from "dayjs";
 import ChartRagneSelector from "./ChartRagneSelector";
 export default {
+  props: ["keywords"],
   components: { ChartRagneSelector },
   data() {
     return {
@@ -24,7 +26,7 @@ export default {
           }
         },
         xaxis: {
-          categories: ["배달의민족", "요기요", "배달통"]
+          categories: []
         },
         fill: {
           colors: [
@@ -56,10 +58,21 @@ export default {
       series: [
         {
           name: "검색량",
-          data: [30, 40, 50]
+          data: []
         }
       ]
     };
+  },
+  watch: {
+    keywords(value, old) {
+      if (_.isEqual(value, old)) {
+        return;
+      }
+      this.setData();
+    }
+  },
+  created() {
+    this.setData();
   },
   methods: {
     rangeChange(currentRange) {
@@ -73,6 +86,38 @@ export default {
         case "quarter":
           break;
       }
+    },
+    setData() {
+      this.chartOptions.xaxis.categories = [];
+      this.series[0].data = [];
+      const params = {
+        keyword: this.keywords.join(","),
+        start_date: dayjs()
+          .subtract(1, "year")
+          .format("YYYY-MM"),
+        end_date: dayjs().format("YYYY-MM")
+      };
+      this.$axios.get("/naver/trend/", { params }).then(res => {
+        const categories = [];
+        const data = [];
+        res.data.forEach(d => {
+          categories.push(d.name);
+          const count = _.sumBy(d.data, d2 => d2.pcCount);
+          data.push(count);
+        });
+        this.updateChart(data, categories);
+      });
+    },
+    updateChart(data, categories) {
+      if (categories) {
+        this.chartOptions = {
+          ...this.chartOptions,
+          ...{
+            xaxis: { categories }
+          }
+        };
+      }
+      this.series = [{ name: "검색량", data }];
     }
   }
 };

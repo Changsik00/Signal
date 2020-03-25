@@ -43,6 +43,8 @@ export default {
     };
   },
   mounted() {
+    // https://api.signal.bz/v1/naver/channel_counts/?keyword=짬뽕,김밥
+    // https://api.signal.bz/v1/naver/related_keywords/?keyword=%EC%A7%AC%EB%BD%95,%EA%B9%80%EB%B0%A5&start_date=2019-12&end_date=2020-02
     this.draw("bubbleBarChart0");
     this.draw("bubbleBarChart1");
   },

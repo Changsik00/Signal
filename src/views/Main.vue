@@ -219,7 +219,7 @@ export default {
       searchCheck: false,
       searchPreviewList: [],
       searchKeywords: [],
-      naverType: ""
+      naverType: "", 
     };
   },
   computed: {
@@ -261,16 +261,8 @@ export default {
       }
     );
     const keyword = this.$route.params.keyword;
-
     if (keyword) {
-      this.$store.state.currentMode = "MONITOR";
-      this.showMonitorSlideMenu();
-      this.searchOn = true;
-      this.searchType = "NAVER_KEY_WORD";
-      const mappingTable = { 뉴스: "NEWS", 블로그: "BLOG", 카페: "CAFE" };
-      this.naverType = mappingTable[this.$route.params.mode];
-      this.searchKeyword = keyword;
-      this.search();
+      this.$store.state.currentMode = "ANALYTICS";
     } else {
       this.$store.state.currentMode == "";
       this.hideMonitorSlideMenu();

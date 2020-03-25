@@ -46,10 +46,10 @@
         </div>
       </div>
       <div v-if="keywordCheck">
-        <HorizontalBarChart />
-        <LineChart />
-        <VerticalBarChart />
-        <BubbleChart />
+        <HorizontalBarChart :keywords="currentKeywordData" />
+        <LineChart :keywords="currentKeywordData"/>
+        <VerticalBarChart :keywords="currentKeywordData"/>
+        <BubbleChart :keywords="currentKeywordData"/>
       </div>
     </div>
     <v-dialog v-model="dialog" max-width="400">
@@ -103,6 +103,11 @@ export default {
       ["다방", "직방"],
       ["배달의민족", "배달통", "요기요"]
     ];
+
+    const keyword = this.$route.params.keyword;
+    if (keyword) {
+      this.newKeywords.push(keyword)
+    }
   },
   methods: {
     getKeywordsTabTitle(data) {
@@ -128,30 +133,34 @@ export default {
       this.searchKeywords = this.searchKeywords.filter(
         d => d.join("") != this.currentKeywordData.join("")
       );
-      setTimeout(() => (this.tabIndex = 0), 0);
+
+      this.tabIndex = 0;
+      this.currentKeywordData = [];
     },
     addKeywords() {
       this.newKeywords.push("");
     },
-    bookmark() {
-      this.allowKeywords = this.newKeywords.filter(d => d.length != "");
-      if (this.allowKeywords.length > 0) {
-        this.searchKeywords.push(this.allowKeywords);
-        this.tabIndex = this.searchKeywords.length;
-        this.newKeywords = [""];
-      } else {
-        this.$showToast(
-          "키워드가 입력되지 않았습니다. 키워드를 입력해주시기 바랍니다."
-        );
-      }
-    },
-    drawChart() {
+    newKeywordsEmpyCheck() {
       this.allowKeywords = this.newKeywords.filter(d => d.length != "");
       if (this.allowKeywords.length == 0) {
-        this.$showToast(
-          "키워드가 입력되지 않았습니다. 키워드를 입력해주시기 바랍니다."
-        );
+        this.$showToast("키워드가 입력되지 않았습니다.<br>키워드를 입력해주시기 바랍니다.");
+        return false;
       }
+      return true;
+    }, 
+    bookmark() {
+      if (!this.newKeywordsEmpyCheck()) return
+      
+      this.searchKeywords.push(this.allowKeywords);
+      this.tabIndex = this.searchKeywords.length;
+      this.newKeywords = [""];
+    },
+    drawChart() {
+      if (!this.newKeywordsEmpyCheck()) return
+
+      this.currentKeywordData = this.allowKeywords;
+      console.log("#@# currentKeywordData", this.currentKeywordData);
+      
     }
   }
 };
