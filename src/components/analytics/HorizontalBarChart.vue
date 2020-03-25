@@ -60,7 +60,8 @@ export default {
           name: "검색량",
           data: []
         }
-      ]
+      ],
+      chartData: []
     };
   },
   watch: {
@@ -71,6 +72,60 @@ export default {
       this.setData();
     }
   },
+  computed: {
+    allData() {
+      if(_.isEmpty(this.chartData)) {
+        return [];
+      } else {
+        const data = [];
+        this.chartData.forEach(d => {
+          const count = _.sumBy(d.data, d2 => d2.pcCount);
+          data.push(count);
+        });
+        return data;
+      }
+    }, 
+    year() {
+      if(_.isEmpty(this.chartData)) {
+        return [];
+      } else {
+        const data = [];
+        const targetDate = dayjs().subtract(1, "year").add(1, "day");
+        this.chartData.forEach(d => {
+          const count = _.sumBy(d.data.filter(d2 => dayjs(d2.period) >= targetDate), d2 => d2.pcCount);
+          data.push(count);
+        });
+        return data;
+      }
+    }, 
+    halfData() {
+      if(_.isEmpty(this.chartData)) {
+        return [];
+      } else {
+        const data = [];
+        const targetDate = dayjs().subtract(6, "month").add(1, "day");
+        this.chartData.forEach(d => {
+          const count = _.sumBy(d.data.filter(d2 => dayjs(d2.period) >= targetDate), d2 => d2.pcCount);
+          data.push(count);
+        });
+        return data;
+      }
+    }, 
+    quarter() {
+      if(_.isEmpty(this.chartData)) {
+        return [];
+      } else {
+        const data = [];
+        const targetDate = dayjs().subtract(3, "month").add(1, "day");
+        this.chartData.forEach(d => {
+          const count = _.sumBy(d.data.filter(d2 => dayjs(d2.period) >= targetDate), d2 => d2.pcCount);
+          data.push(count);
+        });
+        return data;
+      }
+    }, 
+
+  },
   created() {
     this.setData();
   },
@@ -78,22 +133,27 @@ export default {
     rangeChange(currentRange) {
       switch (currentRange) {
         case "all":
+          this.updateChart(this.allData);
           break;
         case "year":
+          this.updateChart(this.year);
           break;
         case "half":
+          this.updateChart(this.halfData);
           break;
         case "quarter":
+          this.updateChart(this.quarter);
           break;
       }
     },
     setData() {
       this.chartOptions.xaxis.categories = [];
       this.series[0].data = [];
+      this.chartData = [];
       const params = {
         keyword: this.keywords.join(","),
         start_date: dayjs()
-          .subtract(1, "year")
+          .subtract(3, "year")
           .format("YYYY-MM"),
         end_date: dayjs().format("YYYY-MM")
       };
@@ -106,6 +166,8 @@ export default {
           data.push(count);
         });
         this.updateChart(data, categories);
+
+        this.chartData = res.data;
       });
     },
     updateChart(data, categories) {
