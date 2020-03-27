@@ -15,30 +15,9 @@ export default {
     return {
       categories: [],
       dataset: {
-        children: [
-          { name: "Cocoa", value: 5637 },
-          { name: "Olives", value: 1321 },
-          { name: "Tea", value: 2312 },
-          { name: "Mashed Potatoes", value: 1123 },
-          { name: "Boiled Potatoes", value: 1424 },
-          { name: "Milk", value: 1524 },
-          { name: "Chicken Salad", value: 1525 },
-          { name: "Vanilla Ice Cream", value: 1676 },
-          { name: "Lettuce Salad", value: 1566 },
-          { name: "Lobster Salad", value: 1511 },
-          { name: "Chocolate", value: 1489 },
-          { name: "Apple Pie", value: 1487 },
-          { name: "Orange Juice", value: 1423 },
-          { name: "American Cheese", value: 1372 },
-          { name: "Green Peas", value: 1341 },
-          { name: "Assorted Cakes", value: 1331 },
-          { name: "French Fried Potatoes", value: 1328 },
-          { name: "Potato Salad", value: 1306 },
-          { name: "Baked Potatoes", value: 1293 },
-          { name: "Roquefort", value: 1273 },
-          { name: "Stewed Prunes", value: 1268 }
-        ]
-      }
+        children: []
+      },
+      currentR: 0
     };
   },
   watch: {
@@ -59,25 +38,29 @@ export default {
         keyword: this.keywords.join(",")
       };
       this.$axios.get("/naver/related_keywords/", { params }).then(res => {
+        let index = 0;
         for (var key in res.data) {
-          this.categories.push(key);
+          const data = {children: []};
+          res.data[key].map(d => {
+            const k = Object.keys(d)[0];
+            const v = d[k];
+            data.children.push({name: k, value: v}); 
+          });
+          this.draw(`bubbleBarChart${index}`, data, key);
+          index += 1;
         }
-        this.draw("bubbleBarChart0");
-        this.draw("bubbleBarChart1");
-        this.draw("bubbleBarChart2");
       });
     },
-    draw(id) {
-      // https://github.com/d3/d3-scale-chromatic/blob/master/README.md#categorical
+    draw(id, dataset, name) {
       var diameter = 1000 / 3;
       var fontScale = 4;
       var color = d3
         .scaleOrdinal()
-        .domain(this.dataset)
+        .domain(dataset)
         .range(d3.schemeSet3);
 
       var bubble = d3
-        .pack(this.dataset)
+        .pack(dataset)
         .size([diameter, diameter])
         .padding(1.5);
 
@@ -92,7 +75,7 @@ export default {
         .attr("height", diameter)
         .attr("class", "bubble");
 
-      var nodes = d3.hierarchy(this.dataset).sum(function(d) {
+      var nodes = d3.hierarchy(dataset).sum(function(d) {
         return d.value;
       });
 
@@ -120,6 +103,15 @@ export default {
         })
         .style("fill", function(d, i) {
           return color(i);
+        })
+        .on("mouseover",function(d, i){
+          this.currentR = d.r;
+          d3.select(this)
+          .attr("r",function(d){return 100;})
+        })
+        .on("mouseout", function(d, i) {
+          d3.select(this)
+          .attr("r",function(d){return this.currentR;})
         });
 
       node
@@ -133,7 +125,15 @@ export default {
         .attr("font-size", function(d) {
           return d.r / fontScale;
         })
-        .attr("fill", "black");
+        .attr("fill", "black")
+        .on("mouseover",function(d, i){
+          d3.select(this)
+          .attr("font-size",function(d){return 20;})
+        })
+        .on("mouseout", function(d, i) {
+          d3.select(this)
+          .attr("font-size",function(d){return d.r / fontScale})
+        });;
 
       node
         .append("text")
@@ -146,7 +146,15 @@ export default {
         .attr("font-size", function(d) {
           return d.r / fontScale;
         })
-        .attr("fill", "black");
+        .attr("fill", "black")
+        .on("mouseover",function(d, i){
+          d3.select(this)
+          .attr("font-size",function(d){return 18;})
+        })
+        .on("mouseout", function(d, i) {
+          d3.select(this)
+          .attr("font-size",function(d){return d.r / fontScale})
+        });;
 
       d3.select(self.frameElement).style("height", diameter + "px");
     }
