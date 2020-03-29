@@ -23,7 +23,7 @@ export default {
   data() {
     return {
       categories: [],
-      currentR: 0
+      currentData: null
     };
   },
   watch: {
@@ -65,8 +65,9 @@ export default {
             data.children.push({ name: k, value: v });
           });
           data.children = data.children
+            .filter(d => Number.isInteger(d.value) && d.value > 10)
             .sort((a, b) => b.value > a.value)
-            .slice(0, 20);
+            .slice(0, 15);
           this.draw(index, data, key);
           index += 1;
         }
@@ -79,7 +80,7 @@ export default {
         return;
       }
       var diameter = 1000 / 3;
-      var fontScale = 4;
+      var fontScale = 3.5;
       var color = d3
         .scaleOrdinal()
         .domain(dataset)
@@ -89,6 +90,10 @@ export default {
         .pack(dataset)
         .size([diameter, diameter])
         .padding(1.5);
+
+      var sizeScale = d3.scaleSqrt().range([15, 50]);
+      sizeScale.domain(d3.extent(dataset.children, d => d.value));
+      bubble.radius(d => sizeScale(d.value));
 
       var svg = d3
         .select("#" + `bubbleBarChart${index}`)
@@ -149,18 +154,32 @@ export default {
 
       node
         .on("mouseover", function(d, i) {
-          console.log("#@# node", d, i);
-          d3.select(this)
-            .scale(10)
-            .style("z-index", "10");
+          this.currentData = { ...d };
+          d.depth = 10;
+          d.parent.depth = 10;
+          d3.select(this).attr("transform", function(d) {
+            if (d.r < 50) {
+              return `translate(${d.x},${d.y}) scale(${50 / d.r})`;
+            } else {
+              return `translate(${d.x},${d.y}) scale(1)`;
+            }
+          });
         })
         .on("mouseout", function(d, i) {
-          d3.select(this).attr("r", function(d) {
-            return this.currentR;
+          d = this.currentData;
+          d3.select(this).attr("transform", function(d) {
+            return `translate(${d.x},${d.y}) scale(1)`;
           });
+          this.currentData = null;
         });
-      // d3.select(self.frameElement).style("height", diameter + "px");
     }
   }
 };
 </script>
+<style lang="scss" scoped>
+/deep/.node {
+  cursor: pointer;
+  transition: all ease 1s;
+  z-index: 100;
+}
+</style>
