@@ -2,9 +2,18 @@
   <section style="padding: 50px; ">
     <div style="display:flex;">언급된 이슈어</div>
     <div style="display: flex; width: 1000px; margin: auto">
-      <div id="bubbleBarChart0"></div>
-      <div id="bubbleBarChart1"></div>
-      <div id="bubbleBarChart2"></div>
+      <div>
+        <div id="bubbleBarChart0"></div>
+        <div style="text-align: center;">{{ categories[0] }}</div>
+      </div>
+      <div>
+        <div id="bubbleBarChart1"></div>
+        <div style="text-align: center;">{{ categories[1] }}</div>
+      </div>
+      <div>
+        <div id="bubbleBarChart2"></div>
+        <div style="text-align: center;">{{ categories[2] }}</div>
+      </div>
     </div>
   </section>
 </template>
@@ -14,9 +23,6 @@ export default {
   data() {
     return {
       categories: [],
-      dataset: {
-        children: []
-      },
       currentR: 0
     };
   },
@@ -37,21 +43,41 @@ export default {
       const params = {
         keyword: this.keywords.join(",")
       };
+      d3.select("#bubbleBarChart0")
+        .select("svg")
+        .remove();
+      d3.select("#bubbleBarChart1")
+        .select("svg")
+        .remove();
+      d3.select("#bubbleBarChart2")
+        .select("svg")
+        .remove();
+
+      this.categories = [];
+
       this.$axios.get("/naver/related_keywords/", { params }).then(res => {
         let index = 0;
         for (var key in res.data) {
-          const data = {children: []};
+          const data = { children: [] };
           res.data[key].map(d => {
             const k = Object.keys(d)[0];
             const v = d[k];
-            data.children.push({name: k, value: v}); 
+            data.children.push({ name: k, value: v });
           });
-          this.draw(`bubbleBarChart${index}`, data, key);
+          data.children = data.children
+            .sort((a, b) => b.value > a.value)
+            .slice(0, 20);
+          this.draw(index, data, key);
           index += 1;
         }
       });
     },
-    draw(id, dataset, name) {
+    draw(index, dataset, name) {
+      this.categories.push(name);
+      if (dataset.children.length == 0) {
+        this.$showToast(name + " : 연관 검색어가 없습니다.");
+        return;
+      }
       var diameter = 1000 / 3;
       var fontScale = 4;
       var color = d3
@@ -64,12 +90,8 @@ export default {
         .size([diameter, diameter])
         .padding(1.5);
 
-      d3.select("#" + id)
-        .select("svg")
-        .remove();
-
       var svg = d3
-        .select("#" + id)
+        .select("#" + `bubbleBarChart${index}`)
         .append("svg")
         .attr("width", diameter)
         .attr("height", diameter)
@@ -92,10 +114,6 @@ export default {
           return "translate(" + d.x + "," + d.y + ")";
         });
 
-      node.append("title").text(function(d) {
-        return d.name + ": " + d.value;
-      });
-
       node
         .append("circle")
         .attr("r", function(d) {
@@ -103,15 +121,6 @@ export default {
         })
         .style("fill", function(d, i) {
           return color(i);
-        })
-        .on("mouseover",function(d, i){
-          this.currentR = d.r;
-          d3.select(this)
-          .attr("r",function(d){return 100;})
-        })
-        .on("mouseout", function(d, i) {
-          d3.select(this)
-          .attr("r",function(d){return this.currentR;})
         });
 
       node
@@ -119,21 +128,12 @@ export default {
         .attr("dy", ".2em")
         .style("text-anchor", "middle")
         .text(function(d) {
-          return d.data.name.substring(0, d.r / 3);
+          return d.data.name.substring(0, d.r / 2);
         })
-        .attr("font-family", "sans-serif")
         .attr("font-size", function(d) {
           return d.r / fontScale;
         })
-        .attr("fill", "black")
-        .on("mouseover",function(d, i){
-          d3.select(this)
-          .attr("font-size",function(d){return 20;})
-        })
-        .on("mouseout", function(d, i) {
-          d3.select(this)
-          .attr("font-size",function(d){return d.r / fontScale})
-        });;
+        .attr("fill", "black");
 
       node
         .append("text")
@@ -142,21 +142,24 @@ export default {
         .text(function(d) {
           return d.data.value;
         })
-        .attr("font-family", "Gill Sans", "Gill Sans MT")
         .attr("font-size", function(d) {
           return d.r / fontScale;
         })
-        .attr("fill", "black")
-        .on("mouseover",function(d, i){
+        .attr("fill", "black");
+
+      node
+        .on("mouseover", function(d, i) {
+          console.log("#@# node", d, i);
           d3.select(this)
-          .attr("font-size",function(d){return 18;})
+            .scale(10)
+            .style("z-index", "10");
         })
         .on("mouseout", function(d, i) {
-          d3.select(this)
-          .attr("font-size",function(d){return d.r / fontScale})
-        });;
-
-      d3.select(self.frameElement).style("height", diameter + "px");
+          d3.select(this).attr("r", function(d) {
+            return this.currentR;
+          });
+        });
+      // d3.select(self.frameElement).style("height", diameter + "px");
     }
   }
 };

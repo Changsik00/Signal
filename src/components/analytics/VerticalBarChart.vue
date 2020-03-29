@@ -1,8 +1,6 @@
 <template>
   <section style="padding: 50px; ">
-    <div style="display:flex; align-items: center;">
-      <ChartRagneSelector :title="'채널별 컨텐츠량'" @change="rangeChange" />
-    </div>
+    <div>채널별 컨텐츠량</div>
     <div id="chart" style="width: 1000px; margin: auto; padding: 20px;">
       <apexchart
         type="bar"
