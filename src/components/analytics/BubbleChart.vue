@@ -22,8 +22,7 @@ export default {
   props: ["keywords"],
   data() {
     return {
-      categories: [],
-      currentData: null
+      categories: []
     };
   },
   watch: {
@@ -67,7 +66,7 @@ export default {
           data.children = data.children
             .filter(d => Number.isInteger(d.value) && d.value > 10)
             .sort((a, b) => b.value > a.value)
-            .slice(0, 15);
+            .slice(0, 20);
           this.draw(index, data, key);
           index += 1;
         }
@@ -154,27 +153,28 @@ export default {
 
       node
         .on("mouseover", function(d, i) {
-          this.currentData = { ...d };
           if (d.r < 50) {
-            d3.select(this).attr(
-              "transform",
-              d => `translate(${d.x},${d.y}) scale(${50 / d.r})`
-            );
             d3.select(this).raise();
-          } else {
-            d3.select(this).attr(
-              "transform",
-              d => `translate(${d.x},${d.y}) scale(1)`
+            setTimeout(
+              () =>
+                d3
+                  .select(this)
+                  .attr(
+                    "transform",
+                    d => `translate(${d.x},${d.y}) scale(${50 / d.r})`
+                  ),
+              0
             );
           }
         })
         .on("mouseout", function(d, i) {
-          d = this.currentData;
-          d3.select(this).attr(
-            "transform",
-            d => `translate(${d.x},${d.y}) scale(1)`
-          );
-          this.currentData = null;
+          if (d.r < 50) {
+            d3.select(this).attr(
+              "transform",
+              d => `translate(${d.x},${d.y}) scale(1)`
+            );
+            this.currentData = null;
+          }
         });
     }
   }
@@ -183,10 +183,6 @@ export default {
 <style lang="scss" scoped>
 /deep/.node {
   cursor: pointer;
-  transition: all ease 1s;
-  z-index: 1;
-  &:hover {
-    z-index: 10;
-  }
+  transition: all ease 0.5s;
 }
 </style>
