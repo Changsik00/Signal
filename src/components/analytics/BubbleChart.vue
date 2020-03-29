@@ -155,21 +155,25 @@ export default {
       node
         .on("mouseover", function(d, i) {
           this.currentData = { ...d };
-          d.depth = 10;
-          d.parent.depth = 10;
-          d3.select(this).attr("transform", function(d) {
-            if (d.r < 50) {
-              return `translate(${d.x},${d.y}) scale(${50 / d.r})`;
-            } else {
-              return `translate(${d.x},${d.y}) scale(1)`;
-            }
-          });
+          if (d.r < 50) {
+            d3.select(this).attr(
+              "transform",
+              d => `translate(${d.x},${d.y}) scale(${50 / d.r})`
+            );
+            d3.select(this).raise();
+          } else {
+            d3.select(this).attr(
+              "transform",
+              d => `translate(${d.x},${d.y}) scale(1)`
+            );
+          }
         })
         .on("mouseout", function(d, i) {
           d = this.currentData;
-          d3.select(this).attr("transform", function(d) {
-            return `translate(${d.x},${d.y}) scale(1)`;
-          });
+          d3.select(this).attr(
+            "transform",
+            d => `translate(${d.x},${d.y}) scale(1)`
+          );
           this.currentData = null;
         });
     }
@@ -180,6 +184,9 @@ export default {
 /deep/.node {
   cursor: pointer;
   transition: all ease 1s;
-  z-index: 100;
+  z-index: 1;
+  &:hover {
+    z-index: 10;
+  }
 }
 </style>
