@@ -1,18 +1,31 @@
 <template>
   <section style="padding: 50px; ">
-    <div style="display:flex;">언급된 이슈어</div>
+    <div>
+      <span style="font-size: 20px; font-weight: bold">언급된 이슈어</span> (
+      수집기간 : 전체기간 )
+    </div>
+    <div style="color: #8a8a8a">
+      키워드에 대한 각각의 언급된 이슈어를 시각화하여 제공해 드립니다.
+    </div>
+
     <div style="display: flex; width: 1000px; margin: auto">
       <div>
         <div id="bubbleBarChart0"></div>
-        <div style="text-align: center;">{{ categories[0] }}</div>
+        <div style="text-align: center; font-size:18px; font-weight: bold">
+          {{ categories[0] }}
+        </div>
       </div>
       <div>
         <div id="bubbleBarChart1"></div>
-        <div style="text-align: center;">{{ categories[1] }}</div>
+        <div style="text-align: center; font-size:18px; font-weight: bold">
+          {{ categories[1] }}
+        </div>
       </div>
       <div>
         <div id="bubbleBarChart2"></div>
-        <div style="text-align: center;">{{ categories[2] }}</div>
+        <div style="text-align: center; font-size:18px; font-weight: bold">
+          {{ categories[2] }}
+        </div>
       </div>
     </div>
   </section>
@@ -73,11 +86,12 @@ export default {
       });
     },
     draw(index, dataset, name) {
-      this.categories.push(name);
       if (dataset.children.length == 0) {
+        this.categories.push("");
         this.$showToast(name + " : 연관 검색어가 없습니다.");
         return;
       }
+      this.categories.push(name);
       var diameter = 1000 / 3;
       var fontScale = 3.5;
       var color = d3

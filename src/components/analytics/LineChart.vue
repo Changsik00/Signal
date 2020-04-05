@@ -1,10 +1,22 @@
 <template>
   <section style="padding: 50px; ">
     <div style="display:flex; align-items: center;">
-      <ChartRagneSelector :title="'검색량 추이'" @change="rangeChange" />
+      <ChartRagneSelector
+        :title="'검색량 추이'"
+        :sub-title="
+          '기간별 키워드의 검색량을 보여드림으로써 트렌드의 흐름을 파악할 수 있습니다.'
+        "
+        :start="start"
+        :end="end"
+        @change="rangeChange"
+      />
     </div>
     <div id="chart" style="width: 1000px; margin: auto; padding: 20px;">
-      <apexchart height="350" :options="chartOptions" :series="series"></apexchart>
+      <apexchart
+        height="350"
+        :options="chartOptions"
+        :series="series"
+      ></apexchart>
     </div>
   </section>
 </template>
@@ -16,6 +28,8 @@ export default {
   props: ["keywords"],
   data() {
     return {
+      start: null,
+      end: null,
       series: [],
       chartOptions: {
         chart: {
@@ -104,7 +118,6 @@ export default {
       }
     },
     setData() {
-      this.chartOptions.xaxis.categories = [];
       this.series = [];
       const series = [];
       this.chartData = [];
@@ -116,8 +129,8 @@ export default {
         end_date: dayjs().format("YYYY-MM")
       };
       this.$axios.get("/naver/trend/", { params }).then(res => {
-        const categories = [];
-        const data = [];
+        this.start = res.data[0].data[0].period;
+        this.end = res.data[0].data[res.data[0].data.length - 1].period;
         res.data.forEach(d => {
           const data = d.data.map(d2 => [
             dayjs(d2.period).$d.getTime(),

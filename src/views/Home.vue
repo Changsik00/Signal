@@ -14,7 +14,7 @@
                              margin-top: 30px; text-align: center;"
     >
       당신의 서비스, 브랜드, 경쟁사등 다양한 소식을
-      <br />카카오톡으로 쉽게 전달해드립니다.
+      <br />빠르고 정확하게 전달해드립니다.
     </div>
     <div
       style="display:flex; align-items:center; justify-content: center; margin-top: 30px;"
@@ -167,23 +167,25 @@
       <div style="margin-top: 80px; display: flex; justify-content: center;">
         <div style="width: 320px; text-align: center;">
           <img src="~@/assets/img/home/ico-service-1.svg" />
-          <div style="font-size: 18px;">정확한 데이터</div>
+          <div style="font-size: 18px; font-weight: bold">정확한 데이터</div>
           <div style="font-size: 16px; margin-top: 10px;">
-            사용자가 원하는 데이터를 설저한 키워드에 맞춰 정확하게 제공합니다.
+            설정한 키워드를 간편하고 빠르게 대시보드에서 관리할 수 있습니다.
           </div>
         </div>
         <div style="width: 320px; text-align: center;">
           <img src="~@/assets/img/home/ico-service-2.svg" />
-          <div style="font-size: 18px;">사용자 중심 디자인</div>
+          <div style="font-size: 18px; font-weight: bold">
+            사용자 중심 디자인
+          </div>
           <div style="font-size: 16px; margin-top: 10px;">
             한눈에 다양한 데이터를 쉽고 빠르게 이해할 수 있도록 디자인 합니다.
           </div>
         </div>
         <div style="width: 320px; text-align: center;">
           <img src="~@/assets/img/home/ico-service-3.svg" />
-          <div style="font-size: 18px;">서비스 업데이트</div>
+          <div style="font-size: 18px; font-weight: bold">서비스 업데이트</div>
           <div style="font-size: 16px; margin-top: 10px;">
-            보다 퀘적한 환경에서 사용할 수 있게 지속적인 서비스 업데이트를
+            보다 쾌적한 환경에서 사용할 수 있게 지속적인 서비스 업데이트를
             합니다.
           </div>
         </div>
@@ -191,14 +193,14 @@
       <div style="margin-top: 80px; display: flex; justify-content: center;">
         <div style="width: 320px; text-align: center;">
           <img src="~@/assets/img/home/ico-service-4.svg" />
-          <div style="font-size: 18px;">신속한 응답률</div>
+          <div style="font-size: 18px; font-weight: bold">신속한 응답률</div>
           <div style="font-size: 16px; margin-top: 10px;">
             문의하신 내용은 접수순서대로 최대한 빠르게 처리합니다.
           </div>
         </div>
         <div style="width: 320px; text-align: center;">
           <img src="~@/assets/img/home/ico-service-5.svg" />
-          <div style="font-size: 18px;">자동화 툴</div>
+          <div style="font-size: 18px; font-weight: bold">자동화 툴</div>
           <div style="font-size: 16px; margin-top: 10px;">
             한번만 키워드를 입력하면 추가로 입력할 필요없이 관심 키워드를
             지속적으로 받을 수 있습니다.
@@ -206,7 +208,7 @@
         </div>
         <div style="width: 320px; text-align: center;">
           <img src="~@/assets/img/home/ico-service-6.svg" />
-          <div style="font-size: 18px;">상담 봇</div>
+          <div style="font-size: 18px; font-weight: bold">상담 봇</div>
           <div style="font-size: 16px; margin-top: 10px;">
             채팅 상담봇을 이용하여 간단한 문제는 스스로 확인할 수 있으며, 1:1
             상담을 통해서도 다양한 문제에 답변을 받을 수 있습니다.

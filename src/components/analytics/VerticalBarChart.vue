@@ -1,6 +1,12 @@
 <template>
   <section style="padding: 50px; ">
-    <div>채널별 컨텐츠량</div>
+    <div>
+      <span style="font-size: 20px; font-weight: bold">채널별 컨텐츠량</span> (
+      수집기간 : 전체기간 )
+    </div>
+    <div style="color: #8a8a8a">
+      채널별 만들어진 컨텐츠량을 확인하여 강점과 약점을 비교 확인할 수 있습니다.
+    </div>
     <div id="chart" style="width: 1000px; margin: auto; padding: 20px;">
       <apexchart
         type="bar"

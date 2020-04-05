@@ -1,10 +1,23 @@
 <template>
   <section style="padding: 50px; ">
     <div style="display:flex; align-items: center;">
-      <ChartRagneSelector :title="'검색량'" @change="rangeChange" />
+      <ChartRagneSelector
+        :title="'검색량'"
+        :sub-title="
+          '특정 키워드의 총 검색량을 알려드려 키워드가 가지고 있는 영향력을 확인할 수 있습니다.'
+        "
+        :start="start"
+        :end="end"
+        @change="rangeChange"
+      />
     </div>
     <div style="width: 1000px; margin: auto; padding: 20px;">
-      <apexchart type="bar" height="250" :options="chartOptions" :series="series"></apexchart>
+      <apexchart
+        type="bar"
+        height="250"
+        :options="chartOptions"
+        :series="series"
+      ></apexchart>
     </div>
   </section>
 </template>
@@ -16,7 +29,8 @@ export default {
   props: ["keywords"],
   data() {
     return {
-      range: "all",
+      start: null,
+      end: null,
       chartOptions: {
         plotOptions: {
           bar: {
@@ -145,6 +159,8 @@ export default {
         end_date: dayjs().format("YYYY-MM")
       };
       this.$axios.get("/naver/trend/", { params }).then(res => {
+        this.start = res.data[0].data[0].period;
+        this.end = res.data[0].data[res.data[0].data.length - 1].period;
         const categories = [];
         const data = [];
         res.data.forEach(d => {

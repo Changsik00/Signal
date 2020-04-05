@@ -1,7 +1,13 @@
 <template>
   <section style="width: 100%; display: flex; align-items: center;">
     <div style="flex-grow: 1;">
-      {{ title }} ({{ dateFormatted }} ~ {{ dateFormatted2 }})
+      <span style="font-size: 20px; font-weight: bold">{{ title }}</span> ({{
+        dateFormatted
+      }}
+      ~ {{ dateFormatted2 }})
+      <div style="color: #8a8a8a">
+        {{ subTitle }}
+      </div>
     </div>
     <div class="range-selector-layer">
       <div @click="range = 'year'">1년</div>
@@ -15,7 +21,7 @@
 <script>
 import dayjs from "dayjs";
 export default {
-  props: ["title"],
+  props: ["title", "subTitle", "start", "end"],
   data() {
     return {
       range: "all"
@@ -25,31 +31,28 @@ export default {
     dateFormatted() {
       switch (this.range) {
         case "all":
-          return dayjs()
-            .subtract(3, "year")
-            .add(1, "day")
-            .format("YYYY-MM-DD");
+          return dayjs(this.start).format("YYYY-MM-DD");
         case "year":
-          return dayjs()
+          return dayjs(this.end)
             .subtract(1, "year")
             .add(1, "day")
             .format("YYYY-MM-DD");
         case "half":
-          return dayjs()
+          return dayjs(this.end)
             .subtract(6, "month")
             .add(1, "day")
             .format("YYYY-MM-DD");
         case "quarter":
-          return dayjs()
+          return dayjs(this.end)
             .subtract(3, "month")
             .add(1, "day")
             .format("YYYY-MM-DD");
         default:
-          return dayjs().format("YYYY-MM-DD");
+          return dayjs(this.end).format("YYYY-MM-DD");
       }
     },
     dateFormatted2() {
-      return dayjs().format("YYYY-MM-DD");
+      return dayjs(this.end).format("YYYY-MM-DD");
     }
   },
   watch: {

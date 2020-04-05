@@ -3,7 +3,11 @@
     <v-layout class="main-layer">
       <Analytics v-if="$store.state.currentMode == 'ANALYTICS'" />
       <v-layout v-show="$store.state.currentMode == 'MONITOR'">
-        <Container style="display: flex; " :orientation="'horizontal'" @drop="onDrop">
+        <Container
+          style="display: flex; "
+          :orientation="'horizontal'"
+          @drop="onDrop"
+        >
           <Draggable v-for="(feed, i) in getFeeds" :key="i">
             <FeedColumn :data="feed" />
           </Draggable>
@@ -23,8 +27,14 @@
       width="320"
       style="padding-bottom: 20px"
     >
-      <v-layout align-center style="padding: 10px 0; background-color: whitesmoke;">
-        <div v-if="searchOn" style="display: flex; align-items: center; margin-left: 10px;">
+      <v-layout
+        align-center
+        style="padding: 10px 0; background-color: whitesmoke;"
+      >
+        <div
+          v-if="searchOn"
+          style="display: flex; align-items: center; margin-left: 10px;"
+        >
           <img
             v-if="searchType.startsWith('NAVER_KEY_WORD')"
             src="../assets/img/common/naver2-on.svg"
@@ -41,7 +51,9 @@
         <div
           v-else
           style="font-size: 20px; font-weight: bold; margin-left: 15px;"
-        >Select a column type</div>
+        >
+          Select a column type
+        </div>
         <v-spacer></v-spacer>
         <v-btn icon @click="sideMenuClose">
           <v-icon v-if="searchOn">close</v-icon>
@@ -58,27 +70,49 @@
             <b-input v-model="searchKeyword" style="flex-grow: 1" type="text" />
             <div v-if="!searchCheck">
               <v-btn icon style="margin: 0 0 0 10px" @click="search">
-                <v-icon style="font-size: 30px; color: #393f45; cursor: pointer;">search</v-icon>
+                <v-icon
+                  style="font-size: 30px; color: #393f45; cursor: pointer;"
+                  >search</v-icon
+                >
               </v-btn>
             </div>
             <div v-else>
               <v-btn icon style="margin: 0 0 0 10px" @click="acceptKeyword">
-                <v-icon style="font-size: 30px; color: #393f45; cursor: pointer;">check_circle</v-icon>
+                <v-icon
+                  style="font-size: 30px; color: #393f45; cursor: pointer;"
+                  >check_circle</v-icon
+                >
               </v-btn>
               <v-btn icon style="margin: 0 0 0 10px" @click="cancelKeyword">
-                <v-icon style="font-size: 30px; color: #393f45; cursor: pointer;">remove_circle</v-icon>
+                <v-icon
+                  style="font-size: 30px; color: #393f45; cursor: pointer;"
+                  >remove_circle</v-icon
+                >
               </v-btn>
             </div>
           </v-layout>
-          <v-layout v-for="keyword in searchKeywords" :key="keyword.data" align-center class="menu">
+          <v-layout
+            v-for="keyword in searchKeywords"
+            :key="keyword.data"
+            align-center
+            class="menu"
+          >
             {{ keyword.data }}
             <v-spacer></v-spacer>
-            <v-btn icon style="width: 30px; height: 30px; margin: 0;" @click="removeFeed(keyword)">
+            <v-btn
+              icon
+              style="width: 30px; height: 30px; margin: 0;"
+              @click="removeFeed(keyword)"
+            >
               <v-icon>delete</v-icon>
             </v-btn>
           </v-layout>
           <div v-if="searchCheck" class="side-menu line">
-            <div v-for="(feed, i) in searchPreviewList" :key="i" style="padding: 10px;">
+            <div
+              v-for="(feed, i) in searchPreviewList"
+              :key="i"
+              style="padding: 10px;"
+            >
               <div
                 v-if="feed.title"
                 style="font-size: 16px; font-weight: bold;"
@@ -90,8 +124,17 @@
                 style="font-size: 14px;"
                 v-html="feed.description"
               ></div>
-              <div v-if="feed.text" class="mt10" style="font-size: 14px;" v-html="feed.text"></div>
-              <div v-if="feed.tweet" style="font-size: 16px;" v-html="feed.tweet"></div>
+              <div
+                v-if="feed.text"
+                class="mt10"
+                style="font-size: 14px;"
+                v-html="feed.text"
+              ></div>
+              <div
+                v-if="feed.tweet"
+                style="font-size: 16px;"
+                v-html="feed.tweet"
+              ></div>
               <div
                 v-if="feed.user"
                 class="mt5"
@@ -104,14 +147,23 @@
         <div v-else>
           <div class="side-menu line">
             <v-layout align-center class="title">
-              <img src="../assets/img/common/naver2-on.svg" style="width: 25px; margin-right: 5px;" />
+              <img
+                src="../assets/img/common/naver2-on.svg"
+                style="width: 25px; margin-right: 5px;"
+              />
               <div>Naver Search</div>
             </v-layout>
-            <div class="menu" @click="showSearch('NAVER_KEY_WORD', 'NEWS')">뉴스 검색</div>
-            <div class="menu" @click="showSearch('NAVER_KEY_WORD', 'BLOG')">블로그 검색</div>
-            <div class="menu" @click="showSearch('NAVER_KEY_WORD', 'CAFE')">카페 검색</div>
+            <div class="menu" @click="showSearch('NAVER_KEY_WORD', 'NEWS')">
+              뉴스 검색
+            </div>
+            <div class="menu" @click="showSearch('NAVER_KEY_WORD', 'BLOG')">
+              블로그 검색
+            </div>
+            <div class="menu" @click="showSearch('NAVER_KEY_WORD', 'CAFE')">
+              카페 검색
+            </div>
           </div>
-          <div class="side-menu line">
+          <!-- <div class="side-menu line">
             <v-layout align-center class="title">
               <img
                 v-if="$store.state.snsConnect.facebook"
@@ -130,21 +182,23 @@
               <span
                 v-if="connectFacebookPosts"
                 style="font-size: 12px; color: #9da6af"
-              >(모니터링)</span>
+                >(모니터링)</span
+              >
             </div>
             <div class="menu" @click="facebook('PageMentions')">
               Page Mentions
               <span
                 v-if="connectFacebookMentions"
                 style="font-size: 12px; color: #9da6af"
-              >(모니터링)</span>
+                >(모니터링)</span
+              >
             </div>
-            <!-- <div class="menu" @click="facebook('PageSearch')">
+            <div class="menu" @click="facebook('PageSearch')">
               Page Search
               <span style="font-size: 12px; color: #9da6af">(준비중)</span>
-            </div>-->
-          </div>
-          <div class="side-menu line">
+            </div>
+          </div> -->
+          <!-- <div class="side-menu line">
             <v-layout align-center class="title">
               <img
                 v-if="$store.state.snsConnect.twitter"
@@ -172,20 +226,20 @@
                 style="font-size: 12px; color: #9da6af"
               >(모니터링)</span>
             </div>
-            <!-- <div class="menu" @click="twitter('Likes')">
+            <div class="menu" @click="twitter('Likes')">
               Likes
               <span style="font-size: 12px; color: #9da6af">(준비중)</span>
-            </div>-->
+            </div>
             <div class="menu" @click="twitter('KeywordSearch')">Keyword Search</div>
-            <!-- <div class="menu" @click="twitter('UserSearch')">
+            <div class="menu" @click="twitter('UserSearch')">
               User Search
               <span style="font-size: 12px; color: #9da6af">(준비중)</span>
-            </div>-->
-            <!-- <div class="menu" @click="twitter('Lists')">
+            </div>
+            <div class="menu" @click="twitter('Lists')">
               Lists
               <span style="font-size: 12px; color: #9da6af">(준비중)</span>
-            </div>-->
-          </div>
+            </div>
+          </div> -->
         </div>
       </div>
     </v-navigation-drawer>
@@ -219,7 +273,7 @@ export default {
       searchCheck: false,
       searchPreviewList: [],
       searchKeywords: [],
-      naverType: "", 
+      naverType: ""
     };
   },
   computed: {
@@ -264,7 +318,7 @@ export default {
     if (keyword) {
       this.$store.state.currentMode = "ANALYTICS";
     } else {
-      this.$store.state.currentMode == "";
+      this.$store.state.currentMode == "MONITOR";
       this.hideMonitorSlideMenu();
     }
   },
