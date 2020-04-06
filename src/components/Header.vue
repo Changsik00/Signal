@@ -113,11 +113,6 @@ export default {
   computed: {
     ...mapGetters(["isLogin", "monitorSlideMenu"])
   },
-  created() {
-    if (!this.isLogin) {
-      this.$store.state.currentMode = "ANALYTICS";
-    }
-  },
   methods: {
     ...mapMutations(["logout", "showMonitorSlideMenu", "hideMonitorSlideMenu"]),
     clickAnalytics() {

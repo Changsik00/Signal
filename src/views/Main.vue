@@ -278,6 +278,7 @@ export default {
   },
   computed: {
     ...mapGetters([
+      "isLogin",
       "monitorSlideMenu",
       "getNaverKeywords",
       "getTwitterKeywords",
@@ -314,12 +315,14 @@ export default {
         }
       }
     );
-    const keyword = this.$route.params.keyword;
-    if (keyword) {
-      this.$store.state.currentMode = "ANALYTICS";
-    } else {
-      this.$store.state.currentMode == "MONITOR";
+    if(this.isLogin) {
+      this.$store.state.currentMode = "MONITOR";
       this.hideMonitorSlideMenu();
+    } else { 
+      const keyword = this.$route.params.keyword;
+      if (keyword) {
+        this.$store.state.currentMode = "ANALYTICS";
+      }  
     }
   },
   methods: {
