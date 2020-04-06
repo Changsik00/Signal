@@ -8,7 +8,7 @@
     <v-layout column style="padding: 0; height: 100%; background-color: white; overflow: hidden">
       <v-toolbar dark color="primary">
         <v-spacer></v-spacer>
-        <v-btn icon dark @click="$store.state.showLogin = false">
+        <v-btn icon dark @click="hideDialog">
           <v-icon>close</v-icon>
         </v-btn>
       </v-toolbar>
@@ -183,22 +183,17 @@ export default {
   created() {
     firebase.auth().useDeviceLanguage();
   },
-  mounted() {
-    this.$store.subscribe((mutation, state) => {
-      switch (state.type) {
-        case "showLogin":
-          this.email = "";
-          this.password = "";
-          this.confirmPassword = "";
-          this.dialog = true;
-          this.showFindPassword = false;
-          this.showSignUp = false;
-          break;
-      }
-    });
-  },
   methods: {
+    dataReset() {
+      console.log("#@# dataReset");
+      this.email = "";
+      this.password = "";
+      this.confirmPassword = "";
+      this.showFindPassword = false;
+      this.showSignUp = false;
+    },
     hideDialog() {
+      this.dataReset();
       this.$store.state.showLogin = false;
     },
     sendResetPassword() {
@@ -219,6 +214,7 @@ export default {
             access_token: result.user.refreshToken,
             type: "email"
           };
+          this.dataReset();
           this.$store.dispatch("login", params);
         })
         .catch(error => {
@@ -260,6 +256,7 @@ export default {
             access_token: result.user.refreshToken,
             type: sns
           };
+          this.dataReset();
           this.$store.dispatch("login", params);
         })
         .catch(error => {
@@ -279,6 +276,7 @@ export default {
                   access_token: result.user.refreshToken,
                   type: "email"
                 };
+                this.dataReset();
                 this.$store.dispatch("login", params);
               },
               error => {
