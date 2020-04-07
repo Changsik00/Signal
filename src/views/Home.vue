@@ -1,83 +1,49 @@
 <template>
   <section>
-    <div
-      style=" font-size: 48px;
-                              font-weight: bold;
-                              text-align: center;
-                              margin-top: 60px;
-                              color: #393f45"
-    >
+    <div style=" font-size: 48px; font-weight: bold; text-align: center; margin-top: 60px; color: #393f45">
       지금 당신의 관심사를 검색하세요.
     </div>
-    <div
-      style="font-size: 24px; color: #393f45; 
-                             margin-top: 30px; text-align: center;"
-    >
+    <div style="font-size: 24px; color: #393f45; margin-top: 30px; text-align: center;">
       당신의 서비스, 브랜드, 경쟁사등 다양한 소식을
       <br />빠르고 정확하게 전달해드립니다.
     </div>
-    <div
-      style="display:flex; align-items:center; justify-content: center; margin-top: 30px;"
-    >
-      <v-text-field
-        v-model="keyword"
-        solo
-        flat
-        class="Normal-form"
-        placeholder="키워드를 입력하세요."
-      ></v-text-field>
+    <div style="display:flex; align-items:center; justify-content: center; margin-top: 30px;">
+      <v-text-field v-model="keyword" solo flat class="Normal-form" placeholder="키워드를 입력하세요."></v-text-field>
       <v-btn flat dark class="Button-solid" @click="search">검색</v-btn>
     </div>
 
     <div style="margin-top: 50px; display: flex; justify-content: center;">
       <div style="width: 190px; text-align: center;">
         <img src="~@/assets/img/home/ico-main-1.svg" />
-        <div style=" font-size: 16px; font-weight: bold; color: #393f45;">
-          분석
-        </div>
+        <div style=" font-size: 16px; font-weight: bold; color: #393f45;">분석</div>
       </div>
       <div style="width: 190px; text-align: center;">
         <img src="~@/assets/img/home/ico-main-2.svg" />
-        <div style=" font-size: 16px; font-weight: bold; color: #393f45;">
-          모니터링
-        </div>
+        <div style=" font-size: 16px; font-weight: bold; color: #393f45;">모니터링</div>
       </div>
       <div style="width: 190px; text-align: center;">
         <img src="~@/assets/img/home/ico-main-3.svg" />
-        <div style=" font-size: 16px; font-weight: bold; color: #393f45;">
-          트랜드
-        </div>
+        <div style=" font-size: 16px; font-weight: bold; color: #393f45;">트랜드</div>
       </div>
       <div style="width: 190px; text-align: center;">
         <img src="~@/assets/img/home/ico-main-4.svg" />
-        <div style=" font-size: 16px; font-weight: bold; color: #393f45;">
-          이슈어
-        </div>
+        <div style=" font-size: 16px; font-weight: bold; color: #393f45;">이슈어</div>
       </div>
       <div style="width: 190px; text-align: center;">
         <img src="~@/assets/img/home/ico-main-5.svg" />
-        <div style=" font-size: 16px; font-weight: bold; color: #393f45;">
-          칸반보드
-        </div>
+        <div style=" font-size: 16px; font-weight: bold; color: #393f45;">칸반보드</div>
       </div>
     </div>
-    <div
-      style="margin-top: 50px; background-color: #24c185; 
-                                padding: 30px; text-align: center; color: #ffffff;"
-    >
-      <div style="font-size: 30px; font-weight: bold;">
-        키워드 데이터를 한 곳에서 확인하세요!
-      </div>
+    <div style="margin-top: 50px; background-color: #24c185; padding: 30px; text-align: center; color: #ffffff;">
+      <div style="font-size: 30px; font-weight: bold;">키워드 데이터를 한 곳에서 확인하세요!</div>
       <div style="font-size: 16px; font-weight: bold;">
         온라인상에 흩어져 있던 키워드 데이터를 한 곳으로 모아드립니다.
         <br />내가 관심을 가지고 있던 키워드를 한 눈에 확인할 수 있고, 새로운
         데이터를 실시간으로 알려드립니다.
       </div>
     </div>
-    <div style="margin-top: 50px; display:flex; justify-content: center;">
-      <div
-        style="display:flex; flex-direction: column; width: 240px; align-items: center;"
-      >
+    <div style="margin-top: 50px; padding: 0 25px; display:flex; justify-content: center;">
+      <div style="display:flex; flex-direction: column; width: 240px; align-items: center;">
         <img width="40" src="~@/assets/img/home/ico-insta.png" />
         <img src="~@/assets/img/home/img-insta.png" />
       </div>
@@ -87,9 +53,7 @@
         <img width="40" src="~@/assets/img/home/ico-twitter.png" />
         <img src="~@/assets/img/home/img-twitter.png" />
       </div>
-      <div
-        style="display:flex; flex-direction: column; width: 240px; align-items: center;"
-      >
+      <div style="display:flex; flex-direction: column; width: 240px; align-items: center;">
         <img width="40" src="~@/assets/img/home/ico-facebook.png" />
         <img src="~@/assets/img/home/img-facebook.png" />
       </div>
@@ -100,36 +64,21 @@
         <img src="~@/assets/img/home/img-naver.png" />
       </div>
     </div>
-    <div
-      style="margin-top: 150px; display: flex; justify-content: center; align-items: center;"
-    >
+    <div style="margin-top: 150px; padding: 0 25px; display: flex; justify-content: center; align-items: center;">
       <div style="flex-grow: 1; max-width: 470px;">
-        <div style="color: #24c185; font-size: 18px; font-weight: bold;">
-          분석
-        </div>
-        <div style="font-size: 36px; font-weight: bold;">
-          키워드 데이터를 정확하게!
-        </div>
+        <div style="color: #24c185; font-size: 18px; font-weight: bold;">분석</div>
+        <div style="font-size: 36px; font-weight: bold;">키워드 데이터를 정확하게!</div>
         <div style="margin-top: 20px; font-size: 16px;">
           관심 산업 또는 제품에 대한 검색량 추이, 연관어 데이터를 제공하여 현재
           키워드 상태와 앞으로의 전망을 명확하게 판단할 수 있습니다.
         </div>
       </div>
-      <img
-        style="flex-grow: 1; max-width: 470px;"
-        src="~@/assets/img/home/img-data-1.svg"
-      />
+      <img style="flex-grow: 1; max-width: 470px;" src="~@/assets/img/home/img-data-1.svg" />
     </div>
-    <div
-      style="margin-top: 150px; display: flex; justify-content: center; align-items: center;"
-    >
+    <div style="margin-top: 150px; padding: 0 25px; display: flex; justify-content: center; align-items: center;">
       <div style="flex-grow: 1; max-width: 470px;">
-        <div style="color: #24c185; font-size: 18px; font-weight: bold;">
-          모니터링
-        </div>
-        <div style="font-size: 36px; font-weight: bold;">
-          경쟁사 소식을 실시간으로!
-        </div>
+        <div style="color: #24c185; font-size: 18px; font-weight: bold;">모니터링</div>
+        <div style="font-size: 36px; font-weight: bold;">경쟁사 소식을 실시간으로!</div>
         <div style="margin-top: 20px; font-size: 16px;">
           매일 온라인에서 찾아보던 경쟁사 소식을 이제는 찾아볼 필요 없이 소식이
           있을 때마다 실시간 업데이트하여 알려드립니다.
@@ -140,16 +89,10 @@
         src="~@/assets/img/home/img-data-2.svg"
       />
     </div>
-    <div
-      style="margin-top: 150px; display: flex; justify-content: center; align-items: center;"
-    >
+    <div style="margin-top: 150px; padding: 0 25px; display: flex; justify-content: center; align-items: center;">
       <div style="flex-grow: 1; max-width: 470px;">
-        <div style="color: #24c185; font-size: 18px; font-weight: bold;">
-          트렌드
-        </div>
-        <div style="font-size: 36px; font-weight: bold;">
-          실시간 이슈를 쉽고 빠르게!
-        </div>
+        <div style="color: #24c185; font-size: 18px; font-weight: bold;">트렌드</div>
+        <div style="font-size: 36px; font-weight: bold;">실시간 이슈를 쉽고 빠르게!</div>
         <div style="margin-top: 20px; font-size: 16px;">
           매일 일어나는 실시간 검색어를 12시간 누적데이터 기준으로 정리해
           제공함으로써 그날의 이슈를 쉽게 확인할 수 있습니다.
@@ -160,26 +103,18 @@
         src="~@/assets/img/home/img-data-3.svg"
       />
     </div>
-    <div style="margin-top: 50px; background-color: #f0f0f0; padding: 50px 0;">
-      <div style="text-align: center; font-size: 36px; font-weight: bold;">
-        우리의 서비스는 원칙이 있습니다.
-      </div>
+    <div style="margin-top: 50px; background-color: #f0f0f0; padding: 50px 25px;">
+      <div style="text-align: center; font-size: 36px; font-weight: bold;">우리의 서비스는 원칙이 있습니다.</div>
       <div style="margin-top: 80px; display: flex; justify-content: center;">
         <div style="width: 320px; text-align: center;">
           <img src="~@/assets/img/home/ico-service-1.svg" />
           <div style="font-size: 18px; font-weight: bold">정확한 데이터</div>
-          <div style="font-size: 16px; margin-top: 10px;">
-            설정한 키워드를 간편하고 빠르게 대시보드에서 관리할 수 있습니다.
-          </div>
+          <div style="font-size: 16px; margin-top: 10px;">설정한 키워드를 간편하고 빠르게 대시보드에서 관리할 수 있습니다.</div>
         </div>
         <div style="width: 320px; text-align: center;">
           <img src="~@/assets/img/home/ico-service-2.svg" />
-          <div style="font-size: 18px; font-weight: bold">
-            사용자 중심 디자인
-          </div>
-          <div style="font-size: 16px; margin-top: 10px;">
-            한눈에 다양한 데이터를 쉽고 빠르게 이해할 수 있도록 디자인 합니다.
-          </div>
+          <div style="font-size: 18px; font-weight: bold">사용자 중심 디자인</div>
+          <div style="font-size: 16px; margin-top: 10px;">한눈에 다양한 데이터를 쉽고 빠르게 이해할 수 있도록 디자인 합니다.</div>
         </div>
         <div style="width: 320px; text-align: center;">
           <img src="~@/assets/img/home/ico-service-3.svg" />
@@ -194,9 +129,7 @@
         <div style="width: 320px; text-align: center;">
           <img src="~@/assets/img/home/ico-service-4.svg" />
           <div style="font-size: 18px; font-weight: bold">신속한 응답률</div>
-          <div style="font-size: 16px; margin-top: 10px;">
-            문의하신 내용은 접수순서대로 최대한 빠르게 처리합니다.
-          </div>
+          <div style="font-size: 16px; margin-top: 10px;">문의하신 내용은 접수순서대로 최대한 빠르게 처리합니다.</div>
         </div>
         <div style="width: 320px; text-align: center;">
           <img src="~@/assets/img/home/ico-service-5.svg" />
@@ -217,42 +150,28 @@
       </div>
     </div>
     <div style="max-width: 1024px; margin: auto; padding-top: 40px;">
-      <v-carousel
-        height="200"
-        hide-delimiters
-        light
-        style="box-shadow:none;"
-      >
+      <v-carousel height="200" hide-delimiters light style="box-shadow:none;">
         <v-carousel-item v-for="(item, i) in itemList" :key="i">
           <v-layout align-center fill-height style="justify-content: center; padding: 20px 60px;">
             <div style="text-align: left; flex-grow: 1; max-width: 500px;">
               <div
                 style="width: 75px; text-align: center; color: #24c185; border-radius: 2px; 
                                         border: solid 1px #24c185; padding: 2px 5px;"
-              >
-                EASY
-              </div>
-              <div style="font-weight: bold; font-size: 20px; color: #393f45">
-                {{ item.title }}
-              </div>
+              >EASY</div>
+              <div style="font-weight: bold; font-size: 20px; color: #393f45">{{ item.title }}</div>
               <div v-html="item.info"></div>
             </div>
-            <img style="width: 166px !imortant; height: 166px;"
-                :src="require(`../assets/img/home/${item.img}`)"  
+            <img
+              style="width: 166px !imortant; height: 166px;"
+              :src="require(`../assets/img/home/${item.img}`)"
             />
           </v-layout>
         </v-carousel-item>
       </v-carousel>
     </div>
-    <div
-      style="margin-top: 50px; background-color: #f0f0f0; padding: 50px 0; text-align: center"
-    >
-      <div style="font-size: 36px; font-weight: 300;">
-        모든 소셜미디어 관리를 한 곳에서 시작하세요!
-      </div>
-      <div
-        style="font-size: 18px; font-weight: 300; margin: 20px auto 0 auto; max-width: 1024px;"
-      >
+    <div style="margin-top: 50px; background-color: #f0f0f0; padding: 50px 25px; text-align: center">
+      <div style="font-size: 36px; font-weight: 300;">모든 소셜미디어 관리를 한 곳에서 시작하세요!</div>
+      <div style="font-size: 18px; font-weight: 300; margin: 20px auto 0 auto; max-width: 1024px;">
         키워드 검색량, 모니터링, 이슈트래킹, 통계까지 복잡하고 어려웠던
         소셜미디어 관리를 이제는 시그널에서 쉽고 빠르게 관리할 수 있도록
         도와드립니다.
