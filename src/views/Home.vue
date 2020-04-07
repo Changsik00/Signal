@@ -1,18 +1,17 @@
 <template>
   <section>
-    <div style=" font-size: 48px; font-weight: bold; text-align: center; margin-top: 60px; color: #393f45">
+    <div style=" font-size: 48px; padding: 20px; font-weight: bold; text-align: center; margin-top: 60px; color: #393f45">
       지금 당신의 관심사를 검색하세요.
     </div>
-    <div style="font-size: 24px; color: #393f45; margin-top: 30px; text-align: center;">
-      당신의 서비스, 브랜드, 경쟁사등 다양한 소식을
-      <br />빠르고 정확하게 전달해드립니다.
+    <div style="font-size: 24px; padding: 20px; color: #393f45; margin-top: 30px; text-align: center;">
+      당신의 서비스, 브랜드, 경쟁사등 다양한 소식을 빠르고 정확하게 전달해드립니다.
     </div>
-    <div style="display:flex; align-items:center; justify-content: center; margin-top: 30px;">
+    <div style="display:flex; align-items:center; justify-content: center; margin-top: 30px; padding: 30px;">
       <v-text-field v-model="keyword" solo flat class="Normal-form" placeholder="키워드를 입력하세요."></v-text-field>
       <v-btn flat dark class="Button-solid" @click="search">검색</v-btn>
     </div>
 
-    <div style="margin-top: 50px; display: flex; justify-content: center;">
+    <div style="margin-top: 50px; display: flex; justify-content: center; padding: 30px;">
       <div style="width: 190px; text-align: center;">
         <img src="~@/assets/img/home/ico-main-1.svg" />
         <div style=" font-size: 16px; font-weight: bold; color: #393f45;">분석</div>
