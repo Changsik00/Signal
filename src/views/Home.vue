@@ -216,38 +216,34 @@
         </div>
       </div>
     </div>
-    <v-carousel
-      height="auto"
-      hide-delimiters
-      light
-      style="box-shadow:none; max-width: 1024px; margin: auto; padding-top: 50px"
-    >
-      <v-carousel-item v-for="(item, i) in itemList" :key="i">
-        <v-layout align-center fill-height style="padding: 0 70px;">
-          <div style="text-align: left; flex-grow:1;">
-            <div
-              style="width: 75px; text-align: center; color: #24c185; border-radius: 2px; 
-                                       border: solid 1px #24c185; padding: 2px 5px;"
-            >
-              EASY
+    <div style="max-width: 1024px; margin: auto; padding-top: 40px;">
+      <v-carousel
+        height="200"
+        hide-delimiters
+        light
+        style="box-shadow:none;"
+      >
+        <v-carousel-item v-for="(item, i) in itemList" :key="i">
+          <v-layout align-center fill-height style="justify-content: center; padding: 20px 60px;">
+            <div style="text-align: left; flex-grow: 1; max-width: 500px;">
+              <div
+                style="width: 75px; text-align: center; color: #24c185; border-radius: 2px; 
+                                        border: solid 1px #24c185; padding: 2px 5px;"
+              >
+                EASY
+              </div>
+              <div style="font-weight: bold; font-size: 20px; color: #393f45">
+                {{ item.title }}
+              </div>
+              <div v-html="item.info"></div>
             </div>
-            <div style="font-weight: bold; font-size: 20px; color: #393f45">
-              {{ item.title }}
-            </div>
-            <div v-html="item.info"></div>
-          </div>
-
-          <div
-            style="min-width: 166px;
-                                      min-height: 166px;
-                                      margin: auto;
-                                      border-radius: 50%;
-                                      border: solid 1px #979797;
-                                      background-color: #979797;"
-          ></div>
-        </v-layout>
-      </v-carousel-item>
-    </v-carousel>
+            <img style="width: 166px !imortant; height: 166px;"
+                :src="require(`../assets/img/home/${item.img}`)"  
+            />
+          </v-layout>
+        </v-carousel-item>
+      </v-carousel>
+    </div>
     <div
       style="margin-top: 50px; background-color: #f0f0f0; padding: 50px 0; text-align: center"
     >
@@ -280,25 +276,25 @@ export default {
           title: "EASY  검색은 간편! 정보는 정확!",
           info:
             "키워드만 입력해서 검색하면 소셜미디어상에<br>다양한 정보를 한꺼번에 받아볼 수 있어요!",
-          imgUrl: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg"
+          img: "img-people-1.png"
         },
         {
           title: "ONE  많은 소셜미디어 계정 관리를 하나의 채널에서!",
           info:
             "페이스북, 인스타, 트위터등 관리해야할 많은<br>소셜미디어를 하나의의 채널에서 관리할 수 있어 편리해요!",
-          imgUrl: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg"
+          img: "img-people-2.png"
         },
         {
           title: "SAVE  시간을 절약 할 수 있어요!",
           info:
             "다양한 소셜미디어 채널에 글을 한번에<br>작성할 수 있어 시간을 절약할 수 있어요!",
-          imgUrl: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg"
+          img: "img-people-3.png"
         },
         {
           title: "DATA 경쟁사를 알게 되었어요!",
           info:
             "항상 궁금했지만 알 수 없었던 경쟁사와<br>우리의 현재 상황을 명확하게 인지할 수있게 되었어요.",
-          imgUrl: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg"
+          img: "img-people-4.png"
         }
       ]
     };
