@@ -1,13 +1,7 @@
 <template>
   <section style="width: 100%; background-color: white;">
     <div class="search-keywords-layer">
-      <div
-        class="item"
-        :class="{ active: tabIndex == 0 }"
-        @click="clickKeywordTab(0)"
-      >
-        검색하기
-      </div>
+      <div class="item" :class="{ active: tabIndex == 0 }" @click="clickKeywordTab(0)">검색하기</div>
       <div
         v-for="(item, i) in searchKeywords"
         :key="i"
@@ -16,11 +10,7 @@
         @click="clickKeywordTab(i + 1)"
       >
         {{ getKeywordsTabTitle(item) }}
-        <v-icon
-          style="font-size: 20px; margin-left: 5px;"
-          @click="showDialog(item)"
-          >close</v-icon
-        >
+        <v-icon style="font-size: 20px; margin-left: 5px;" @click="showDialog(item)">close</v-icon>
       </div>
     </div>
     <div style="height: 100%; overflow-y: auto; padding-bottom: 30px;">
@@ -30,9 +20,7 @@
           style="display: flex; flex-direction: column; align-items: center;"
         >
           <div style="margin-top: 30px; width: 500px; text-align: center;">
-            <div style="font-size: 36px; font-weight: bold;">
-              빅데이터를 시각화하여 제공합니다.
-            </div>
+            <div style="font-size: 36px; font-weight: bold;">빅데이터를 시각화하여 제공합니다.</div>
             <div style="margin-top: 20px;">
               <div v-for="(keyword, i) in newKeywords" :key="i">
                 <v-text-field
@@ -50,9 +38,7 @@
                 >
                   <div
                     style="flex-grow: 1; text-align: left; color: #888888; padding-top: 4px;"
-                  >
-                    비교 분석하기 원하는 키워드를 추가하세요
-                  </div>
+                  >비교 분석하기 원하는 키워드를 추가하세요</div>
                   <v-icon>add</v-icon>
                 </div>
               </div>
@@ -74,8 +60,7 @@
     <v-dialog v-model="dialog" max-width="400">
       <v-card>
         <v-card-text>
-          <div class="headline">{{ getKeywordsTabTitle2() }}</div>
-          해당키워드를 삭제 하겠습니까?
+          <div class="headline">{{ getKeywordsTabTitle2() }}</div>해당키워드를 삭제 하겠습니까?
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -112,24 +97,48 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["isLoading"]),
+    ...mapGetters(["isLogin"]),
     keywordCheck() {
       return this.currentKeywordData.some(d => d.length > 0);
     }
   },
   created() {
-    this.searchKeywords = [
-      ["삼성화재"],
-      ["제주항공", "진에어"],
-      ["배달의민족", "배달통", "요기요"]
-    ];
-
-    const keyword = this.$route.params.keyword;
-    if (keyword) {
-      this.newKeywords.push(keyword);
-    }
+    this.requestKeyword();
   },
   methods: {
+    requestKeyword() {
+      if (this.isLogin) {
+        // todo api 연동
+      } else {
+        this.searchKeywords = JSON.parse(
+          localStorage.getItem("ANALYTICS_LIST")
+        );
+        if (!this.searchKeywords) {
+          this.searchKeywords = [
+            ["삼성화재"],
+            ["제주항공", "진에어"],
+            ["배달의민족", "배달통", "요기요"]
+          ];
+
+          localStorage.setItem(
+            "ANALYTICS_LIST",
+            JSON.stringify(this.searchKeywords)
+          );
+        }
+
+        let keyword = this.$route.params.keyword;
+        if (keyword) {
+          localStorage.setItem("ANALYTICS_KEYOWRD", keyword);
+        } else {
+          keyword = localStorage.getItem("ANALYTICS_KEYOWRD");
+          if (!keyword) {
+            keyword = "";
+          }
+        }
+        console.log("#@# keywrod", keyword);
+        this.newKeywords.push(keyword);
+      }
+    },
     getKeywordsTabTitle(data) {
       return data.join(" vs ");
     },
@@ -176,12 +185,17 @@ export default {
       this.searchKeywords.push(this.allowKeywords);
       this.tabIndex = this.searchKeywords.length;
       this.newKeywords = [""];
+
+      if (!this.isLogin) {
+        localStorage.setItem(
+          "ANALYTICS_LIST",
+          JSON.stringify(this.searchKeywords)
+        );
+      }
     },
     drawChart() {
       if (!this.newKeywordsEmpyCheck()) return;
-
       this.currentKeywordData = this.allowKeywords;
-      console.log("#@# currentKeywordData", this.currentKeywordData);
     }
   }
 };
@@ -189,11 +203,19 @@ export default {
 <style lang="scss">
 .search-keywords-layer {
   display: flex;
+  align-items: flex-start;
+  width: 100%;
   border-bottom: 1px solid #aaaaaa;
-  display: flex;
-  align-items: center;
+  overflow-x: auto;
+  overflow-y: hidden;
   & .item {
-    padding: 10px 20px;
+    display: inline-block;
+    height: 50px;
+    line-height: 52px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0 20px;
+    flex-shrink: 0;
     cursor: pointer;
     &.active {
       border-bottom: 2px solid cadetblue;

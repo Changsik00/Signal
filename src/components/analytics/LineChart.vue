@@ -126,7 +126,7 @@ export default {
         start_date: dayjs()
           .subtract(3, "year")
           .format("YYYY-MM"),
-        end_date: dayjs().format("YYYY-MM")
+        end_date: dayjs().subtract(1, "month").format("YYYY-MM")
       };
       this.$axios.get("/naver/trend/", { params }).then(res => {
         this.start = res.data[0].data[0].period;

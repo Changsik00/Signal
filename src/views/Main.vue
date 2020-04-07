@@ -273,7 +273,7 @@ export default {
       searchCheck: false,
       searchPreviewList: [],
       searchKeywords: [],
-      naverType: ""
+      naverType: "",
     };
   },
   computed: {
@@ -319,10 +319,7 @@ export default {
       this.$store.state.currentMode = "MONITOR";
       this.hideMonitorSlideMenu();
     } else { 
-      const keyword = this.$route.params.keyword;
-      if (keyword) {
-        this.$store.state.currentMode = "ANALYTICS";
-      }  
+      this.$store.state.currentMode = "ANALYTICS";
     }
   },
   methods: {
