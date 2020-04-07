@@ -149,20 +149,20 @@
         </div>
       </div>
     </div>
-    <div style="max-width: 1024px; margin: auto; padding-top: 40px;">
-      <v-carousel height="200" hide-delimiters light style="box-shadow:none;">
+    <div style="max-width: 1024px; margin: auto; padding-top: 45px;">
+      <v-carousel height="220" hide-delimiters light style="box-shadow:none;">
         <v-carousel-item v-for="(item, i) in itemList" :key="i">
           <v-layout align-center fill-height style="justify-content: center; padding: 20px 60px;">
             <div style="text-align: left; flex-grow: 1; max-width: 500px;">
               <div
-                style="width: 75px; text-align: center; color: #24c185; border-radius: 2px; 
-                                        border: solid 1px #24c185; padding: 2px 5px;"
-              >EASY</div>
-              <div style="font-weight: bold; font-size: 20px; color: #393f45">{{ item.title }}</div>
+                style="width: 75px; line-height: 24px; text-align: center; color: #24c185; border-radius: 2px; 
+                       border: 1px solid #24c185; padding-top: 2px;"
+              >{{item.feature}}</div>
+              <div style="margin-top: 5px; font-weight: bold; font-size: 20px; color: #393f45">{{ item.title }}</div>
               <div v-html="item.info"></div>
             </div>
             <img
-              style="width: 166px !imortant; height: 166px;"
+              style="width: 166px !imortant; height: 166px; margin-left: 20px;"
               :src="require(`../assets/img/home/${item.img}`)"
             />
           </v-layout>
@@ -192,27 +192,28 @@ export default {
       selectItems: ["뉴스", "블로그", "카페"],
       itemList: [
         {
-          title: "EASY  검색은 간편! 정보는 정확!",
+          feature: "EASY",
+          title: "검색은 간편! 정보는 정확!",
           info:
-            "키워드만 입력해서 검색하면 소셜미디어상에<br>다양한 정보를 한꺼번에 받아볼 수 있어요!",
+            "키워드만 입력해서 검색하면 소셜미디어상에 다양한 정보를 한꺼번에 받아볼 수 있어요!",
           img: "img-people-1.png"
         },
         {
-          title: "ONE  많은 소셜미디어 계정 관리를 하나의 채널에서!",
-          info:
-            "페이스북, 인스타, 트위터등 관리해야할 많은<br>소셜미디어를 하나의의 채널에서 관리할 수 있어 편리해요!",
+          feature: "DATA ",
+          title: "경쟁사를 알게 되었어요!",
+          info: "항상 궁금했지만 알 수 없었던 경쟁사와 우리의 현재 상황을 명확하게 인지할 수 있게 되었어요",
           img: "img-people-2.png"
         },
         {
-          title: "SAVE  시간을 절약 할 수 있어요!",
-          info:
-            "다양한 소셜미디어 채널에 글을 한번에<br>작성할 수 있어 시간을 절약할 수 있어요!",
+          feature: "SAVE",
+          title: "시간을 절약 할 수 있어요!",
+          info: "소셜미디어 채널에 글을 한번에 확인할 수 있어 시간을 절약할 수 있어요!",
           img: "img-people-3.png"
         },
         {
-          title: "DATA 경쟁사를 알게 되었어요!",
-          info:
-            "항상 궁금했지만 알 수 없었던 경쟁사와<br>우리의 현재 상황을 명확하게 인지할 수있게 되었어요.",
+          feature: "ONE",
+          title: "많은 소셜미디어 계정 관리를 하나의 채널에서!",
+          info: "관리해야할 다양한 SNS채널을 하나의 채널에서 확인할 수 있어 편리해요!",
           img: "img-people-4.png"
         }
       ]
