@@ -7,8 +7,8 @@
       당신의 서비스, 브랜드, 경쟁사등 다양한 소식을 빠르고 정확하게 전달해드립니다.
     </div>
     <div style="display:flex; align-items:center; justify-content: center; margin-top: 30px; padding: 30px;">
-      <v-text-field v-model="keyword" solo flat class="Normal-form" placeholder="키워드를 입력하세요."></v-text-field>
-      <v-btn flat dark class="Button-solid" @click="search">검색</v-btn>
+      <v-text-field v-model="keyword" solo flat class="search-form" placeholder="키워드를 입력하세요."></v-text-field>
+      <v-btn flat dark class="search-button" @click="search">검색</v-btn>
     </div>
 
     <div style="margin-top: 50px; display: flex; justify-content: center; padding: 30px;">
@@ -63,7 +63,7 @@
         <img src="~@/assets/img/home/img-naver.png" />
       </div>
     </div>
-    <div style="margin-top: 150px; padding: 0 25px; display: flex; justify-content: center; align-items: center;">
+    <div class="section">
       <div style="flex-grow: 1; max-width: 470px;">
         <div style="color: #24c185; font-size: 18px; font-weight: bold;">분석</div>
         <div style="font-size: 36px; font-weight: bold;">키워드 데이터를 정확하게!</div>
@@ -74,7 +74,7 @@
       </div>
       <img style="flex-grow: 1; max-width: 470px;" src="~@/assets/img/home/img-data-1.svg" />
     </div>
-    <div style="margin-top: 150px; padding: 0 25px; display: flex; justify-content: center; align-items: center;">
+    <div class="section">
       <div style="flex-grow: 1; max-width: 470px;">
         <div style="color: #24c185; font-size: 18px; font-weight: bold;">모니터링</div>
         <div style="font-size: 36px; font-weight: bold;">경쟁사 소식을 실시간으로!</div>
@@ -88,7 +88,7 @@
         src="~@/assets/img/home/img-data-2.svg"
       />
     </div>
-    <div style="margin-top: 150px; padding: 0 25px; display: flex; justify-content: center; align-items: center;">
+    <div class="section">
       <div style="flex-grow: 1; max-width: 470px;">
         <div style="color: #24c185; font-size: 18px; font-weight: bold;">트렌드</div>
         <div style="font-size: 36px; font-weight: bold;">실시간 이슈를 쉽고 빠르게!</div>
@@ -104,46 +104,56 @@
     </div>
     <div style="margin-top: 50px; background-color: #f0f0f0; padding: 50px 25px;">
       <div style="text-align: center; font-size: 36px; font-weight: bold;">우리의 서비스는 원칙이 있습니다.</div>
-      <div style="margin-top: 80px; display: flex; justify-content: center;">
-        <div style="width: 320px; text-align: center;">
+      <div class="flex">
+        <div class="info-item">
           <img src="~@/assets/img/home/ico-service-1.svg" />
-          <div style="font-size: 18px; font-weight: bold">정확한 데이터</div>
-          <div style="font-size: 16px; margin-top: 10px;">설정한 키워드를 간편하고 빠르게 대시보드에서 관리할 수 있습니다.</div>
+          <div>
+            <div style="font-size: 18px; font-weight: bold">정확한 데이터</div>
+            <div style="font-size: 16px; margin-top: 10px;">설정한 키워드를 간편하고 빠르게 대시보드에서 관리할 수 있습니다.</div>
+          </div>
         </div>
-        <div style="width: 320px; text-align: center;">
+        <div class="info-item">
           <img src="~@/assets/img/home/ico-service-2.svg" />
-          <div style="font-size: 18px; font-weight: bold">사용자 중심 디자인</div>
-          <div style="font-size: 16px; margin-top: 10px;">한눈에 다양한 데이터를 쉽고 빠르게 이해할 수 있도록 디자인 합니다.</div>
+          <div>
+            <div style="font-size: 18px; font-weight: bold">사용자 중심 디자인</div>
+            <div style="font-size: 16px; margin-top: 10px;">한눈에 다양한 데이터를 쉽고 빠르게 이해할 수 있도록 디자인 합니다.</div>
+          </div>
         </div>
-        <div style="width: 320px; text-align: center;">
+        <div class="info-item">
           <img src="~@/assets/img/home/ico-service-3.svg" />
-          <div style="font-size: 18px; font-weight: bold">서비스 업데이트</div>
-          <div style="font-size: 16px; margin-top: 10px;">
-            보다 쾌적한 환경에서 사용할 수 있게 지속적인 서비스 업데이트를
-            합니다.
+          <div>
+            <div style="font-size: 18px; font-weight: bold">서비스 업데이트</div>
+            <div style="font-size: 16px; margin-top: 10px;">
+              보다 쾌적한 환경에서 사용할 수 있게 지속적인 서비스 업데이트를
+              합니다.
+            </div>
           </div>
         </div>
-      </div>
-      <div style="margin-top: 80px; display: flex; justify-content: center;">
-        <div style="width: 320px; text-align: center;">
+        <div class="info-item">
           <img src="~@/assets/img/home/ico-service-4.svg" />
-          <div style="font-size: 18px; font-weight: bold">신속한 응답률</div>
-          <div style="font-size: 16px; margin-top: 10px;">문의하신 내용은 접수순서대로 최대한 빠르게 처리합니다.</div>
-        </div>
-        <div style="width: 320px; text-align: center;">
-          <img src="~@/assets/img/home/ico-service-5.svg" />
-          <div style="font-size: 18px; font-weight: bold">자동화 툴</div>
-          <div style="font-size: 16px; margin-top: 10px;">
-            한번만 키워드를 입력하면 추가로 입력할 필요없이 관심 키워드를
-            지속적으로 받을 수 있습니다.
+          <div>
+            <div style="font-size: 18px; font-weight: bold">신속한 응답률</div>
+            <div style="font-size: 16px; margin-top: 10px;">문의하신 내용은 접수순서대로 최대한 빠르게 처리합니다.</div>
           </div>
         </div>
-        <div style="width: 320px; text-align: center;">
+        <div class="info-item">
+          <img src="~@/assets/img/home/ico-service-5.svg" />
+          <div>
+            <div style="font-size: 18px; font-weight: bold">자동화 툴</div>
+            <div style="font-size: 16px; margin-top: 10px;">
+              한번만 키워드를 입력하면 추가로 입력할 필요없이 관심 키워드를
+              지속적으로 받을 수 있습니다.
+            </div>
+          </div>
+        </div>
+        <div class="info-item">
           <img src="~@/assets/img/home/ico-service-6.svg" />
-          <div style="font-size: 18px; font-weight: bold">상담 봇</div>
-          <div style="font-size: 16px; margin-top: 10px;">
-            채팅 상담봇을 이용하여 간단한 문제는 스스로 확인할 수 있으며, 1:1
-            상담을 통해서도 다양한 문제에 답변을 받을 수 있습니다.
+          <div>
+            <div style="font-size: 18px; font-weight: bold">상담 봇</div>
+            <div style="font-size: 16px; margin-top: 10px;">
+              채팅 상담봇을 이용하여 간단한 문제는 스스로 확인할 수 있으며, 1:1
+              상담을 통해서도 다양한 문제에 답변을 받을 수 있습니다.
+            </div>
           </div>
         </div>
       </div>
@@ -152,7 +162,7 @@
       <v-carousel height="220" hide-delimiters light style="box-shadow:none;">
         <v-carousel-item v-for="(item, i) in itemList" :key="i">
           <v-layout align-center fill-height style="justify-content: center; padding: 20px 60px;">
-            <div style="text-align: left; flex-grow: 1; max-width: 500px;">
+            <div style="text-align: left; flex-grow: 4; max-width: 500px;">
               <div
                 style="width: 75px; line-height: 24px; text-align: center; color: #24c185; border-radius: 2px; 
                        border: 1px solid #24c185; padding-top: 2px;"
@@ -160,9 +170,8 @@
               <div style="margin-top: 5px; font-weight: bold; font-size: 20px; color: #393f45">{{ item.title }}</div>
               <div v-html="item.info"></div>
             </div>
-            <img
-              style="width: 166px !imortant; height: 166px; margin-left: 20px;"
-              :src="require(`../assets/img/home/${item.img}`)"
+            <img class="carousel-img"
+                 :src="require(`../assets/img/home/${item.img}`)"
             />
           </v-layout>
         </v-carousel-item>
@@ -239,7 +248,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .home-layer-margin {
   margin-top: 60px;
   @include tablet {
@@ -295,7 +304,7 @@ export default {
   }
 }
 
-.Normal-form {
+.search-form {
   width: 330px;
   max-width: 330px;
   height: 50px;
@@ -303,10 +312,63 @@ export default {
   border: solid 1px #dbdbdb;
 }
 
-.Button-solid {
+.search-button {
   width: 120px;
   height: 50px;
   border-radius: 4px;
   background-color: var(--greenblue);
+}
+
+.section {
+  margin-top: 150px; 
+  padding: 0 25px; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center;
+  flex-direction: column-reverse;
+  @include tablet {
+     flex-direction: row;
+  }
+}
+
+.info-item {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 50px;
+  @include tablet {
+    width: 33.33%;
+    margin-top: 80px;
+    text-align: center;
+    flex-direction: column;
+  }
+  &>:nth-child(2) {
+    margin-left: 10px;
+    @include tablet {
+      margin: 0 10px;
+    }
+  }
+}
+
+.flex {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 0 25px;
+  @include tablet {
+    flex-direction: row;
+  }
+}
+
+.carousel-img {
+  width: 84px; 
+  height: 84px;
+  margin-left: 10px;
+  @include tablet {
+    width: 166px; 
+    height: 166px;
+    margin-left: 20px;
+  }
+  
 }
 </style>
