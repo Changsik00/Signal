@@ -304,21 +304,6 @@ export default {
   }
 }
 
-.search-form {
-  width: 330px;
-  max-width: 330px;
-  height: 50px;
-  border-radius: 4px;
-  border: solid 1px #dbdbdb;
-}
-
-.search-button {
-  width: 120px;
-  height: 50px;
-  border-radius: 4px;
-  background-color: var(--greenblue);
-}
-
 .section {
   margin-top: 150px; 
   padding: 0 25px; 

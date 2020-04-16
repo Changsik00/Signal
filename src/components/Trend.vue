@@ -1,8 +1,8 @@
 <template>
   <section style="background-color: white; width: 100%; height: 100%; overflow-y: auto">
     <section class="container">
-      <div style="font-size: 24px; font-weight: bold; margin-top: 30px;">실시간 검색어</div>
-      <div>
+      <div class="sg-title mt30">실시간 검색어</div>
+      <div class="mt10">
         매일 일어난 실시간 검색어를 12시간 누적데이터 기준으로 정리하여
         제공합니다.
       </div>
@@ -99,7 +99,6 @@ export default {
       this.totalResultTop10 = [];
       const imageURL = "/naver/ogimage/?url=";
       top10.forEach(async d => {
-        console.log("#@# await d", d)
         const imageResult = await this.$axios.get(imageURL + d.link);
         if (
           imageResult.data.image.startsWith("http") &&

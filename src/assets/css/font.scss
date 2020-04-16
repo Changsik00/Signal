@@ -6,26 +6,16 @@ body {
     word-break: keep-all;
 }
 
-.title1 {
-    @include font(24px, bold, $black);
-
-    @include tablet {
-        @include font(36px, bold, $black);
-    }
-
-    @include desktop {
-        @include font(36px, bold, $black);
-    }
+.sg-title {
+  @include font(36px, bold, $grey7);
+  @include tablet {
+    @include font(36px, bold, $grey7);
+  }
+  @include desktop {
+    @include font(36px, bold, $grey7);
+  }
 }
 
-.title2 {
-    @include font(20px, bold, $grey6);
-
-    @include tablet {
-        @include font(30px, bold, $grey6);
-    }
-
-    @include desktop {
-        @include font(30px, bold, $grey6);
-    }
+.font14 {
+  @include font(14px);  
 }

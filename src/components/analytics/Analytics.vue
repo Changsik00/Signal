@@ -20,7 +20,7 @@
           style="display: flex; flex-direction: column; align-items: center;"
         >
           <div style="margin-top: 30px; width: 500px; text-align: center;">
-            <div style="font-size: 36px; font-weight: bold;">빅데이터를 시각화하여 제공합니다.</div>
+            <div class="sg-title ">빅데이터를 시각화하여 제공합니다.</div>
             <div style="margin-top: 20px;">
               <div v-for="(keyword, i) in newKeywords" :key="i">
                 <v-text-field

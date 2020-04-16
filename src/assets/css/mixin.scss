@@ -20,7 +20,7 @@ $desktop-width: 1024px;
     }
 }
 
-@mixin font($font-size, $font-weight, $color, $letter_spacing: normal, $line-height: 1.2) {
+@mixin font($font-size, $font-weight: normal, $color: $grey7, $line-height: 1.2, $letter_spacing: normal) {
     font-size: $font-size;
     font-weight: $font-weight;
     color: $color;

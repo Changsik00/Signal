@@ -17,6 +17,7 @@
         <div style="margintop: 50px; text-align: center">Posts</div>
       </v-layout>
       <Trend v-if="$store.state.currentMode == 'TREND'" />
+      <KeywordTool v-if="$store.state.currentMode == 'KEYWORDTOOL'" />
     </v-layout>
 
     <v-navigation-drawer
@@ -251,6 +252,7 @@ import { mapGetters, mapMutations, mapActions } from "vuex";
 import FeedColumn from "../components/FeedColumn";
 import Analytics from "../components/analytics/Analytics";
 import Trend from "../components/Trend";
+import KeywordTool from "../components/KeywordTool";
 import { Container, Draggable } from "vue-smooth-dnd";
 
 export default {
@@ -258,6 +260,7 @@ export default {
     FeedColumn,
     Analytics,
     Trend,
+    KeywordTool,
     Container,
     Draggable
   },

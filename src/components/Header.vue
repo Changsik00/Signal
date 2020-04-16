@@ -18,6 +18,15 @@
         >
         <v-btn
           class="text-capitalize top-button"
+          :class="{ active: $store.state.currentMode == 'KEYWORDTOOL' }"
+          outline
+          round
+          color="primary"
+          @click="clickKeywordTool"
+          >키워드툴</v-btn
+        >
+        <v-btn
+          class="text-capitalize top-button"
           :class="{ active: $store.state.currentMode == 'MONITOR' }"
           outline
           round
@@ -142,6 +151,9 @@ export default {
     clickTrend() {
       this.hideMonitorSlideMenu();
       this.$store.state.currentMode = "TREND";
+    },
+    clickKeywordTool() {
+       this.$store.state.currentMode = "KEYWORDTOOL";
     }
   }
 };
