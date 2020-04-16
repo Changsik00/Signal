@@ -99,6 +99,7 @@ export default {
       this.totalResultTop10 = [];
       const imageURL = "/naver/ogimage/?url=";
       top10.forEach(async d => {
+        console.log("#@# await d", d)
         const imageResult = await this.$axios.get(imageURL + d.link);
         if (
           imageResult.data.image.startsWith("http") &&
@@ -110,6 +111,7 @@ export default {
           d.image = "";
         }
         this.totalResultTop10.push(d);
+        this.totalResultTop10.sort((a, b) => b.value - a.value);
       });
     },
     draw(data) {
