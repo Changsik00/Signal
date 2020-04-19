@@ -26,7 +26,7 @@
     "vue-scrollmonitor": "^0.1.0",
     "vue-smooth-dnd": "^0.8.0",
     "vue-toasted": "^1.1.26",
-    "vuetify": "^1.5.9",
+    "vuetify": "^1.5.24",
     "vuex": "^3.0.1",
     "webpack-bundle-tracker": "^0.4.2-beta"
   },

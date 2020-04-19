@@ -1,5 +1,8 @@
-실제 해당 키워드를 검색 했을때 온라인상에 노출되어지는 컨텐츠를 순서대로 보여드려 경쟁 컨텐츠의 퀄리티를 확인할 수 있습니다.<template>
-  <section style="background-color: white; width: 100%; height: 100%; overflow-y: auto">
+실제 해당 키워드를 검색 했을때 온라인상에 노출되어지는 컨텐츠를 순서대로
+보여드려 경쟁 컨텐츠의 퀄리티를 확인할 수 있습니다.<template>
+  <section
+    style="background-color: white; width: 100%; height: 100%; overflow-y: auto"
+  >
     <section class="container">
       <div class="sg-title mt30 center">
         가장 가치있는
@@ -12,148 +15,235 @@
           <v-radio label="Instagram" value="Instagram"></v-radio>
           <v-radio label="Twitter" value="Twitter"></v-radio>
         </v-radio-group>
-        <div style="display:flex; align-items: center; justify-content: center; margin-top: -10px">
-          <v-text-field v-model="keyword" solo flat class="search-form" placeholder="키워드를 입력하세요."></v-text-field>
+        <div
+          style="display:flex; align-items: center; justify-content: center; margin-top: -10px"
+        >
+          <v-text-field
+            v-model="keyword"
+            solo
+            flat
+            class="search-form"
+            placeholder="키워드를 입력하세요."
+          ></v-text-field>
           <v-btn flat dark class="search-button" @click="search">검색</v-btn>
         </div>
-
-        <div v-if="keyword == ''" style="margin-top: 80px; text-align: left;">
-          <div style="font-size: 18px; font-weight: bold;">키워드 툴이란 어떤것일까요?</div>
-          <div class="grey6" style="margin-top: 10px; background-color: #f9f9f9; padding: 25px;">
-            수천개의 키워드를 검색량 대비 경쟁 컨텐츠량으로 DataBase 정보를 분석하여 나에게 가장 맞는 키워드를 추천해드리는 서비스입니다.
-            <br />
-            <br />온라인상에 다양한 검색엔진으로 부터 고객유입을 얻을려면 올바른 키워드를 중심으로 작성 해야 합니다. 온라인상에 우리의 잠재고객이 많이 찾고 검색하는 키워드를 사용해야 한다는 의미입니다.
-            <br />
-            <br />고객이 사용하는 키워드를 사용해야 여러분이 운영하는 서비스에 방문객을 획기적으로 증가시킬 수 있습니다.
-          </div>
-          <div style="margin-top: 50px; font-size: 18px; font-weight: bold;">좋은 키워드의 기준은 무엇일까요?</div>
-          <div class="grey6 mt5">
-            좋은 키워드란 사용자가
-            <span class="accent">검색은 많이</span>하는데 노출되는
-            <span class="accent">경쟁 컨텐츠가 적은</span> 키워드가 좋은 키워드입니다.
-            <table style="width: 100%; margin-top: 30px">
-              <tr>
-                <th>키워드 검색량</th>
-                <th>경쟁 컨텐츠량</th>
-                <th>고객이 유입될 확률</th>
-              </tr>
-              <tr>
-                <td>높음</td>
-                <td>높음</td>
-                <td>보통</td>
-              </tr>
-              <tr style="background-color: orange;" class="grey7">
-                <td>높음</td>
-                <td>적음</td>
-                <td>높음</td>
-              </tr>
-              <tr>
-                <td>적음</td>
-                <td>높음</td>
-                <td>낮음</td>
-              </tr>
-              <tr>
-                <td>적음</td>
-                <td>적음</td>
-                <td>보통</td>
-              </tr>
-            </table>
-          </div>
-          <div style="margin-top: 50px; font-size: 18px; font-weight: bold;">키워드 툴 특징은 무엇인가요?</div>
-          <div class="flex">
-            <div class="keyword-tool-text">
-              <img src="~@/assets/img/home/ico-service-4.svg" />
-              <div>
-                <div style="font-size: 18px; font-weight: bold">수천개 추천 키워드 제공</div>
-                <div style="font-size: 16px; margin-top: 10px;">
-                  DataBase에서 수천개의 키워드를 제공함으로써 사용자가 원하는 키워드를 선택할 수 있습니다.
-                </div>
-              </div>
-            </div>
-            <div class="keyword-tool-text ml-0-30-30">
-              <img src="~@/assets/img/home/ico-service-4.svg" />
-              <div>
-                <div style="font-size: 18px; font-weight: bold">검증된 데이터</div>
-                <div style="font-size: 16px; margin-top: 10px;">
-                  네이버, 유튜브등 실제 검색엔진에 사용되어지고 있는 데이터를 이용하여 세분화 및 정교화시킵니다.
-                </div>
-              </div>
-            </div>
-            <div class="keyword-tool-text">
-              <img src="~@/assets/img/home/ico-service-4.svg" />
-              <div>
-                <div style="font-size: 18px; font-weight: bold">키워드 점수</div>
-                <div style="font-size: 16px; margin-top: 10px;">
-                  고객이 실제 검색한 검색량과 현재 온라인상에 퍼져있는 경쟁 컨텐츠량을 정량화하여 보기 쉽게 제공합니다. 
-                </div>
-              </div>
-            </div>
-            <div class="keyword-tool-text ml-0-30-30">
-              <img src="~@/assets/img/home/ico-service-4.svg" />
-              <div>
-                <div style="font-size: 18px; font-weight: bold">상위 컨텐츠</div>
-                <div style="font-size: 16px; margin-top: 10px;">
-                  실제 해당 키워드를 검색 했을때 온라인상에 노출되어지는 컨텐츠를 순서대로 보여드려 경쟁 컨텐츠의 퀄리티를 확인할 수 있습니다.
-                </div>
-              </div>
-            </div>
-          </div>
+        <!-- <div v-if="keyword == ''" style="margin-top: 80px;"> -->
+        <div v-if="false" style="margin-top: 80px;">
+          <KeywordToolInfo />
         </div>
+
+        <div>
+          <apexchart
+            height="350"
+            type="radialBar"
+            :options="chartOptions"
+            :series="series"
+          ></apexchart>
+        </div>
+        <div>
+          <div id="half-donut"></div>
+        </div>
+        <section>
+          <div class="keyword-tool-label">
+            키워드 Top3 노출 컨텐츠
+            <v-icon>help</v-icon>
+          </div>
+          <v-data-table
+            dark
+            :headers="headers"
+            :items="desserts"
+            class="elevation-1"
+          >
+            <template v-slot:items="props">
+              <td>{{ props.item.name }}</td>
+              <td class="text-xs-right">{{ props.item.calories }}</td>
+              <td class="text-xs-right">{{ props.item.fat }}</td>
+              <td class="text-xs-right">{{ props.item.carbs }}</td>
+              <td class="text-xs-right">{{ props.item.protein }}</td>
+              <td class="text-xs-right">{{ props.item.iron }}</td>
+            </template>
+          </v-data-table>
+        </section>
       </div>
     </section>
   </section>
 </template>
 <script>
+import KeywordToolInfo from "./KeywordToolInfo";
 export default {
+  components: { KeywordToolInfo },
   data() {
     return {
       radios: "Youtube",
-      keyword: ""
+      keyword: "",
+      headers: [
+        {
+          text: "Dessert (100g serving)",
+          align: "left",
+          sortable: false,
+          value: "name"
+        },
+        { text: "Calories", value: "calories" },
+        { text: "Fat (g)", value: "fat" },
+        { text: "Carbs (g)", value: "carbs" },
+        { text: "Protein (g)", value: "protein" },
+        { text: "Iron (%)", value: "iron" }
+      ],
+      desserts: [
+        {
+          name: "Frozen Yogurt",
+          calories: 159,
+          fat: 6.0,
+          carbs: 24,
+          protein: 4.0,
+          iron: "1%"
+        },
+        {
+          name: "Ice cream sandwich",
+          calories: 237,
+          fat: 9.0,
+          carbs: 37,
+          protein: 4.3,
+          iron: "1%"
+        },
+        {
+          name: "Eclair",
+          calories: 262,
+          fat: 16.0,
+          carbs: 23,
+          protein: 6.0,
+          iron: "7%"
+        },
+        {
+          name: "Cupcake",
+          calories: 305,
+          fat: 3.7,
+          carbs: 67,
+          protein: 4.3,
+          iron: "8%"
+        },
+        {
+          name: "Gingerbread",
+          calories: 356,
+          fat: 16.0,
+          carbs: 49,
+          protein: 3.9,
+          iron: "16%"
+        },
+        {
+          name: "Jelly bean",
+          calories: 375,
+          fat: 0.0,
+          carbs: 94,
+          protein: 0.0,
+          iron: "0%"
+        },
+        {
+          name: "Lollipop",
+          calories: 392,
+          fat: 0.2,
+          carbs: 98,
+          protein: 0,
+          iron: "2%"
+        },
+        {
+          name: "Honeycomb",
+          calories: 408,
+          fat: 3.2,
+          carbs: 87,
+          protein: 6.5,
+          iron: "45%"
+        },
+        {
+          name: "Donut",
+          calories: 452,
+          fat: 25.0,
+          carbs: 51,
+          protein: 4.9,
+          iron: "22%"
+        },
+        {
+          name: "KitKat",
+          calories: 518,
+          fat: 26.0,
+          carbs: 65,
+          protein: 7,
+          iron: "6%"
+        }
+      ],
+      series: [76],
+      chartOptions: {
+        chart: {
+          type: "radialBar",
+          offsetY: -20,
+          sparkline: {
+            enabled: true
+          }
+        },
+        plotOptions: {
+          radialBar: {
+            startAngle: -90,
+            endAngle: 90,
+            track: {
+              background: "#f0f0f0",
+              strokeWidth: "98%",
+              margin: 5 // margin is in pixels
+            },
+            dataLabels: {
+              name: {
+                show: true
+              },
+              value: {
+                offsetY: -10,
+                fontSize: "30px"
+              }
+            }
+          }
+        },
+        fill: {
+          type: "gradient",
+          gradient: {
+            shade: "light",
+            shadeIntensity: 0.4,
+            inverseColors: false,
+            opacityFrom: 1,
+            opacityTo: 1,
+            stops: [0, 25, 75, 100]
+          }
+        },
+        labels: ["Average Results"]
+      }
     };
   },
+  created() {
+    this.drawHalfDonot();
+
+    // https://v15.vuetifyjs.com/ko/components/data-tables
+    // https://vuetifyjs.com/ko/components/data-tables/
+    // https://zbciok.eu/java/index.php/2019/09/10/vue-js-v-data-tablevuetify-crud-example/
+  },
   methods: {
-    search() {}
+    search() {},
+    drawHalfDonot() {
+      // https://stackoverflow.com/questions/18198252/d3-arc-gradient
+      // http://bl.ocks.org/mbostock/5100636
+      // https://bl.ocks.org/adamjanes/53eedf0b915fd8b20f04fd08bc24ff00
+    }
   }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .v-radio {
   margin: 10px;
 }
 
-table,
-th,
-td {
-  padding: 6px;
-  width: 33.33%;
-  text-align: center !important;
-  border: 1px solid black;
-}
-th {
-  font-weight: bold;
-  background-color: whitesmoke;
-}
-
-.keyword-tool-text {
+.keyword-tool-label {
   display: flex;
-  flex-direction: row;
-  width: 100%;
-  margin-top: 30px;
+  color: $grey6;
+  font-size: 18px;
 
-  @include tablet {
-    width: calc(50% - 30px);
-  }
-  & > :nth-child(2) {
-    margin-left: 20px;
-  }
-}
-
-.flex {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  @include tablet {
-    flex-direction: row;
+  & > .v-icon {
+    cursor: pointer;
   }
 }
 </style>
