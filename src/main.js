@@ -5,11 +5,9 @@ import router from "./router";
 import store from "./store";
 import Toasted from "vue-toasted";
 import VeeValidate from "vee-validate";
+import VueObserveVisibility from "vue-observe-visibility";
 import Buefy from "buefy";
 import "buefy/dist/buefy.css";
-import VueObserveVisibility from "vue-observe-visibility";
-
-
 import "./plugins/vuetify";
 import "./plugins/axios";
 import "./plugins/my";
@@ -25,8 +23,6 @@ Vue.use(Toasted, {
 Vue.use(VeeValidate);
 Vue.use(Buefy);
 Vue.use(VueObserveVisibility);
-
-
 
 // Loading 전역으로 component 등록
 // https://vuejs.org/v2/guide/components-registration.html
@@ -48,8 +44,8 @@ Vue.component("Login", Login);
 Vue.component("Connections", Connections);
 Vue.component("NewPost", NewPost);
 
-import VueApexCharts from 'vue-apexcharts'
-Vue.component('apexchart', VueApexCharts)
+import VueApexCharts from "vue-apexcharts";
+Vue.component("apexchart", VueApexCharts);
 
 // https://kr.vuejs.org/v2/api/index.html
 Vue.config.productionTip = false;
