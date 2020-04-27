@@ -93,7 +93,7 @@
 }
 
 .container {
-	width: $desktop-width;
+	max-width: $desktop-width;
 	margin: auto;
 	padding: 30px;
 }

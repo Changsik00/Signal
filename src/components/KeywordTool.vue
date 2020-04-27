@@ -1,5 +1,5 @@
 <template>
-  <section style="background-color: white; width: 100%; height: 100%; overflow-y: auto">
+  <section style="background-color: white; width: 100%; height: 100%; overflow-y: auto;">
     <section class="container">
       <div class="sg-title mt30 center">
         가장 가치있는
@@ -23,7 +23,7 @@
         <div style="margin-top: 120px; font-size: 20px;">
           <span class="accent">배달의 민족</span> 키워드 현황
         </div>
-        <div style="margin-top: 40px; display:flex; position: relative; align-items: center;">
+        <div class="top-chart-layer">
           <div class="top-chart-rect">
             <div class="keyword-tool-label">
               키워드 점수
@@ -37,7 +37,7 @@
                 </div>
               </v-tooltip>
             </div>
-            <apexchart type="radialBar" :options="chartOptions" :series="series"></apexchart>
+            <apexchart width="150%" :options="chartOptions" :series="series"></apexchart>
           </div>
           <div class="top-chart-rect">
             <div class="keyword-tool-label">
@@ -52,7 +52,7 @@
                 </div>
               </v-tooltip>
             </div>
-            <apexchart type="radialBar" :options="chartOptions" :series="series"></apexchart>
+            <apexchart width="150%" :options="chartOptions" :series="series"></apexchart>
           </div>
           <div class="top-chart-rect">
             <div class="keyword-tool-label">
@@ -67,7 +67,7 @@
                 </div>
               </v-tooltip>
             </div>
-            <apexchart type="radialBar" :options="chartOptions" :series="series"></apexchart>
+            <apexchart width="150%" :options="chartOptions" :series="series"></apexchart>
           </div>
         </div>
         <div>
@@ -92,15 +92,18 @@
           <div style="font-size: 20px;">
             <span class="accent">배달의 민족</span> 추천 키워드 (4,343 검색)
           </div>
-          <b-table class="mt30" 
-                   :paginated="true" 
-                   :pagination-simple="false"
-                   :per-page="10" 
-                   :sort-icon="arrow-up"
-                   :sort-icon-size="is-small"
-                   :data="keywordTableData" 
-                   :columns="keywordTableColumns">
-          </b-table>
+          <b-table
+            class="mt30"
+            :paginated="true"
+            :pagination-simple="false"
+            :per-page="10"
+            :sort-icon="'arrow-up'"
+            :sort-icon-size="'is-small'"
+            :default-sort-direction="'desc'"
+            :data="keywordTableData"
+            :columns="keywordTableColumns"
+            default-sort="point"
+          ></b-table>
         </div>
       </div>
     </section>
@@ -115,10 +118,11 @@ export default {
       radios: "Youtube",
       keyword: "",
       colors: ["#1B5E20", "#7CB342", "#FDD835", "#F57C00", "#E64A19"],
-      series: [75],
+      series: [100],
       chartOptions: {
         chart: {
-          type: "radialBar",
+          type: "radialBar"
+          // type: "bar"
         },
         plotOptions: {
           radialBar: {
@@ -152,31 +156,30 @@ export default {
         fill: {
           type: "gradient",
           gradient: {
+            shade: "light",
+            type: "horizontal",
+            // stops: [0, 75],
             colorStops: [
               {
                 offset: 0,
-                color: "#33691E"
+                color: "#1B5E20"
               },
+              // {
+              //   offset: 25,
+              //   color: "#7CB342"
+              // },
               {
-                offset: 20,
-                color: "#64DD17"
+                offset: 50,
+                color: "#FDD835"
               },
-              {
-                offset: 40,
-                color: "#FFD600"
-              },
-              {
-                offset: 60,
-                color: "#FFAB00"
-              },
-              {
-                offset: 80,
-                color: "#FF6D00"
-              },
+              // {
+              //   offset: 75,
+              //   color: "#F57C00"
+              // },
               {
                 offset: 100,
-                color: "#DD2C00"
-              }
+                color: "#E64A19"
+              },
             ]
           }
         },
@@ -186,91 +189,201 @@ export default {
         labels: ["Average Results"]
       },
       top3TableColumns: [
-          {
-              field: 'no',
-              label: 'NO',
-              width: '40',
-              numeric: true,
-              centered: true
-          },
-          {
-              field: 'blog_name',
-              label: '블로그 이름',
-              centered: true
-          },
-          {
-              field: 'title',
-              label: '제목',
-              centered: true
-          },
-          {
-              field: 'visitor_count',
-              label: '방문자수',
-              centered: true
-          }
+        {
+          field: "no",
+          label: "NO",
+          width: "40",
+          numeric: true,
+          centered: true
+        },
+        {
+          field: "blog_name",
+          label: "블로그 이름",
+          centered: true
+        },
+        {
+          field: "title",
+          label: "제목",
+          centered: true
+        },
+        {
+          field: "visitor_count",
+          label: "방문자수",
+          centered: true
+        }
       ],
       top3TableData: [
-          { 'no': 1, 'blog_name': '윤마의 요지경', 'title': '체험단 리뷰나왔어요', 'visitor_count': 200},
-          { 'no': 2, 'blog_name': '제이슨 스토리', 'title': '배달의 민족 후기', 'visitor_count': 300},
-          { 'no': 3, 'blog_name': '킥커', 'title': '요기요 어때 후기', 'visitor_count': 2333},
+        {
+          no: 1,
+          blog_name: "윤마의 요지경",
+          title: "체험단 리뷰나왔어요",
+          visitor_count: 200
+        },
+        {
+          no: 2,
+          blog_name: "제이슨 스토리",
+          title: "배달의 민족 후기",
+          visitor_count: 300
+        },
+        {
+          no: 3,
+          blog_name: "킥커",
+          title: "요기요 어때 후기",
+          visitor_count: 2333
+        }
       ],
       keywordTableColumns: [
-          {
-              field: 'keyword',
-              label: '키워드',
-              centered: true,
-              sortable: true
-          },
-          {
-              field: 'point',
-              label: '키워드 점수',
-              centered: true,
-              sortable: true
-          },
-          {
-              field: 'search_count',
-              label: '키워드 검색량',
-              centered: true,
-              sortable: true
-          },
-          {
-              field: 'content_count',
-              label: '경쟁 컨텐츠량',
-              centered: true,
-              sortable: true
-          }
+        {
+          field: "keyword",
+          label: "키워드",
+          centered: true,
+          sortable: true
+        },
+        {
+          field: "point",
+          label: "키워드 점수",
+          centered: true,
+          sortable: true
+        },
+        {
+          field: "search_count",
+          label: "키워드 검색량",
+          centered: true,
+          sortable: true
+        },
+        {
+          field: "content_count",
+          label: "경쟁 컨텐츠량",
+          centered: true,
+          sortable: true
+        }
       ],
       keywordTableData: [
-          { 'keyword': '배달의민족폰트', 'point': 95, 'search_count': 2342, 'content_count': 13513},
-          { 'keyword': '배달의민족매각', 'point': 100, 'search_count': 52323, 'content_count': 52156},
-          { 'keyword': '배달의민족주식', 'point':55, 'search_count': 5223, 'content_count': 567883},
-          { 'keyword': '배달의민족수수료', 'point': 65, 'search_count': 5252, 'content_count': 36573},
-          { 'keyword': '배달의민족폰트', 'point': 125, 'search_count': 3465, 'content_count': 15784},
-          { 'keyword': '배달의민족매각', 'point': 45, 'search_count': 5682, 'content_count': 13313},
-          { 'keyword': '배달의민족주식', 'point': 75, 'search_count': 9731, 'content_count': 6831},
-          { 'keyword': '배달의민족수수료', 'point': 335, 'search_count': 2415, 'content_count': 4444},
-          { 'keyword': '배달의민족폰트', 'point': 95, 'search_count': 2342, 'content_count': 13513},
-          { 'keyword': '배달의민족매각', 'point': 92, 'search_count': 6783, 'content_count': 55555},
-          { 'keyword': '배달의민족주식', 'point': 95, 'search_count': 1414, 'content_count': 112313},
-          { 'keyword': '배달의민족수수료', 'point': 97, 'search_count': 3578, 'content_count': 3253},
-          { 'keyword': '배달의민족폰트', 'point': 95, 'search_count': 2342, 'content_count': 13513},
-          { 'keyword': '배달의민족매각', 'point': 35, 'search_count': 25473, 'content_count': 64362},
-          { 'keyword': '배달의민족주식', 'point': 15, 'search_count': 242, 'content_count': 26426},
-          { 'keyword': '배달의민족수수료', 'point': 45, 'search_count': 2472, 'content_count': 132123},
-          { 'keyword': '배달의민족폰트', 'point': 95, 'search_count': 2342, 'content_count': 13513},
-          { 'keyword': '배달의민족매각', 'point': 78, 'search_count': 1111, 'content_count': 45345},
-          { 'keyword': '배달의민족주식', 'point': 34, 'search_count': 3333, 'content_count': 6322},
-          { 'keyword': '배달의민족수수료', 'point': 234, 'search_count': 5555, 'content_count': 2324},
-      ],
+        {
+          keyword: "배달의민족폰트",
+          point: 95,
+          search_count: 2342,
+          content_count: 13513
+        },
+        {
+          keyword: "배달의민족매각",
+          point: 100,
+          search_count: 52323,
+          content_count: 52156
+        },
+        {
+          keyword: "배달의민족주식",
+          point: 55,
+          search_count: 5223,
+          content_count: 567883
+        },
+        {
+          keyword: "배달의민족수수료",
+          point: 65,
+          search_count: 5252,
+          content_count: 36573
+        },
+        {
+          keyword: "배달의민족폰트",
+          point: 125,
+          search_count: 3465,
+          content_count: 15784
+        },
+        {
+          keyword: "배달의민족매각",
+          point: 45,
+          search_count: 5682,
+          content_count: 13313
+        },
+        {
+          keyword: "배달의민족주식",
+          point: 75,
+          search_count: 9731,
+          content_count: 6831
+        },
+        {
+          keyword: "배달의민족수수료",
+          point: 335,
+          search_count: 2415,
+          content_count: 4444
+        },
+        {
+          keyword: "배달의민족폰트",
+          point: 95,
+          search_count: 2342,
+          content_count: 13513
+        },
+        {
+          keyword: "배달의민족매각",
+          point: 92,
+          search_count: 6783,
+          content_count: 55555
+        },
+        {
+          keyword: "배달의민족주식",
+          point: 95,
+          search_count: 1414,
+          content_count: 112313
+        },
+        {
+          keyword: "배달의민족수수료",
+          point: 97,
+          search_count: 3578,
+          content_count: 3253
+        },
+        {
+          keyword: "배달의민족폰트",
+          point: 95,
+          search_count: 2342,
+          content_count: 13513
+        },
+        {
+          keyword: "배달의민족매각",
+          point: 35,
+          search_count: 25473,
+          content_count: 64362
+        },
+        {
+          keyword: "배달의민족주식",
+          point: 15,
+          search_count: 242,
+          content_count: 26426
+        },
+        {
+          keyword: "배달의민족수수료",
+          point: 45,
+          search_count: 2472,
+          content_count: 132123
+        },
+        {
+          keyword: "배달의민족폰트",
+          point: 95,
+          search_count: 2342,
+          content_count: 13513
+        },
+        {
+          keyword: "배달의민족매각",
+          point: 78,
+          search_count: 1111,
+          content_count: 45345
+        },
+        {
+          keyword: "배달의민족주식",
+          point: 34,
+          search_count: 3333,
+          content_count: 6322
+        },
+        {
+          keyword: "배달의민족수수료",
+          point: 234,
+          search_count: 5555,
+          content_count: 2324
+        }
+      ]
     };
   },
   created() {
-    // https://apexcharts.com/vue-chart-demos/radialbar-charts/semi-circle-gauge/
-    // http://bl.ocks.org/headwinds/c8730e6df1ad408c3aa102d663a16cf5
-    // https://buefy.org/documentation/table/
-    // https://vuetifyjs.com/ko/components/data-tables/
-    // https://www.materialui.co/colors
-    // https://gist.github.com/volodalexey/4e75aa8911c8bf764f1c169985c178b3
+    // https://apexcharts.com/docs/chart-types/radialbar-gauge/
   },
   methods: {
     search() {}
@@ -300,12 +413,26 @@ export default {
   background-color: $grey4;
 }
 
-.top-chart-rect {
-  width: calc(33.33% - 1px);
+.top-chart-layer {
+  margin-top: 40px;
   display: flex;
-  padding: 0 20px;
+  flex-direction: column;
+  align-items: center;
+  @include tablet {
+    flex-direction: row;
+  }
+}
+
+.top-chart-rect {
+  display: flex;
+  padding: 20px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 300px;
+  @include tablet {
+    width: calc(33.33% - 1px);
+  }
 }
 </style>
