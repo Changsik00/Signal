@@ -37,7 +37,7 @@
                 </div>
               </v-tooltip>
             </div>
-            <apexchart width="150%" :options="chartOptions" :series="series"></apexchart>
+            <apexchart width="140%" :options="chartOptions1" :series="series1"></apexchart>
           </div>
           <div class="top-chart-rect">
             <div class="keyword-tool-label">
@@ -52,7 +52,7 @@
                 </div>
               </v-tooltip>
             </div>
-            <apexchart width="150%" :options="chartOptions" :series="series"></apexchart>
+            <apexchart width="140%" :options="chartOptions2" :series="series2"></apexchart>
           </div>
           <div class="top-chart-rect">
             <div class="keyword-tool-label">
@@ -67,7 +67,7 @@
                 </div>
               </v-tooltip>
             </div>
-            <apexchart width="150%" :options="chartOptions" :series="series"></apexchart>
+            <apexchart width="140%" :options="chartOptions3" :series="series3"></apexchart>
           </div>
         </div>
         <div>
@@ -118,12 +118,15 @@ export default {
       radios: "Youtube",
       keyword: "",
       colors: ["#1B5E20", "#7CB342", "#FDD835", "#F57C00", "#E64A19"],
-      series: [100],
+      labels: ["매우 나쁨", "나쁨", "보통", "좋음", "매우 좋음"],
+      series1: [0],
+      series2: [0],
+      series3: [0],
       chartOptions: {
         chart: {
           type: "radialBar"
-          // type: "bar"
         },
+        colors: ["#E64A19"],
         plotOptions: {
           radialBar: {
             startAngle: -90,
@@ -148,46 +151,14 @@ export default {
             }
           }
         },
-        grid: {
-          padding: {
-            top: 20
-          }
-        },
-        fill: {
-          type: "gradient",
-          gradient: {
-            shade: "light",
-            type: "horizontal",
-            // stops: [0, 75],
-            colorStops: [
-              {
-                offset: 0,
-                color: "#1B5E20"
-              },
-              // {
-              //   offset: 25,
-              //   color: "#7CB342"
-              // },
-              {
-                offset: 50,
-                color: "#FDD835"
-              },
-              // {
-              //   offset: 75,
-              //   color: "#F57C00"
-              // },
-              {
-                offset: 100,
-                color: "#E64A19"
-              },
-            ]
-          }
-        },
         stroke: {
           lineCap: "round"
         },
-        labels: ["Average Results"]
+        labels: [""]
       },
+      chartOptions1: {},
+      chartOptions2: {},
+      chartOptions3: {},
       top3TableColumns: [
         {
           field: "no",
@@ -384,8 +355,52 @@ export default {
   },
   created() {
     // https://apexcharts.com/docs/chart-types/radialbar-gauge/
+    this.setData();
   },
   methods: {
+    getLevel(data) {
+      if(data < 20) {
+        return 0
+      } else if(data >= 20 && data < 40) {
+        return 1
+      } else if(data >= 40 && data < 60) {
+        return 2
+      } else if(data >= 60 && data < 80) {
+        return 3
+      }  else if(data >= 80) {
+        return 4
+      }
+    },
+    setData() {
+      this.series1 = [50];
+      let level = this.getLevel(this.series1[0]);
+      this.chartOptions1 = {
+        ...this.chartOptions,
+        ...{
+          colors: [this.colors[level]],
+          labels: [this.labels[level]]
+        }
+      }
+      this.series2 = [24];
+      level = this.getLevel(this.series2[0]);
+      this.chartOptions2 = {
+        ...this.chartOptions,
+        ...{
+          colors: [this.colors[level]],
+          labels: [this.labels[level]]
+        }
+      }
+      this.series3 = [78];
+      level = this.getLevel(this.series3[0]);
+      this.chartOptions3 = {
+        ...this.chartOptions,
+        ...{
+          colors: [this.colors[level]],
+          labels: [this.labels[level]]
+        }
+      } 
+      
+    },
     search() {}
   }
 };
@@ -398,7 +413,7 @@ export default {
 .keyword-tool-label {
   display: flex;
   color: $grey6;
-  align-self: start;
+  // align-self: start;
   font-size: 18px;
   & > .v-icon {
     z-index: 10;
