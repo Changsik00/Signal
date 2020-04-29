@@ -7,8 +7,8 @@
       </div>
       <div style="margin-top: 30px; padding: 30px;">
         <v-radio-group v-model="radios" :row="true" class="justify-center">
-          <v-radio label="Youtube" value="Youtube"></v-radio>
           <v-radio label="Naver" value="Naver"></v-radio>
+          <v-radio label="Youtube" value="Youtube"></v-radio>
           <v-radio label="Instagram" value="Instagram"></v-radio>
           <v-radio label="Twitter" value="Twitter"></v-radio>
         </v-radio-group>
@@ -32,7 +32,8 @@
                   <v-icon v-on="on">help</v-icon>
                 </template>
                 <div style="padding: 10px;">
-                  키워드검색량과 경쟁 컨텐츠량을 시그널의 알고리즘으로 계산하여 사용자가 알기쉽게 보여 드립니다.
+                  키워드검색량과 경쟁 컨텐츠량을 시그널의 알고리즘으로 계산하여
+                  사용자가 알기쉽게 보여 드립니다.
                   <br />*실시간데이터이기 때문에 점수가 변동될수있습니다.
                 </div>
               </v-tooltip>
@@ -47,7 +48,8 @@
                   <v-icon v-on="on">help</v-icon>
                 </template>
                 <div style="padding: 10px;">
-                  키워드의 총 검색량을 보여드려, 해당 키워드를 사용자가 얼마나 검색을 하는지 확인할 수 있습니다.
+                  키워드의 총 검색량을 보여드려, 해당 키워드를 사용자가 얼마나
+                  검색을 하는지 확인할 수 있습니다.
                   <br />*실시간데이터이기 때문에 점수가 변동될수있습니다.
                 </div>
               </v-tooltip>
@@ -62,7 +64,8 @@
                   <v-icon v-on="on">help</v-icon>
                 </template>
                 <div style="padding: 10px;">
-                  키워드를 검색했을때 온라인상에 노출되어지는 경쟁 컨텐츠량을 보여드려 얼마나 많은 경쟁 컨텐츠가 있는지 알려드립니다.
+                  키워드를 검색했을때 온라인상에 노출되어지는 경쟁 컨텐츠량을
+                  보여드려 얼마나 많은 경쟁 컨텐츠가 있는지 알려드립니다.
                   <br />*실시간데이터이기 때문에 점수가 변동될수있습니다.
                 </div>
               </v-tooltip>
@@ -81,7 +84,8 @@
                 <v-icon v-on="on">help</v-icon>
               </template>
               <div style="padding: 10px;">
-                온라인상에 키워드 입력시 가장 먼저 화면상에 노출되어지는 컨텐츠 정보를 확인하여 경쟁자의 컨텐츠 퀄리티를 확인할 수 있습니다.
+                온라인상에 키워드 입력시 가장 먼저 화면상에 노출되어지는 컨텐츠
+                정보를 확인하여 경쟁자의 컨텐츠 퀄리티를 확인할 수 있습니다.
                 <br />* 실시간 데이터이기 때문에 순서가 변동될 수 있습니다.
               </div>
             </v-tooltip>
@@ -115,7 +119,7 @@ export default {
   components: { KeywordToolInfo },
   data() {
     return {
-      radios: "Youtube",
+      radios: "Naver",
       keyword: "",
       colors: ["#1B5E20", "#7CB342", "#FDD835", "#F57C00", "#E64A19"],
       labels: ["매우 나쁨", "나쁨", "보통", "좋음", "매우 좋음"],
@@ -359,16 +363,16 @@ export default {
   },
   methods: {
     getLevel(data) {
-      if(data < 20) {
-        return 0
-      } else if(data >= 20 && data < 40) {
-        return 1
-      } else if(data >= 40 && data < 60) {
-        return 2
-      } else if(data >= 60 && data < 80) {
-        return 3
-      }  else if(data >= 80) {
-        return 4
+      if (data < 20) {
+        return 0;
+      } else if (data >= 20 && data < 40) {
+        return 1;
+      } else if (data >= 40 && data < 60) {
+        return 2;
+      } else if (data >= 60 && data < 80) {
+        return 3;
+      } else if (data >= 80) {
+        return 4;
       }
     },
     setData() {
@@ -380,7 +384,7 @@ export default {
           colors: [this.colors[level]],
           labels: [this.labels[level]]
         }
-      }
+      };
       this.series2 = [24];
       level = this.getLevel(this.series2[0]);
       this.chartOptions2 = {
@@ -389,7 +393,7 @@ export default {
           colors: [this.colors[level]],
           labels: [this.labels[level]]
         }
-      }
+      };
       this.series3 = [78];
       level = this.getLevel(this.series3[0]);
       this.chartOptions3 = {
@@ -398,8 +402,7 @@ export default {
           colors: [this.colors[level]],
           labels: [this.labels[level]]
         }
-      } 
-      
+      };
     },
     search() {}
   }
