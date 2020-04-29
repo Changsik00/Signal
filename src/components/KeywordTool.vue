@@ -16,98 +16,97 @@
           <v-text-field v-model="keyword" solo flat class="search-form" placeholder="키워드를 입력하세요."></v-text-field>
           <v-btn flat dark class="search-button" @click="search">검색</v-btn>
         </div>
-        <!-- <div v-if="keyword == ''" style="margin-top: 80px;"> -->
-        <div v-if="false" style="margin-top: 80px;">
-          <KeywordToolInfo />
-        </div>
-        <div style="margin-top: 120px; font-size: 20px;">
-          <span class="accent">배달의 민족</span> 키워드 현황
-        </div>
-        <div class="top-chart-layer">
-          <div class="top-chart-rect">
-            <div class="keyword-tool-label">
-              키워드 점수
-              <v-tooltip top>
-                <template v-slot:activator="{ on }">
-                  <v-icon v-on="on">help</v-icon>
-                </template>
-                <div style="padding: 10px;">
-                  키워드검색량과 경쟁 컨텐츠량을 시그널의 알고리즘으로 계산하여
-                  사용자가 알기쉽게 보여 드립니다.
-                  <br />*실시간데이터이기 때문에 점수가 변동될수있습니다.
-                </div>
-              </v-tooltip>
-            </div>
-            <apexchart width="140%" :options="chartOptions1" :series="series1"></apexchart>
+        <KeywordToolInfo v-if="test" style="margin-top: 80px;" />
+        <div v-else>
+          <div style="margin-top: 120px; font-size: 20px;">
+            <span class="accent">{{keyword}}</span> 키워드 현황
           </div>
-          <div class="top-chart-rect">
-            <div class="keyword-tool-label">
-              키워드 검색량
-              <v-tooltip top>
-                <template v-slot:activator="{ on }">
-                  <v-icon v-on="on">help</v-icon>
-                </template>
-                <div style="padding: 10px;">
-                  키워드의 총 검색량을 보여드려, 해당 키워드를 사용자가 얼마나
-                  검색을 하는지 확인할 수 있습니다.
-                  <br />*실시간데이터이기 때문에 점수가 변동될수있습니다.
-                </div>
-              </v-tooltip>
-            </div>
-            <apexchart width="140%" :options="chartOptions2" :series="series2"></apexchart>
-          </div>
-          <div class="top-chart-rect">
-            <div class="keyword-tool-label">
-              경쟁 컨텐츠량
-              <v-tooltip top>
-                <template v-slot:activator="{ on }">
-                  <v-icon v-on="on">help</v-icon>
-                </template>
-                <div style="padding: 10px;">
-                  키워드를 검색했을때 온라인상에 노출되어지는 경쟁 컨텐츠량을
-                  보여드려 얼마나 많은 경쟁 컨텐츠가 있는지 알려드립니다.
-                  <br />*실시간데이터이기 때문에 점수가 변동될수있습니다.
-                </div>
-              </v-tooltip>
-            </div>
-            <apexchart width="140%" :options="chartOptions3" :series="series3"></apexchart>
-          </div>
-        </div>
-        <div>
-          <div id="half-donut"></div>
-        </div>
-        <div class="mt50">
-          <div class="keyword-tool-label">
-            키워드 Top3 노출 컨텐츠
-            <v-tooltip top>
-              <template v-slot:activator="{ on }">
-                <v-icon v-on="on">help</v-icon>
-              </template>
-              <div style="padding: 10px;">
-                온라인상에 키워드 입력시 가장 먼저 화면상에 노출되어지는 컨텐츠
-                정보를 확인하여 경쟁자의 컨텐츠 퀄리티를 확인할 수 있습니다.
-                <br />* 실시간 데이터이기 때문에 순서가 변동될 수 있습니다.
+          <div class="top-chart-layer">
+            <div class="top-chart-rect">
+              <div class="keyword-tool-label">
+                키워드 점수
+                <v-tooltip top>
+                  <template v-slot:activator="{ on }">
+                    <v-icon v-on="on">help</v-icon>
+                  </template>
+                  <div style="padding: 10px;">
+                    키워드검색량과 경쟁 컨텐츠량을 시그널의 알고리즘으로 계산하여
+                    사용자가 알기쉽게 보여 드립니다.
+                    <br />*실시간데이터이기 때문에 점수가 변동될수있습니다.
+                  </div>
+                </v-tooltip>
               </div>
-            </v-tooltip>
+              <apexchart width="140%" :options="chartOptions1" :series="series1"></apexchart>
+            </div>
+            <div class="top-chart-rect">
+              <div class="keyword-tool-label">
+                키워드 검색량
+                <v-tooltip top>
+                  <template v-slot:activator="{ on }">
+                    <v-icon v-on="on">help</v-icon>
+                  </template>
+                  <div style="padding: 10px;">
+                    키워드의 총 검색량을 보여드려, 해당 키워드를 사용자가 얼마나
+                    검색을 하는지 확인할 수 있습니다.
+                    <br />*실시간데이터이기 때문에 점수가 변동될수있습니다.
+                  </div>
+                </v-tooltip>
+              </div>
+              <apexchart width="140%" :options="chartOptions2" :series="series2"></apexchart>
+            </div>
+            <div class="top-chart-rect">
+              <div class="keyword-tool-label">
+                경쟁 컨텐츠량
+                <v-tooltip top>
+                  <template v-slot:activator="{ on }">
+                    <v-icon v-on="on">help</v-icon>
+                  </template>
+                  <div style="padding: 10px;">
+                    키워드를 검색했을때 온라인상에 노출되어지는 경쟁 컨텐츠량을
+                    보여드려 얼마나 많은 경쟁 컨텐츠가 있는지 알려드립니다.
+                    <br />*실시간데이터이기 때문에 점수가 변동될수있습니다.
+                  </div>
+                </v-tooltip>
+              </div>
+              <apexchart width="140%" :options="chartOptions3" :series="series3"></apexchart>
+            </div>
           </div>
-          <b-table class="mt30" :data="top3TableData" :columns="top3TableColumns"></b-table>
-        </div>
-        <div class="mt50">
-          <div style="font-size: 20px;">
-            <span class="accent">배달의 민족</span> 추천 키워드 (4,343 검색)
+          <div>
+            <div id="half-donut"></div>
           </div>
-          <b-table
-            class="mt30"
-            :paginated="true"
-            :pagination-simple="false"
-            :per-page="10"
-            :sort-icon="'arrow-up'"
-            :sort-icon-size="'is-small'"
-            :default-sort-direction="'desc'"
-            :data="keywordTableData"
-            :columns="keywordTableColumns"
-            default-sort="point"
-          ></b-table>
+          <div class="mt50">
+            <div class="keyword-tool-label">
+              키워드 Top3 노출 컨텐츠
+              <v-tooltip top>
+                <template v-slot:activator="{ on }">
+                  <v-icon v-on="on">help</v-icon>
+                </template>
+                <div style="padding: 10px;">
+                  온라인상에 키워드 입력시 가장 먼저 화면상에 노출되어지는 컨텐츠
+                  정보를 확인하여 경쟁자의 컨텐츠 퀄리티를 확인할 수 있습니다.
+                  <br />* 실시간 데이터이기 때문에 순서가 변동될 수 있습니다.
+                </div>
+              </v-tooltip>
+            </div>
+            <b-table class="mt30" :data="top3TableData" :columns="top3TableColumns"></b-table>
+          </div>
+          <div class="mt50">
+            <div style="font-size: 20px;">
+              <span class="accent">{{keyword}}</span> 추천 키워드 (4,343 검색)
+            </div>
+            <b-table
+              class="mt30"
+              :paginated="true"
+              :pagination-simple="false"
+              :per-page="10"
+              :sort-icon="'arrow-up'"
+              :sort-icon-size="'is-small'"
+              :default-sort-direction="'desc'"
+              :data="keywordTableData"
+              :columns="keywordTableColumns"
+              default-sort="point"
+            ></b-table>
+          </div>
         </div>
       </div>
     </section>
@@ -119,8 +118,9 @@ export default {
   components: { KeywordToolInfo },
   data() {
     return {
-      radios: "Naver",
+      test: true,
       keyword: "",
+      radios: "Naver",
       colors: ["#1B5E20", "#7CB342", "#FDD835", "#F57C00", "#E64A19"],
       labels: ["매우 나쁨", "나쁨", "보통", "좋음", "매우 좋음"],
       series1: [0],
@@ -357,6 +357,13 @@ export default {
       ]
     };
   },
+  watch: {
+    keyword(value) {
+      if (value == "") {
+        this.test = true;
+      }
+    }
+  },
   created() {
     // https://apexcharts.com/docs/chart-types/radialbar-gauge/
     this.setData();
@@ -404,7 +411,10 @@ export default {
         }
       };
     },
-    search() {}
+    search() {
+      // todo request api
+      this.test = false;
+    }
   }
 };
 </script>
