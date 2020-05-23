@@ -10,7 +10,7 @@ var firebaseConfig = {
   projectId: "signal-97eaf",
   storageBucket: "signal-97eaf.appspot.com",
   messagingSenderId: "493631048995",
-  appId: "1:493631048995:web:5a51cbfc53a696cb"
+  appId: "1:493631048995:web:5a51cbfc53a696cb",
 };
 firebase.initializeApp(firebaseConfig);
 
@@ -33,7 +33,7 @@ const store = new Vuex.Store({
     feeds: null,
     snsConnect: {
       facebook: localStorage.getItem("facebook"),
-      twitter: localStorage.getItem("twitter")
+      twitter: localStorage.getItem("twitter"),
     },
     FEED_TYPE: {
       NAVER_KEY_WORD: "NAVER_KEY_WORD",
@@ -42,8 +42,8 @@ const store = new Vuex.Store({
       TWITTER_MENTIONS: "TWITTER_MENTIONS",
       FACEBOOK_POSTS: "FACEBOOK_POSTS",
       FACEBOOK_MENTIONS: "FACEBOOK_MENTIONS",
-      FACEBOOK_SEARCH: "FACEBOOK_SEARCH"
-    }
+      FACEBOOK_SEARCH: "FACEBOOK_SEARCH",
+    },
   },
   getters: {
     isLoading(state) {
@@ -59,18 +59,18 @@ const store = new Vuex.Store({
       return state.userToken != null && state.userToken.length > 0;
     },
     getNaverKeywords(state) {
-      return state.feeds.filter(d => d.type.startsWith("NAVER_KEY_WORD"));
+      return state.feeds.filter((d) => d.type.startsWith("NAVER_KEY_WORD"));
     },
     getTwitterKeywords(state) {
-      return state.feeds.filter(d => d.type == "TWITTER_KEY_WORD");
+      return state.feeds.filter((d) => d.type == "TWITTER_KEY_WORD");
     },
     getFeeds(state) {
       if (state.feeds == null) {
         const params = {
           signal_id: state.userId,
-          access_token: state.userToken
+          access_token: state.userToken,
         };
-        axios.get("/firebase/user/feed_list/", { params }).then(response => {
+        axios.get("/firebase/user/feed_list/", { params }).then((response) => {
           try {
             store.commit("setFeeds", JSON.parse(response.data));
           } catch (e) {}
@@ -81,7 +81,7 @@ const store = new Vuex.Store({
     },
     monitorSlideMenu(state) {
       return state.monitorSlideMenu;
-    }
+    },
   },
   mutations: {
     showLoading(state) {
@@ -157,14 +157,14 @@ const store = new Vuex.Store({
     removeFeed(state, feed) {
       state.feeds = _.filter(
         state.feeds,
-        d => !(d.data == feed.data && d.type == feed.type)
+        (d) => !(d.data == feed.data && d.type == feed.type)
       );
       const params = {
         signal_id: state.userId,
         access_token: state.userToken,
-        data: JSON.stringify(state.feeds)
+        data: JSON.stringify(state.feeds),
       };
-      if (status.isLogin) {
+      if (state.userToken != null && state.userToken.length > 0) {
         axios.post("/firebase/user/feed_list/", params);
       }
     },
@@ -173,21 +173,24 @@ const store = new Vuex.Store({
         return;
       }
       feed.feedList = [];
-      if (!status.isLogin && state.feeds == null) {
+      if (
+        !(state.userToken != null && state.userToken.length > 0) &&
+        state.feeds == null
+      ) {
         state.feeds = [];
       }
       state.feeds.push(feed);
       const temp = state.feeds
-        .filter(d => d.type != null && d.type != "")
-        .map(d => {
+        .filter((d) => d.type != null && d.type != "")
+        .map((d) => {
           return { data: d.data, type: d.type, feedList: [] };
         });
       const params = {
         signal_id: state.userId,
         access_token: state.userToken,
-        data: JSON.stringify(temp)
+        data: JSON.stringify(temp),
       };
-      if (status.isLogin) {
+      if (state.userToken != null && state.userToken.length > 0) {
         axios.post("/firebase/user/feed_list/", params);
       }
     },
@@ -195,7 +198,7 @@ const store = new Vuex.Store({
       if (feeds == "" || feeds.length == 0) {
         state.feeds = [];
       } else {
-        feeds = feeds.filter(d => d.type != null && d.type != "");
+        feeds = feeds.filter((d) => d.type != null && d.type != "");
         state.feeds = feeds;
       }
     },
@@ -220,12 +223,12 @@ const store = new Vuex.Store({
       const params = {
         signal_id: state.userId,
         access_token: state.userToken,
-        data: JSON.stringify(state.feeds)
+        data: JSON.stringify(state.feeds),
       };
-      if (status.isLogin) {
+      if (state.userToken != null && state.userToken.length > 0) {
         axios.post("/firebase/user/feed_list/", params);
       }
-    }
+    },
   },
   actions: {
     showLoading({ commit }) {
@@ -242,7 +245,7 @@ const store = new Vuex.Store({
     },
     login({ commit }, params) {
       const loginApi = "/firebase/auth/";
-      axios.post(loginApi, params).then(response => {
+      axios.post(loginApi, params).then((response) => {
         commit("login", response.data);
         router.push({ name: "main" });
       });
@@ -258,16 +261,16 @@ const store = new Vuex.Store({
       commit("removeFeed", feed);
     },
     requestTwitterConnection({ commit }, params) {
-      axios.post("/twitter/users/", params).then(response => {
+      axios.post("/twitter/users/", params).then((response) => {
         commit("twiiterConnection", params);
       });
     },
     requestFacebookConnection({ commit }, params) {
-      axios.post("/facebook/users/", params).then(response => {
+      axios.post("/facebook/users/", params).then((response) => {
         commit("facebookConnection", params);
       });
-    }
-  }
+    },
+  },
 });
 
 export default store;

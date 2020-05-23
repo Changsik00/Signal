@@ -185,7 +185,6 @@ export default {
   },
   methods: {
     dataReset() {
-      console.log("#@# dataReset");
       this.email = "";
       this.password = "";
       this.confirmPassword = "";
