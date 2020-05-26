@@ -329,9 +329,8 @@ export default {
     ...mapMutations([
       "showMonitorSlideMenu",
       "hideMonitorSlideMenu",
-      "feedSwap"
     ]),
-    ...mapActions(["removeFeed", "addFeed"]),
+    ...mapActions(["removeFeed", "addFeed", "feedSwap"]),
     search() {
       if (this.searchKeyword.length == 0) {
         this.$showToast("검색어를 입력해 주세요!");

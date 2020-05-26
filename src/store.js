@@ -154,7 +154,7 @@ const store = new Vuex.Store({
       localStorage.setItem("twitter", "");
       router.push({ name: "home" });
     },
-    removeFeed(state, feed) {
+    removeFeed(state, {feed, getters}) {
       state.feeds = _.filter(
         state.feeds,
         (d) => !(d.data == feed.data && d.type == feed.type)
@@ -164,19 +164,16 @@ const store = new Vuex.Store({
         access_token: state.userToken,
         data: JSON.stringify(state.feeds),
       };
-      if (state.userToken != null && state.userToken.length > 0) {
+      if (getters.isLogin) {
         axios.post("/firebase/user/feed_list/", params);
       }
     },
-    addFeed(state, feed) {
+    addFeed(state, {feed, getters}) {
       if (feed.type == null || feed.type == "") {
         return;
       }
       feed.feedList = [];
-      if (
-        !(state.userToken != null && state.userToken.length > 0) &&
-        state.feeds == null
-      ) {
+      if (!getters.isLogin && state.feeds == null) {
         state.feeds = [];
       }
       state.feeds.push(feed);
@@ -190,7 +187,7 @@ const store = new Vuex.Store({
         access_token: state.userToken,
         data: JSON.stringify(temp),
       };
-      if (state.userToken != null && state.userToken.length > 0) {
+      if (getters.isLoading) {
         axios.post("/firebase/user/feed_list/", params);
       }
     },
@@ -212,7 +209,7 @@ const store = new Vuex.Store({
       state.snsConnect.facebook = true;
       state.snsConnect.facebookAccessTotken = params.access_token;
     },
-    feedSwap(state, dropResult) {
+    feedSwap(state, {dropResult, getters}) {
       const removedObj = state.feeds[dropResult.removedIndex];
       state.feeds.splice(dropResult.removedIndex, 1);
       state.feeds.splice(dropResult.addedIndex, 0, removedObj);
@@ -225,7 +222,7 @@ const store = new Vuex.Store({
         access_token: state.userToken,
         data: JSON.stringify(state.feeds),
       };
-      if (state.userToken != null && state.userToken.length > 0) {
+      if (getters.isLogin) {
         axios.post("/firebase/user/feed_list/", params);
       }
     },
@@ -254,11 +251,14 @@ const store = new Vuex.Store({
       firebase.auth().signOut();
       commit("logout");
     },
-    addFeed({ commit }, feed) {
-      commit("addFeed", feed);
+    addFeed({ commit, getters}, feed) {
+      commit("addFeed", {feed, getters});
     },
-    removeFeed({ commit }, feed) {
-      commit("removeFeed", feed);
+    removeFeed({ commit, getters }, feed) {
+      commit("removeFeed", {feed, getters});
+    }, 
+    feedSwap({ commit, getters }, dropResult) {
+      commit("feedSwap", {dropResult, getters});
     },
     requestTwitterConnection({ commit }, params) {
       axios.post("/twitter/users/", params).then((response) => {
