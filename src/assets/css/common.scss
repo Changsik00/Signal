@@ -82,11 +82,14 @@
 .ml30 {
 	margin-left: 30px;
 }
+
 .ml-0-30-30 {
 	margin-left: 0;
+
 	@include tablet {
 		margin-left: 30px;
 	}
+
 	@include desktop {
 		margin-left: 30px;
 	}

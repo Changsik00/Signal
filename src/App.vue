@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import Header from "./components/Header";
-import { mapGetters } from "vuex";
+import Header from "./components/Header"
+import { mapGetters } from "vuex"
 export default {
   name: "App",
   components: {
@@ -23,5 +23,5 @@ export default {
   computed: {
     ...mapGetters(["isLogin"])
   }
-};
+}
 </script>

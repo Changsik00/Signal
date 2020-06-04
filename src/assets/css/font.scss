@@ -2,20 +2,22 @@
 @import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
 body {
-    font-family: "Noto Sans KR", sans-serif;
-    word-break: keep-all;
+  font-family: "Noto Sans KR", sans-serif;
+  word-break: keep-all;
 }
 
 .sg-title {
   @include font(36px, bold, $grey7);
+
   @include tablet {
     @include font(36px, bold, $grey7);
   }
+
   @include desktop {
     @include font(36px, bold, $grey7);
   }
 }
 
 .font14 {
-  @include font(14px);  
+  @include font(14px);
 }

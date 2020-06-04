@@ -1,19 +1,18 @@
 import Vue from "vue";
 import Router from "vue-router";
 import store from "./store";
-const Home = () => import(/* webpackChunkName: "home" */ "./views/Home.vue");
-const Main = () => import(/* webpackChunkName: "main" */ "./views/Main.vue");
+const Home = () => import( /* webpackChunkName: "home" */ "./views/Home.vue");
+const Main = () => import( /* webpackChunkName: "main" */ "./views/Main.vue");
 const PolicyTerms = () =>
-  import(/* webpackChunkName: "terms" */ "./views/PolicyTerms.vue");
+  import( /* webpackChunkName: "terms" */ "./views/PolicyTerms.vue");
 const PolicyPrivacy = () =>
-  import(/* webpackChunkName: "privacy" */ "./views/PolicyPrivacy.vue");
+  import( /* webpackChunkName: "privacy" */ "./views/PolicyPrivacy.vue");
 
 Vue.use(Router);
 
 const router = new Router({
   mode: "history",
-  routes: [
-    {
+  routes: [{
       path: "/",
       name: "home",
       component: Home,
@@ -41,9 +40,13 @@ const router = new Router({
     }
   ],
   scrollBehavior() {
-    return { x: 0, y: 0 };
+    return {
+      x: 0,
+      y: 0
+    };
   }
 });
+
 function homeGuard(to, from, next) {
   if (store.getters.isLogin) {
     store.state.currentMode = "MONITOR";

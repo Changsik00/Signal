@@ -20,7 +20,7 @@
           style="display: flex; flex-direction: column; align-items: center;"
         >
           <div style="margin-top: 30px; width: 500px; text-align: center;">
-            <div class="sg-title ">빅데이터를 시각화하여 제공합니다.</div>
+            <div class="sg-title">빅데이터를 시각화하여 제공합니다.</div>
             <div style="margin-top: 20px;">
               <div v-for="(keyword, i) in newKeywords" :key="i">
                 <v-text-field
@@ -34,7 +34,7 @@
               <div v-if="newKeywords.length < 3" @click="addKeywords">
                 <div
                   style="display:flex; align-items: center; padding: 10px 20px; 
-                border: 2px dotted #888888; border-radius: 5px;"
+                 border: 2px dotted #888888; border-radius: 5px;"
                 >
                   <div
                     style="flex-grow: 1; text-align: left; color: #888888; padding-top: 4px;"
@@ -73,11 +73,11 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import HorizontalBarChart from "./HorizontalBarChart";
-import VerticalBarChart from "./VerticalBarChart";
-import LineChart from "./LineChart";
-import BubbleChart from "./BubbleChart";
+import { mapGetters } from "vuex"
+import HorizontalBarChart from "./HorizontalBarChart"
+import VerticalBarChart from "./VerticalBarChart"
+import LineChart from "./LineChart"
+import BubbleChart from "./BubbleChart"
 
 export default {
   components: {
@@ -94,111 +94,95 @@ export default {
       searchKeywords: [],
       newKeywords: [],
       allowKeywords: []
-    };
+    }
   },
   computed: {
     ...mapGetters(["isLogin"]),
     keywordCheck() {
-      return this.currentKeywordData.some(d => d.length > 0);
+      return this.currentKeywordData.some(d => d.length > 0)
     }
   },
   created() {
-    this.requestKeyword();
+    this.requestKeyword()
   },
   methods: {
     requestKeyword() {
       if (this.isLogin) {
         // todo api 연동
       } else {
-        this.searchKeywords = JSON.parse(
-          localStorage.getItem("ANALYTICS_LIST")
-        );
+        this.searchKeywords = JSON.parse(localStorage.getItem("ANALYTICS_LIST"))
         if (!this.searchKeywords) {
-          this.searchKeywords = [
-            ["삼성화재"],
-            ["제주항공", "진에어"],
-            ["배달의민족", "배달통", "요기요"]
-          ];
+          this.searchKeywords = [["삼성화재"], ["제주항공", "진에어"], ["배달의민족", "배달통", "요기요"]]
 
-          localStorage.setItem(
-            "ANALYTICS_LIST",
-            JSON.stringify(this.searchKeywords)
-          );
+          localStorage.setItem("ANALYTICS_LIST", JSON.stringify(this.searchKeywords))
         }
 
-        let keyword = this.$route.params.keyword;
+        let keyword = this.$route.params.keyword
         if (keyword) {
-          localStorage.setItem("ANALYTICS_KEYOWRD", keyword);
+          localStorage.setItem("ANALYTICS_KEYOWRD", keyword)
         } else {
-          keyword = localStorage.getItem("ANALYTICS_KEYOWRD");
+          keyword = localStorage.getItem("ANALYTICS_KEYOWRD")
           if (!keyword) {
-            keyword = "";
+            keyword = ""
           }
         }
-        console.log("#@# keywrod", keyword);
-        this.newKeywords.push(keyword);
+        console.log("#@# keywrod", keyword)
+        this.newKeywords.push(keyword)
       }
     },
     getKeywordsTabTitle(data) {
-      return data.join(" vs ");
+      return data.join(" vs ")
     },
     getKeywordsTabTitle2() {
-      return this.getKeywordsTabTitle(this.currentKeywordData);
+      return this.getKeywordsTabTitle(this.currentKeywordData)
     },
     clickKeywordTab(i) {
-      this.tabIndex = i;
+      this.tabIndex = i
       if (this.tabIndex == 0) {
-        this.currentKeywordData = this.allowKeywords;
+        this.currentKeywordData = this.allowKeywords
       } else {
-        this.currentKeywordData = this.searchKeywords[i - 1];
+        this.currentKeywordData = this.searchKeywords[i - 1]
       }
     },
     showDialog(data) {
-      this.currentKeywordData = data;
-      this.dialog = true;
+      this.currentKeywordData = data
+      this.dialog = true
     },
     deleteKeyword() {
-      this.dialog = false;
-      this.searchKeywords = this.searchKeywords.filter(
-        d => d.join("") != this.currentKeywordData.join("")
-      );
+      this.dialog = false
+      this.searchKeywords = this.searchKeywords.filter(d => d.join("") != this.currentKeywordData.join(""))
 
-      this.tabIndex = 0;
-      this.currentKeywordData = [];
+      this.tabIndex = 0
+      this.currentKeywordData = []
     },
     addKeywords() {
-      this.newKeywords.push("");
+      this.newKeywords.push("")
     },
     newKeywordsEmpyCheck() {
-      this.allowKeywords = this.newKeywords.filter(d => d.length != "");
+      this.allowKeywords = this.newKeywords.filter(d => d.length != "")
       if (this.allowKeywords.length == 0) {
-        this.$showToast(
-          "키워드가 입력되지 않았습니다.<br>키워드를 입력해주시기 바랍니다."
-        );
-        return false;
+        this.$showToast("키워드가 입력되지 않았습니다.<br>키워드를 입력해주시기 바랍니다.")
+        return false
       }
-      return true;
+      return true
     },
     bookmark() {
-      if (!this.newKeywordsEmpyCheck()) return;
+      if (!this.newKeywordsEmpyCheck()) return
 
-      this.searchKeywords.push(this.allowKeywords);
-      this.tabIndex = this.searchKeywords.length;
-      this.newKeywords = [""];
+      this.searchKeywords.push(this.allowKeywords)
+      this.tabIndex = this.searchKeywords.length
+      this.newKeywords = [""]
 
       if (!this.isLogin) {
-        localStorage.setItem(
-          "ANALYTICS_LIST",
-          JSON.stringify(this.searchKeywords)
-        );
+        localStorage.setItem("ANALYTICS_LIST", JSON.stringify(this.searchKeywords))
       }
     },
     drawChart() {
-      if (!this.newKeywordsEmpyCheck()) return;
-      this.currentKeywordData = this.allowKeywords;
+      if (!this.newKeywordsEmpyCheck()) return
+      this.currentKeywordData = this.allowKeywords
     }
   }
-};
+}
 </script>
 <style lang="scss">
 .search-keywords-layer {

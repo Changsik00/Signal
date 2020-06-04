@@ -70,7 +70,9 @@ const store = new Vuex.Store({
           signal_id: state.userId,
           access_token: state.userToken,
         };
-        axios.get("/firebase/user/feed_list/", { params }).then((response) => {
+        axios.get("/firebase/user/feed_list/", {
+          params
+        }).then((response) => {
           try {
             store.commit("setFeeds", JSON.parse(response.data));
           } catch (e) {}
@@ -152,9 +154,14 @@ const store = new Vuex.Store({
       localStorage.setItem("access_token", "");
       localStorage.setItem("facebook", "");
       localStorage.setItem("twitter", "");
-      router.push({ name: "home" });
+      router.push({
+        name: "home"
+      });
     },
-    removeFeed(state, {feed, getters}) {
+    removeFeed(state, {
+      feed,
+      getters
+    }) {
       state.feeds = _.filter(
         state.feeds,
         (d) => !(d.data == feed.data && d.type == feed.type)
@@ -168,7 +175,10 @@ const store = new Vuex.Store({
         axios.post("/firebase/user/feed_list/", params);
       }
     },
-    addFeed(state, {feed, getters}) {
+    addFeed(state, {
+      feed,
+      getters
+    }) {
       if (feed.type == null || feed.type == "") {
         return;
       }
@@ -180,7 +190,11 @@ const store = new Vuex.Store({
       const temp = state.feeds
         .filter((d) => d.type != null && d.type != "")
         .map((d) => {
-          return { data: d.data, type: d.type, feedList: [] };
+          return {
+            data: d.data,
+            type: d.type,
+            feedList: []
+          };
         });
       const params = {
         signal_id: state.userId,
@@ -209,7 +223,10 @@ const store = new Vuex.Store({
       state.snsConnect.facebook = true;
       state.snsConnect.facebookAccessTotken = params.access_token;
     },
-    feedSwap(state, {dropResult, getters}) {
+    feedSwap(state, {
+      dropResult,
+      getters
+    }) {
       const removedObj = state.feeds[dropResult.removedIndex];
       state.feeds.splice(dropResult.removedIndex, 1);
       state.feeds.splice(dropResult.addedIndex, 0, removedObj);
@@ -228,44 +245,80 @@ const store = new Vuex.Store({
     },
   },
   actions: {
-    showLoading({ commit }) {
+    showLoading({
+      commit
+    }) {
       commit("showLoading");
     },
-    hideLoading({ commit }) {
+    hideLoading({
+      commit
+    }) {
       commit("hideLoading");
     },
-    showSnackbar({ commit }, message) {
+    showSnackbar({
+      commit
+    }, message) {
       commit("showSnackbar", message);
     },
-    hideSnackbar({ commit }) {
+    hideSnackbar({
+      commit
+    }) {
       commit("hideSnackbar");
     },
-    login({ commit }, params) {
+    login({
+      commit
+    }, params) {
       const loginApi = "/firebase/auth/";
       axios.post(loginApi, params).then((response) => {
         commit("login", response.data);
-        router.push({ name: "main" });
+        router.push({
+          name: "main"
+        });
       });
     },
-    logout({ commit }) {
+    logout({
+      commit
+    }) {
       firebase.auth().signOut();
       commit("logout");
     },
-    addFeed({ commit, getters}, feed) {
-      commit("addFeed", {feed, getters});
+    addFeed({
+      commit,
+      getters
+    }, feed) {
+      commit("addFeed", {
+        feed,
+        getters
+      });
     },
-    removeFeed({ commit, getters }, feed) {
-      commit("removeFeed", {feed, getters});
-    }, 
-    feedSwap({ commit, getters }, dropResult) {
-      commit("feedSwap", {dropResult, getters});
+    removeFeed({
+      commit,
+      getters
+    }, feed) {
+      commit("removeFeed", {
+        feed,
+        getters
+      });
     },
-    requestTwitterConnection({ commit }, params) {
+    feedSwap({
+      commit,
+      getters
+    }, dropResult) {
+      commit("feedSwap", {
+        dropResult,
+        getters
+      });
+    },
+    requestTwitterConnection({
+      commit
+    }, params) {
       axios.post("/twitter/users/", params).then((response) => {
         commit("twiiterConnection", params);
       });
     },
-    requestFacebookConnection({ commit }, params) {
+    requestFacebookConnection({
+      commit
+    }, params) {
       axios.post("/facebook/users/", params).then((response) => {
         commit("facebookConnection", params);
       });

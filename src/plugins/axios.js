@@ -8,7 +8,8 @@ import store from "../store";
 Vue.prototype.$axios = axios;
 
 axios.defaults.timeout = 5000;
-axios.defaults.baseURL = "https://api.signal.bz/v1";
+// axios.defaults.baseURL = "https://api.signal.bz/v1";
+axios.defaults.baseURL = "http://127.0.0.1:8000/v1";
 
 function axisoErrorHandler(error) {
   // store.dispatch("showSnackbar", error);

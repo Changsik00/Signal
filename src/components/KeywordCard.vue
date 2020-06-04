@@ -37,62 +37,53 @@ export default {
   data() {
     return {
       ogImage: ""
-    };
+    }
   },
   created() {
-    let baseURL = "/naver/ogimage/?url=";
+    let baseURL = "/naver/ogimage/?url="
     this.$axios
       .get(baseURL + this.item.link)
       .then(res => {
-        if (
-          res.data.image.startsWith("http") &&
-          (res.data.image.endsWith("png") || res.data.image.endsWith("jpg"))
-        ) {
-          this.ogImage = res.data.image;
+        if (res.data.image.startsWith("http") && (res.data.image.endsWith("png") || res.data.image.endsWith("jpg"))) {
+          this.ogImage = res.data.image
         }
       })
-      .catch(error => {});
+      .catch(error => {})
   },
   methods: {
     seeMore() {
-      window.open(this.item.link);
+      window.open(this.item.link)
     },
     visibilityChanged(isVisible, entry) {
       if (isVisible)
         if (this.last - this.index < 4) {
-          this.$emit("detectLastPosition");
+          this.$emit("detectLastPosition")
         }
     },
     dateToFormat(pubDate) {
-      var d = new Date(pubDate);
-      const year = d.getFullYear();
-      const month = d.getMonth() + 1;
-      const day = d.getDate();
+      var d = new Date(pubDate)
+      const year = d.getFullYear()
+      const month = d.getMonth() + 1
+      const day = d.getDate()
       return (
         d.getFullYear().toString() +
         "년" +
-        ((d.getMonth() + 1).toString().length == 2
-          ? (d.getMonth() + 1).toString()
-          : "0" + (d.getMonth() + 1).toString()) +
+        ((d.getMonth() + 1).toString().length == 2 ? (d.getMonth() + 1).toString() : "0" + (d.getMonth() + 1).toString()) +
         "월" +
-        (d.getDate().toString().length == 2
-          ? d.getDate().toString()
-          : "0" + d.getDate().toString()) +
+        (d.getDate().toString().length == 2 ? d.getDate().toString() : "0" + d.getDate().toString()) +
         "일 " +
-        (d.getHours().toString().length == 2
-          ? d.getHours().toString()
-          : "0" + d.getHours().toString()) +
+        (d.getHours().toString().length == 2 ? d.getHours().toString() : "0" + d.getHours().toString()) +
         ":" +
         ((parseInt(d.getMinutes() / 5) * 5).toString().length == 2
           ? (parseInt(d.getMinutes() / 5) * 5).toString()
           : "0" + (parseInt(d.getMinutes() / 5) * 5).toString()) +
         this.checkToday(year, month, day)
-      );
+      )
     },
     dateToFormat2(postdate) {
-      const year = postdate.substring(0, 4);
-      const month = postdate.substring(4, 6);
-      const day = postdate.substring(6, 8);
+      const year = postdate.substring(0, 4)
+      const month = postdate.substring(4, 6)
+      const day = postdate.substring(6, 8)
 
       return (
         postdate.substring(0, 4) +
@@ -102,21 +93,21 @@ export default {
         postdate.substring(6, 8) +
         "일 " +
         this.checkToday(year, month, day)
-      );
+      )
     },
     checkToday(y, m, d) {
-      var now = new Date();
-      const year = now.getFullYear();
-      const month = now.getMonth() + 1;
-      const day = now.getDate();
+      var now = new Date()
+      const year = now.getFullYear()
+      const month = now.getMonth() + 1
+      const day = now.getDate()
 
       if (y == year && m == month && d == day) {
-        return ' <span style="font-weight: bold; color: red"> Today </span>';
+        return ' <span style="font-weight: bold; color: red"> Today </span>'
       }
-      return "";
+      return ""
     }
   }
-};
+}
 </script>
 
 <style lang="scss">

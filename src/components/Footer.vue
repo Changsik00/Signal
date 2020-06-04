@@ -22,7 +22,7 @@
   padding: 30px 50px;
   color: $ice-blue;
 
-  & .link  {
+  & .link {
     display: inline-block;
     border-bottom: 1px solid $ice-blue;
     cursor: pointer;

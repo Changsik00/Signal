@@ -1,11 +1,7 @@
 <template>
   <section>
     <v-toolbar class="header">
-      <img
-        src="../assets/img/common/logo-signal.svg"
-        class="pointer"
-        @click="$router.push('/')"
-      />
+      <img src="../assets/img/common/logo-signal.svg" class="pointer" @click="$router.push('/')" />
       <v-layout v-if="$route.path != '/'" class="ml30">
         <v-btn
           class="text-capitalize top-button"
@@ -14,8 +10,7 @@
           round
           color="primary"
           @click="clickAnalytics"
-          >분석</v-btn
-        >
+        >분석</v-btn>
         <v-btn
           class="text-capitalize top-button"
           :class="{ active: $store.state.currentMode == 'KEYWORDTOOL' }"
@@ -23,8 +18,7 @@
           round
           color="primary"
           @click="clickKeywordTool"
-          >키워드툴</v-btn
-        >
+        >키워드툴</v-btn>
         <v-btn
           class="text-capitalize top-button"
           :class="{ active: $store.state.currentMode == 'MONITOR' }"
@@ -32,8 +26,7 @@
           round
           color="primary"
           @click="clickMonitor"
-          >모니터</v-btn
-        >
+        >모니터</v-btn>
         <v-btn
           class="text-capitalize top-button"
           :class="{ active: $store.state.currentMode == 'TREND' }"
@@ -41,8 +34,7 @@
           round
           color="primary"
           @click="clickTrend"
-          >트랜드</v-btn
-        >
+        >트랜드</v-btn>
         <!-- <v-btn
           class="text-capitalize top-button"
           :class="{ active: $store.state.currentMode == 'POSTS' }"
@@ -73,24 +65,17 @@
             color="primary"
             @click="$store.state.showConnections = true"
             >연결</v-btn
-          > -->
+          >-->
           <v-btn flat round color="primary" @click="logout">로그아웃</v-btn>
         </v-layout>
-        <v-btn
-          v-else
-          flat
-          round
-          color="info"
-          @click="$store.state.showLogin = true"
-          >로그인</v-btn
-        >
+        <v-btn v-else flat round color="info" @click="$store.state.showLogin = true">로그인</v-btn>
       </v-layout>
     </v-toolbar>
     <v-dialog v-model="dialog" max-width="400">
       <v-card>
         <v-card-text>
-          로그인이 필요한 서비스입니다.<br />
-          로그인 페이지로 가시겠습니까?
+          로그인이 필요한 서비스입니다.
+          <br />로그인 페이지로 가시겠습니까?
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -99,11 +84,10 @@
             color="success"
             dark
             @click="
-              $store.state.showLogin = true;
+              $store.state.showLogin = true; 
               dialog = false;
             "
-            >확인</v-btn
-          >
+          >확인</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -111,13 +95,13 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
+import { mapGetters, mapMutations } from "vuex"
 export default {
   data() {
     return {
       dialog: false,
       index: 0
-    };
+    }
   },
   computed: {
     ...mapGetters(["isLogin", "monitorSlideMenu"])
@@ -125,38 +109,38 @@ export default {
   methods: {
     ...mapMutations(["logout", "showMonitorSlideMenu", "hideMonitorSlideMenu"]),
     clickAnalytics() {
-      this.hideMonitorSlideMenu();
-      this.$store.state.currentMode = "ANALYTICS";
+      this.hideMonitorSlideMenu()
+      this.$store.state.currentMode = "ANALYTICS"
     },
     clickMonitor() {
       if (!this.isLogin) {
-        this.dialog = true;
+        this.dialog = true
       } else {
-        this.$store.state.currentMode = "MONITOR";
+        this.$store.state.currentMode = "MONITOR"
         if (this.monitorSlideMenu) {
-          this.hideMonitorSlideMenu();
+          this.hideMonitorSlideMenu()
         } else {
-          this.showMonitorSlideMenu();
+          this.showMonitorSlideMenu()
         }
       }
     },
     clickPosts() {
-      this.hideMonitorSlideMenu();
-      this.$store.state.currentMode = "POSTS";
+      this.hideMonitorSlideMenu()
+      this.$store.state.currentMode = "POSTS"
     },
     clickNewPost() {
-      this.hideMonitorSlideMenu();
-      this.$store.state.showNewPost = true;
+      this.hideMonitorSlideMenu()
+      this.$store.state.showNewPost = true
     },
     clickTrend() {
-      this.hideMonitorSlideMenu();
-      this.$store.state.currentMode = "TREND";
+      this.hideMonitorSlideMenu()
+      this.$store.state.currentMode = "TREND"
     },
     clickKeywordTool() {
-       this.$store.state.currentMode = "KEYWORDTOOL";
+      this.$store.state.currentMode = "KEYWORDTOOL"
     }
   }
-};
+}
 </script>
 
 <style lang="scss">

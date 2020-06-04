@@ -426,7 +426,6 @@ export default {
 .keyword-tool-label {
   display: flex;
   color: $grey6;
-  // align-self: start;
   font-size: 18px;
   & > .v-icon {
     z-index: 10;

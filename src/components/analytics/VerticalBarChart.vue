@@ -4,23 +4,16 @@
       <span style="font-size: 20px; font-weight: bold">채널별 컨텐츠량</span> (
       수집기간 : 전체기간 )
     </div>
-    <div style="color: #8a8a8a">
-      채널별 만들어진 컨텐츠량을 확인하여 강점과 약점을 비교 확인할 수 있습니다.
-    </div>
+    <div style="color: #8a8a8a">채널별 만들어진 컨텐츠량을 확인하여 강점과 약점을 비교 확인할 수 있습니다.</div>
     <div id="chart" style="width: 1000px; margin: auto; padding: 20px;">
-      <apexchart
-        type="bar"
-        height="350"
-        :options="chartOptions"
-        :series="series"
-      ></apexchart>
+      <apexchart type="bar" height="350" :options="chartOptions" :series="series"></apexchart>
     </div>
   </section>
 </template>
 
 <script>
-import dayjs from "dayjs";
-import ChartRagneSelector from "./ChartRagneSelector";
+import dayjs from "dayjs"
+import ChartRagneSelector from "./ChartRagneSelector"
 export default {
   components: { ChartRagneSelector },
   props: ["keywords"],
@@ -44,99 +37,99 @@ export default {
           categories: ["뉴스", "카페", "블로그"]
         }
       }
-    };
+    }
   },
   computed: {
     allData() {
       if (_.isEmpty(this.chartData)) {
-        return [];
+        return []
       } else {
-        const data = [];
+        const data = []
         this.chartData.forEach(d => {
-          const count = _.sumBy(d.data, d2 => d2.pcCount);
-          data.push(count);
-        });
-        return data;
+          const count = _.sumBy(d.data, d2 => d2.pcCount)
+          data.push(count)
+        })
+        return data
       }
     },
     year() {
-      return this.getData(this.chartData, 12);
+      return this.getData(this.chartData, 12)
     },
     halfData() {
-      return this.getData(this.chartData, 6);
+      return this.getData(this.chartData, 6)
     },
     quarter() {
-      return this.getData(this.chartData, 3);
+      return this.getData(this.chartData, 3)
     }
   },
   watch: {
     keywords(value, old) {
       if (_.isEqual(value, old)) {
-        return;
+        return
       }
-      this.setData();
+      this.setData()
     }
   },
   created() {
-    this.setData();
+    this.setData()
   },
   methods: {
     rangeChange(currentRange) {
       switch (currentRange) {
         case "all":
-          break;
+          break
         case "year":
-          break;
+          break
         case "half":
-          break;
+          break
         case "quarter":
-          break;
+          break
       }
     },
     getData(chartData, period) {
       if (_.isEmpty(chartData)) {
-        return [];
+        return []
       } else {
-        const data = [];
+        const data = []
         const targetDate = dayjs()
           .subtract(period, "month")
-          .add(1, "day");
+          .add(1, "day")
         chartData.forEach(d => {
           const count = _.sumBy(
             d.data.filter(d2 => dayjs(d2.period) >= targetDate),
             d2 => d2.pcCount
-          );
-          data.push(count);
-        });
-        return data;
+          )
+          data.push(count)
+        })
+        return data
       }
     },
     setData() {
-      this.series = [];
-      const categories = [];
-      this.chartData = [];
+      this.series = []
+      const categories = []
+      this.chartData = []
       const params = {
         keyword: this.keywords.join(",")
-      };
+      }
       this.$axios.get("/naver/channel_counts/", { params }).then(res => {
-        const data = [];
+        const data = []
         for (let [key, value] of Object.entries(res.data)) {
           for (let [k, v] of Object.entries(value)) {
-            data.push({ name: k, data: [] });
+            data.push({ name: k, data: [] })
           }
-          break;
+          break
         }
         for (let [key, value] of Object.entries(res.data)) {
-          categories.push(key);
+          categories.push(key)
           for (let [k, v] of Object.entries(value)) {
             data.forEach(d => {
-              if (d.name == k) d.data.push(v);
-            });
+              if (d.name == k) d.data.push(v)
+            })
           }
         }
-        this.updateChart(data, categories);
-        this.chartData = res.data;
-      });
+        this.updateChart(data, categories)
+        this.chartData = res.data
+      })
     },
     updateChart(series, categories) {
       if (categories) {
@@ -145,12 +138,12 @@ export default {
           ...{
             xaxis: { categories }
           }
-        };
+        }
       }
-      this.series = series;
+      this.series = series
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

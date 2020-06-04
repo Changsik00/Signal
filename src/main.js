@@ -27,16 +27,16 @@ Vue.use(VueObserveVisibility);
 // Loading 전역으로 component 등록
 // https://vuejs.org/v2/guide/components-registration.html
 const Loading = () =>
-  import(/* webpackChunkName: "Header" */ "./components/Loading.vue");
+  import( /* webpackChunkName: "Header" */ "./components/Loading.vue");
 const Snackbar = () =>
-  import(/* webpackChunkName: "Snackbar" */ "./components/Snackbar.vue");
+  import( /* webpackChunkName: "Snackbar" */ "./components/Snackbar.vue");
 const Login = () =>
-  import(/* webpackChunkName: "Login" */ "./components/Login.vue");
+  import( /* webpackChunkName: "Login" */ "./components/Login.vue");
 const Connections = () =>
-  import(/* webpackChunkName: "Connections" */ "./components/Connections.vue");
+  import( /* webpackChunkName: "Connections" */ "./components/Connections.vue");
 
 const NewPost = () =>
-  import(/* webpackChunkName: "NewPost" */ "./components/NewPost.vue");
+  import( /* webpackChunkName: "NewPost" */ "./components/NewPost.vue");
 
 Vue.component("Loading", Loading);
 Vue.component("Snackbar", Snackbar);

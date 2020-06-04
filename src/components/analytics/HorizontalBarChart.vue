@@ -3,9 +3,7 @@
     <div style="display:flex; align-items: center;">
       <ChartRagneSelector
         :title="'검색량'"
-        :sub-title="
-          '특정 키워드의 총 검색량을 알려드려 키워드가 가지고 있는 영향력을 확인할 수 있습니다.'
-        "
+        :sub-title="'특정 키워드의 총 검색량을 알려드려 키워드가 가지고 있는 영향력을 확인할 수 있습니다.'"
         :start="start"
         :end="end"
         @change="rangeChange"
@@ -17,8 +15,8 @@
   </section>
 </template>
 <script>
-import dayjs from "dayjs";
-import ChartRagneSelector from "./ChartRagneSelector";
+import dayjs from "dayjs"
+import ChartRagneSelector from "./ChartRagneSelector"
 export default {
   components: { ChartRagneSelector },
   props: ["keywords"],
@@ -41,13 +39,13 @@ export default {
           colors: [
             ({ value, dataPointIndex }) => {
               if (dataPointIndex == 0) {
-                return "#008FFB";
+                return "#008FFB"
               } else if (dataPointIndex == 1) {
-                return "#00E396";
+                return "#00E396"
               } else if (dataPointIndex == 2) {
-                return "#FEB019";
+                return "#FEB019"
               } else {
-                return "#FF4560";
+                return "#FF4560"
               }
             }
           ]
@@ -71,81 +69,81 @@ export default {
         }
       ],
       chartData: []
-    };
+    }
   },
   computed: {
     allData() {
       if (_.isEmpty(this.chartData)) {
-        return [];
+        return []
       } else {
-        const data = [];
+        const data = []
         this.chartData.forEach(d => {
-          const count = _.sumBy(d.data, d2 => d2.pcCount);
-          data.push(count);
-        });
-        return data;
+          const count = _.sumBy(d.data, d2 => d2.pcCount)
+          data.push(count)
+        })
+        return data
       }
     },
     year() {
-      return this.getData(this.chartData, 12);
+      return this.getData(this.chartData, 12)
     },
     halfData() {
-      return this.getData(this.chartData, 6);
+      return this.getData(this.chartData, 6)
     },
     quarter() {
-      return this.getData(this.chartData, 3);
+      return this.getData(this.chartData, 3)
     }
   },
   watch: {
     keywords(value, old) {
       if (_.isEqual(value, old)) {
-        return;
+        return
       }
-      this.setData();
+      this.setData()
     }
   },
   created() {
-    this.setData();
+    this.setData()
   },
   methods: {
     rangeChange(currentRange) {
       switch (currentRange) {
         case "all":
-          this.updateChart(this.allData);
-          break;
+          this.updateChart(this.allData)
+          break
         case "year":
-          this.updateChart(this.year);
-          break;
+          this.updateChart(this.year)
+          break
         case "half":
-          this.updateChart(this.halfData);
-          break;
+          this.updateChart(this.halfData)
+          break
         case "quarter":
-          this.updateChart(this.quarter);
-          break;
+          this.updateChart(this.quarter)
+          break
       }
     },
     getData(chartData, period) {
       if (_.isEmpty(chartData)) {
-        return [];
+        return []
       } else {
-        const data = [];
+        const data = []
         const targetDate = dayjs()
           .subtract(period, "month")
-          .add(1, "day");
+          .add(1, "day")
         chartData.forEach(d => {
           const count = _.sumBy(
             d.data.filter(d2 => dayjs(d2.period) >= targetDate),
             d2 => d2.pcCount
-          );
-          data.push(count);
-        });
-        return data;
+          )
+          data.push(count)
+        })
+        return data
       }
     },
     setData() {
-      this.chartOptions.xaxis.categories = [];
-      this.series[0].data = [];
-      this.chartData = [];
+      this.chartOptions.xaxis.categories = []
+      this.series[0].data = []
+      this.chartData = []
       const params = {
         keyword: this.keywords.join(","),
         start_date: dayjs()
@@ -154,21 +152,21 @@ export default {
         end_date: dayjs()
           .subtract(1, "month")
           .format("YYYY-MM")
-      };
+      }
       this.$axios.get("/naver/trend/", { params }).then(res => {
-        this.start = res.data[0].data[0].period;
-        this.end = res.data[0].data[res.data[0].data.length - 1].period;
-        const categories = [];
-        const data = [];
+        this.start = res.data[0].data[0].period
+        this.end = res.data[0].data[res.data[0].data.length - 1].period
+        const categories = []
+        const data = []
         res.data.forEach(d => {
-          categories.push(d.name);
-          const count = _.sumBy(d.data, d2 => d2.pcCount);
-          data.push(count);
-        });
-        this.updateChart(data, categories);
+          categories.push(d.name)
+          const count = _.sumBy(d.data, d2 => d2.pcCount)
+          data.push(count)
+        })
+        this.updateChart(data, categories)
 
-        this.chartData = res.data;
-      });
+        this.chartData = res.data
+      })
     },
     updateChart(data, categories) {
       if (categories) {
@@ -177,10 +175,10 @@ export default {
           ...{
             xaxis: { categories }
           }
-        };
+        }
       }
-      this.series = [{ name: "검색량", data }];
+      this.series = [{ name: "검색량", data }]
     }
   }
-};
+}
 </script>

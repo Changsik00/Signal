@@ -168,7 +168,7 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import firebase from "firebase"
 export default {
   data() {
     return {
@@ -178,30 +178,30 @@ export default {
       confirmPassword: "",
       showFindPassword: false,
       showSignUp: false
-    };
+    }
   },
   created() {
-    firebase.auth().useDeviceLanguage();
+    firebase.auth().useDeviceLanguage()
   },
   methods: {
     dataReset() {
-      this.email = "";
-      this.password = "";
-      this.confirmPassword = "";
-      this.showFindPassword = false;
-      this.showSignUp = false;
+      this.email = ""
+      this.password = ""
+      this.confirmPassword = ""
+      this.showFindPassword = false
+      this.showSignUp = false
     },
     hideDialog() {
-      this.dataReset();
-      this.$store.state.showLogin = false;
+      this.dataReset()
+      this.$store.state.showLogin = false
     },
     sendResetPassword() {
       firebase
         .auth()
         .sendPasswordResetEmail(this.email)
         .catch(error => {
-          this.$showToast("Error : " + error.message);
-        });
+          this.$showToast("Error : " + error.message)
+        })
     },
     authenticateEmail() {
       firebase
@@ -212,55 +212,55 @@ export default {
             login_id: result.user.email,
             access_token: result.user.refreshToken,
             type: "email"
-          };
-          this.dataReset();
-          this.$store.dispatch("login", params);
+          }
+          this.dataReset()
+          this.$store.dispatch("login", params)
         })
         .catch(error => {
-          this.$showToast("Error : " + error.message);
-        });
+          this.$showToast("Error : " + error.message)
+        })
     },
     authenticateSNS(sns) {
-      let provider = null;
+      let provider = null
       switch (sns) {
         case "facebook":
-          provider = new firebase.auth.FacebookAuthProvider();
-          break;
+          provider = new firebase.auth.FacebookAuthProvider()
+          break
 
         case "twitter":
-          provider = new firebase.auth.TwitterAuthProvider();
-          break;
+          provider = new firebase.auth.TwitterAuthProvider()
+          break
 
         case "google":
-          provider = new firebase.auth.GoogleAuthProvider();
-          break;
+          provider = new firebase.auth.GoogleAuthProvider()
+          break
 
         case "instagram":
-          provider = new firebase.auth.FacebookAuthProvider();
+          provider = new firebase.auth.FacebookAuthProvider()
           // provider.addScope("manage_pages,instagram_basic,instagram_content_publish");
-          provider.addScope("manage_pages,instagram_basic");
-          break;
+          provider.addScope("manage_pages,instagram_basic")
+          break
       }
       firebase
         .auth()
         .signInWithPopup(provider)
         .then(result => {
-          let loginId = result.user.email;
+          let loginId = result.user.email
           if (loginId == null) {
-            loginId = `${result.user.uid}@${sns}.com`;
+            loginId = `${result.user.uid}@${sns}.com`
           }
           const params = {
             login_id: loginId,
             // access_token: result.credential.accessToken,
             access_token: result.user.refreshToken,
             type: sns
-          };
-          this.dataReset();
-          this.$store.dispatch("login", params);
+          }
+          this.dataReset()
+          this.$store.dispatch("login", params)
         })
         .catch(error => {
-          this.$showToast("Error : " + error.message);
-        });
+          this.$showToast("Error : " + error.message)
+        })
     },
     signUp() {
       this.$validator.validateAll().then(validate => {
@@ -274,24 +274,24 @@ export default {
                   login_id: result.user.email,
                   access_token: result.user.refreshToken,
                   type: "email"
-                };
-                this.dataReset();
-                this.$store.dispatch("login", params);
+                }
+                this.dataReset()
+                this.$store.dispatch("login", params)
               },
               error => {
-                this.$showToast("Error : " + error.message);
+                this.$showToast("Error : " + error.message)
               }
             )
             .catch(error => {
-              this.$showToast("Error : " + error.message);
-            });
+              this.$showToast("Error : " + error.message)
+            })
         } else {
-          this.$showToast("필수 항목을 확인 해 주세요!");
+          this.$showToast("필수 항목을 확인 해 주세요!")
         }
-      });
+      })
     }
   }
-};
+}
 </script>
 
 <style lang="scss">

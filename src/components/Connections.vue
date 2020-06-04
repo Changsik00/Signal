@@ -48,63 +48,59 @@
 </template>
 
 <script>
-import firebase from "firebase";
+import firebase from "firebase"
 export default {
   data() {
     return {
       dialog: false,
       isFacebookConneted: false,
       isTwitterConneted: false
-    };
+    }
   },
   created() {
-    firebase.auth().useDeviceLanguage();
+    firebase.auth().useDeviceLanguage()
   },
   methods: {
     authenticateSNS(sns) {
-      let provider = null;
+      let provider = null
       switch (sns) {
         case "facebook":
-          provider = new firebase.auth.FacebookAuthProvider();
-          provider.addScope("manage_pages,publish_pages,pages_show_list");
-          break;
+          provider = new firebase.auth.FacebookAuthProvider()
+          provider.addScope("manage_pages,publish_pages,pages_show_list")
+          break
 
         case "twitter":
-          provider = new firebase.auth.TwitterAuthProvider();
-          break;
+          provider = new firebase.auth.TwitterAuthProvider()
+          break
 
         case "google":
-          provider = new firebase.auth.GoogleAuthProvider();
-          break;
+          provider = new firebase.auth.GoogleAuthProvider()
+          break
 
         case "instagram":
-          provider = new firebase.auth.FacebookAuthProvider();
+          provider = new firebase.auth.FacebookAuthProvider()
           // provider.addScope("manage_pages,instagram_basic,instagram_content_publish");
-          provider.addScope("manage_pages,instagram_basic");
-          break;
+          provider.addScope("manage_pages,instagram_basic")
+          break
       }
 
       firebase
         .auth()
         .signInWithPopup(provider)
         .then(result => {
-          this.snsConnect(sns, result);
+          this.snsConnect(sns, result)
         })
         .catch(error => {
-          if (
-            error.credential &&
-            error.credential.accessToken &&
-            error.credential.accessToken.length > 0
-          ) {
-            this.snsConnect(sns, error);
+          if (error.credential && error.credential.accessToken && error.credential.accessToken.length > 0) {
+            this.snsConnect(sns, error)
           }
-        });
+        })
     },
     snsConnect(sns, result) {
-      let params = null;
+      let params = null
       switch (sns) {
         case "facebook":
-          const token = result.credential.accessToken;
+          const token = result.credential.accessToken
           // if (token && token.length > 0) {
           //   this.$axios
           //     .get("https://graph.facebook.com/me/accounts?access_token=" + token)
@@ -138,9 +134,9 @@ export default {
             id: result.additionalUserInfo.profile.id,
             access_token: token,
             secret: ""
-          };
-          this.$store.dispatch("requestFacebookConnection", params);
-          break;
+          }
+          this.$store.dispatch("requestFacebookConnection", params)
+          break
 
         case "twitter":
           params = {
@@ -149,13 +145,13 @@ export default {
             id: result.additionalUserInfo.username,
             access_token: result.credential.accessToken,
             secret: result.credential.secret
-          };
-          this.$store.dispatch("requestTwitterConnection", params);
-          break;
+          }
+          this.$store.dispatch("requestTwitterConnection", params)
+          break
       }
     }
   }
-};
+}
 </script>
 
 <style lang="scss">
